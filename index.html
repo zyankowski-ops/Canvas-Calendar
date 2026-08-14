@@ -13,157 +13,368 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --navy: #073b68;
+      --navy-dark: #052a4a;
+      --blue: #0c5fa8;
+      --yellow: #ffc72c;
+      --yellow-light: #ffe28a;
+      --silver: #dbe2e8;
+      --blue-row: #b9dcf4;
+      --green-row: #c3efd3;
+      --danger: #e32222;
+      --text: #102235;
+    }
+
     body {
       margin: 0;
-      padding: 18px;
+      background: #f4f6f8;
       font-family: Arial, Helvetica, sans-serif;
-      background: white;
-      color: #000;
+      color: var(--text);
     }
 
-    .calendar-wrapper {
-      max-width: 1280px;
-      margin: auto;
+    .site-shell {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 18px;
     }
 
-    .page-title {
-      font-size: 38px;
-      font-weight: 300;
-      color: #555;
-      margin: 0 0 32px 0;
-    }
-
-    /* =========================
+    /* =========================================================
        HEADER
-    ========================== */
+    ========================================================== */
 
     .hero {
-      background: #2f5d78;
-      min-height: 230px;
-      display: flex;
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.03),
+          rgba(255,255,255,0)
+        ),
+        linear-gradient(
+          135deg,
+          var(--navy-dark),
+          var(--blue)
+        );
+
+      border: 3px solid #c7d2dc;
+      box-shadow:
+        0 8px 20px rgba(0,0,0,.22),
+        inset 0 0 0 2px rgba(255,255,255,.18);
+
+      display: grid;
+      grid-template-columns: 320px 1fr;
       align-items: center;
+      gap: 35px;
+
+      padding: 25px 40px;
+      margin-bottom: 22px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 28px;
+      background: var(--yellow);
+      transform: rotate(35deg);
+      opacity: .95;
+      z-index: 0;
+    }
+
+    .hero::before {
+      top: 15px;
+      right: -100px;
+    }
+
+    .hero::after {
+      bottom: 5px;
+      left: -150px;
+    }
+
+    .hero-logo-wrap,
+    .hero-title-wrap {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-logo-wrap {
+      display: flex;
       justify-content: center;
-      gap: 55px;
-      padding: 24px 40px;
-      margin: 0 14px 60px 14px;
+      align-items: center;
     }
 
     .hero-logo {
-      width: 210px;
-      max-width: 24vw;
-      height: auto;
+      width: 260px;
+      max-height: 220px;
+      object-fit: contain;
       display: block;
+
+      /*
+        This does not remove a baked-in white PNG background,
+        but it makes a transparent version look perfect.
+      */
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,.28));
+    }
+
+    .hero-title-wrap {
+      text-align: center;
     }
 
     .hero-title {
-      font-size: 64px;
-      font-weight: 700;
-      color: white;
       margin: 0;
-      text-align: center;
+      font-size: clamp(54px, 7vw, 100px);
+      line-height: .9;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      color: white;
+
       text-shadow:
-        -2px -2px 0 #1d4660,
-         2px -2px 0 #1d4660,
-        -2px  2px 0 #1d4660,
-         2px  2px 0 #1d4660;
+        -3px -3px 0 #071f34,
+         3px -3px 0 #071f34,
+        -3px  3px 0 #071f34,
+         3px  3px 0 #071f34,
+         0 8px 0 rgba(0,0,0,.20);
     }
 
-    /* =========================
+    .hero-subtitle {
+      margin-top: 10px;
+      color: var(--yellow);
+      font-size: clamp(24px, 3vw, 44px);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+
+    /* =========================================================
        CALENDAR
-    ========================== */
+    ========================================================== */
+
+    .calendar-shell {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+
+      border: 1px solid #94a3b3;
+
+      box-shadow:
+        0 6px 18px rgba(0,0,0,.12);
+    }
 
     .calendar {
       width: 100%;
       border-collapse: collapse;
       table-layout: fixed;
-      border: 1px solid #333;
     }
 
     .calendar th,
     .calendar td {
-      border: 1px solid #333;
+      border: 1px solid #526273;
       text-align: center;
     }
 
-    .calendar th {
-      background: #fff0b7;
-      font-size: 18px;
-      padding: 10px 6px;
-      height: 44px;
+    .calendar thead th {
+      background:
+        linear-gradient(
+          to bottom,
+          #ffe35e,
+          #ffc928
+        );
+
+      color: #111;
+      font-size: 22px;
+      font-weight: 900;
+      padding: 14px 8px;
+
+      text-shadow:
+        0 1px 0 rgba(255,255,255,.5);
     }
 
     .week-column {
-      width: 125px;
+      width: 145px;
     }
 
     .week-row td {
-      height: 170px;
-      font-size: 20px;
-      font-weight: bold;
-      padding: 10px;
+      height: 180px;
+      padding: 14px;
+      vertical-align: middle;
     }
 
     .week-blue td {
-      background: #b9d8ed;
+      background:
+        linear-gradient(
+          to bottom,
+          #c7e8fb,
+          var(--blue-row)
+        );
     }
 
     .week-green td {
-      background: #b9e8ce;
+      background:
+        linear-gradient(
+          to bottom,
+          #d2f5df,
+          var(--green-row)
+        );
     }
 
-    .separator td {
-      height: 18px;
-      background: #fff0b7;
-      padding: 0;
+    .week-label {
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1.1;
     }
 
     .date {
-      font-size: 21px;
-      font-weight: 700;
+      font-size: 25px;
+      font-weight: 900;
       margin-bottom: 14px;
+      color: #071c2e;
     }
 
-    .calendar-button {
+    /* =========================================================
+       ACTIVITY BUTTONS
+    ========================================================== */
+
+    .activity-button {
+      width: 90%;
+      max-width: 250px;
+
+      margin: 0 auto;
+
       border: none;
-      background: transparent;
-      font: inherit;
-      font-weight: 700;
+      border-radius: 12px;
+
+      padding: 16px 15px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #0a4d88,
+          #053765
+        );
+
+      color: white;
+
+      font-size: 18px;
+      font-weight: 800;
+
       cursor: pointer;
-      padding: 12px;
-      border-radius: 8px;
-      width: 100%;
+
+      box-shadow:
+        0 5px 0 #022541,
+        0 8px 14px rgba(0,0,0,.22);
+
+      transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
-    .calendar-button:hover {
-      background: rgba(255,255,255,.4);
+    .activity-button:hover {
+      transform: translateY(-2px);
+
+      background:
+        linear-gradient(
+          to bottom,
+          #1170bd,
+          #064778
+        );
+
+      box-shadow:
+        0 7px 0 #022541,
+        0 10px 18px rgba(0,0,0,.24);
     }
 
-    .closed {
-      color: #ff0066;
-      font-size: 17px;
-      line-height: 1.6;
-      font-weight: 700;
+    .activity-button:active {
+      transform: translateY(3px);
+
+      box-shadow:
+        0 2px 0 #022541,
+        0 5px 10px rgba(0,0,0,.20);
     }
 
-    .loading {
-      text-align: center;
-      padding: 40px;
-      font-size: 20px;
+    .button-icon {
+      font-size: 25px;
+      line-height: 1;
+      flex: 0 0 auto;
     }
 
-    /* =========================
-       POPUP
-    ========================== */
+    .button-label {
+      line-height: 1.2;
+    }
+
+    /* =========================================================
+       CLOSED DAY
+    ========================================================== */
+
+    .closed-card {
+      width: 88%;
+      max-width: 240px;
+      margin: 0 auto;
+
+      background: white;
+
+      border-radius: 12px;
+
+      padding: 8px;
+
+      box-shadow:
+        0 5px 14px rgba(0,0,0,.18);
+    }
+
+    .closed-title {
+      background: var(--danger);
+      color: white;
+
+      border-radius: 7px 7px 0 0;
+
+      font-size: 25px;
+      font-weight: 900;
+
+      padding: 7px;
+    }
+
+    .closed-text {
+      color: var(--danger);
+
+      font-size: 18px;
+      font-weight: 800;
+      font-style: italic;
+
+      padding: 11px 7px;
+      white-space: pre-wrap;
+    }
+
+    /* =========================================================
+       MODAL
+    ========================================================== */
 
     .modal-overlay {
       display: none;
+
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.55);
+
+      background: rgba(0,0,0,.68);
+
+      z-index: 999999;
+
       align-items: center;
       justify-content: center;
-      z-index: 999999;
-      padding: 24px;
+
+      padding: 25px;
     }
 
     .modal-overlay.open {
@@ -171,107 +382,232 @@
     }
 
     .modal {
-      width: min(760px, 95vw);
-      max-height: 85vh;
-      overflow-y: auto;
+      width: min(780px, 96vw);
+      max-height: 88vh;
+
+      overflow: hidden;
+
+      border-radius: 18px;
+
       background: white;
-      border-radius: 14px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+
+      border: 3px solid #ced7df;
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.48);
+
+      animation: popupIn .18s ease-out;
+    }
+
+    @keyframes popupIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-header {
+      background:
+        linear-gradient(
+          135deg,
+          #05335c,
+          #0b5798
+        );
+
+      color: white;
+
+      padding: 22px 60px 22px 26px;
+
       position: relative;
-      padding: 32px;
-      text-align: left;
+
+      border-bottom: 5px solid var(--yellow);
+    }
+
+    .modal-title {
+      margin: 0;
+
+      font-size: 30px;
+      font-weight: 900;
+
+      line-height: 1.15;
+    }
+
+    .modal-date {
+      margin-top: 5px;
+
+      color: var(--yellow);
+
+      font-size: 21px;
+      font-weight: 800;
     }
 
     .modal-close {
       position: absolute;
-      top: 12px;
-      right: 16px;
+
+      right: 18px;
+      top: 13px;
+
       border: none;
-      background: none;
-      font-size: 34px;
+      background: transparent;
+
+      color: white;
+
+      font-size: 38px;
+      font-weight: 700;
+
       cursor: pointer;
     }
 
-    .modal h2 {
-      margin-top: 0;
-      padding-right: 40px;
-      color: #2f5d78;
+    .modal-body {
+      padding: 26px;
+
+      overflow-y: auto;
+      max-height: calc(88vh - 130px);
     }
 
-    .modal-content {
+    .modal-section {
+      margin-bottom: 24px;
+    }
+
+    .modal-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-section-title {
+      color: var(--navy);
+
+      font-size: 21px;
+      font-weight: 900;
+
+      margin-bottom: 9px;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-section-content {
       font-size: 18px;
-      line-height: 1.6;
+      line-height: 1.55;
+
       white-space: pre-wrap;
+
+      color: #1c2c3a;
     }
 
-    @media (max-width: 850px) {
+    .modal-divider {
+      height: 1px;
+      background: #d3d9df;
+      margin: 20px 0;
+    }
 
-      body {
-        padding: 10px;
-      }
+    .loading {
+      padding: 50px;
+      text-align: center;
 
-      .page-title {
-        font-size: 30px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================== */
+
+    @media (max-width: 950px) {
+
+      .site-shell {
+        padding: 8px;
       }
 
       .hero {
-        min-height: 170px;
-        gap: 24px;
-        padding: 18px;
-        margin-bottom: 35px;
+        grid-template-columns: 180px 1fr;
+        min-height: 190px;
+
+        padding: 18px 20px;
+
+        border-radius: 12px;
       }
 
       .hero-logo {
-        width: 135px;
-        max-width: 32vw;
+        width: 165px;
+        max-height: 160px;
       }
 
       .hero-title {
-        font-size: 40px;
+        font-size: clamp(36px, 8vw, 65px);
       }
 
-      .week-row td {
-        height: 125px;
-        font-size: 15px;
+      .hero-subtitle {
+        font-size: 20px;
       }
 
-      .date {
-        font-size: 16px;
+      .calendar {
+        min-width: 900px;
       }
 
-      .calendar th {
-        font-size: 14px;
+      .calendar-shell {
+        overflow-x: auto;
       }
+
     }
 
   </style>
 </head>
 
+
 <body>
 
-<div class="calendar-wrapper">
+<div class="site-shell">
 
-  <h1 class="page-title">Shop Schedule</h1>
+  <!-- =======================================================
+       HEADER
+  ======================================================== -->
 
-  <div class="hero">
+  <header class="hero">
 
-    <img
-     src="RMCTC ATT LOGO.png"
-      alt="RMCTC Auto Tech"
-      class="hero-logo"
-    >
+    <div class="hero-logo-wrap">
 
-    <h2 class="hero-title">
-      Shop Schedule
-    </h2>
+      <img
+        src="RMCTC ATT LOGO.png"
+        alt="RMCTC Auto Tech"
+        class="hero-logo"
+      >
 
-  </div>
+    </div>
 
 
-  <div id="calendarArea">
+    <div class="hero-title-wrap">
 
-    <div class="loading">
-      Loading schedule...
+      <h1 class="hero-title">
+        Shop
+      </h1>
+
+      <div class="hero-subtitle">
+        Schedule
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       CALENDAR
+  ======================================================== -->
+
+  <div class="calendar-shell">
+
+    <div id="calendarArea">
+
+      <div class="loading">
+        Loading shop schedule...
+      </div>
+
     </div>
 
   </div>
@@ -279,30 +615,119 @@
 </div>
 
 
-<!-- POPUP -->
+<!-- =========================================================
+     POPUP
+========================================================== -->
 
 <div
   id="modalOverlay"
   class="modal-overlay"
-  onclick="closeModalFromOverlay(event)"
 >
 
   <div class="modal">
 
-    <button
-      class="modal-close"
-      onclick="closeModal()"
-      aria-label="Close popup"
-    >
-      ×
-    </button>
+    <div class="modal-header">
 
-    <h2 id="modalTitle"></h2>
+      <button
+        id="modalClose"
+        class="modal-close"
+        aria-label="Close popup"
+      >
+        ×
+      </button>
 
-    <div
-      id="modalContent"
-      class="modal-content"
-    ></div>
+      <h2
+        id="modalTitle"
+        class="modal-title"
+      ></h2>
+
+      <div
+        id="modalDate"
+        class="modal-date"
+      ></div>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div
+        id="mainContentSection"
+        class="modal-section"
+      >
+
+        <div class="modal-section-title">
+          🔧 Today's Activity
+        </div>
+
+        <div
+          id="modalContent"
+          class="modal-section-content"
+        ></div>
+
+      </div>
+
+
+      <div
+        id="objectivesSection"
+        class="modal-section"
+        style="display:none;"
+      >
+
+        <div class="modal-divider"></div>
+
+        <div class="modal-section-title">
+          ✅ Today's Objectives
+        </div>
+
+        <div
+          id="modalObjectives"
+          class="modal-section-content"
+        ></div>
+
+      </div>
+
+
+      <div
+        id="materialsSection"
+        class="modal-section"
+        style="display:none;"
+      >
+
+        <div class="modal-divider"></div>
+
+        <div class="modal-section-title">
+          🧰 Materials / Tools
+        </div>
+
+        <div
+          id="modalMaterials"
+          class="modal-section-content"
+        ></div>
+
+      </div>
+
+
+      <div
+        id="instructionsSection"
+        class="modal-section"
+        style="display:none;"
+      >
+
+        <div class="modal-divider"></div>
+
+        <div class="modal-section-title">
+          📋 Instructions
+        </div>
+
+        <div
+          id="modalInstructions"
+          class="modal-section-content"
+        ></div>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -310,6 +735,10 @@
 
 
 <script>
+
+/* =========================================================
+   GOOGLE SHEET
+========================================================== */
 
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?output=csv";
@@ -324,6 +753,10 @@ const DAYS = [
 ];
 
 
+/* =========================================================
+   LOAD DATA
+========================================================== */
+
 Papa.parse(SHEET_URL, {
 
   download: true,
@@ -332,11 +765,13 @@ Papa.parse(SHEET_URL, {
 
   skipEmptyLines: true,
 
+
   complete: function(results) {
 
     buildCalendar(results.data);
 
   },
+
 
   error: function(error) {
 
@@ -344,36 +779,50 @@ Papa.parse(SHEET_URL, {
       "<div class='loading'>Unable to load schedule.</div>";
 
     console.error(error);
+
   }
 
 });
 
 
+/* =========================================================
+   BUILD CALENDAR
+========================================================== */
+
 function buildCalendar(data) {
 
   const weeks = {};
 
+  const popupData = {};
+
 
   data.forEach(row => {
 
-    const week = String(row["Week"] || "").trim();
+    const week =
+      String(row["Week"] || "").trim();
 
-    const day = String(row["Day"] || "").trim();
+    const day =
+      String(row["Day"] || "").trim();
 
 
-    if (!week || !day) return;
+    if (!week || !day) {
+      return;
+    }
 
 
     if (!weeks[week]) {
-
       weeks[week] = {};
-
     }
 
 
     weeks[week][day] = row;
 
   });
+
+
+  const weekNumbers =
+    Object.keys(weeks)
+      .sort((a,b) => Number(a) - Number(b));
 
 
   let html = `
@@ -388,15 +837,25 @@ function buildCalendar(data) {
             Week #
           </th>
 
-          <th>Monday</th>
+          <th>
+            Monday
+          </th>
 
-          <th>Tuesday</th>
+          <th>
+            Tuesday
+          </th>
 
-          <th>Wednesday</th>
+          <th>
+            Wednesday
+          </th>
 
-          <th>Thursday</th>
+          <th>
+            Thursday
+          </th>
 
-          <th>Friday</th>
+          <th>
+            Friday
+          </th>
 
         </tr>
 
@@ -407,16 +866,12 @@ function buildCalendar(data) {
   `;
 
 
-  const weekNumbers =
-    Object.keys(weeks).sort((a,b) => Number(a) - Number(b));
-
-
   weekNumbers.forEach((weekNumber, index) => {
 
     const colorClass =
       index % 2 === 0
-      ? "week-blue"
-      : "week-green";
+        ? "week-blue"
+        : "week-green";
 
 
     html += `
@@ -424,7 +879,11 @@ function buildCalendar(data) {
       <tr class="week-row ${colorClass}">
 
         <td>
-          Week ${escapeHTML(weekNumber)}
+
+          <div class="week-label">
+            Week ${escapeHTML(weekNumber)}
+          </div>
+
         </td>
 
     `;
@@ -432,7 +891,8 @@ function buildCalendar(data) {
 
     DAYS.forEach(day => {
 
-      const item = weeks[weekNumber][day];
+      const item =
+        weeks[weekNumber][day];
 
 
       if (!item) {
@@ -447,20 +907,47 @@ function buildCalendar(data) {
       const date =
         String(item["Date"] || "").trim();
 
+
       const buttonText =
         String(item["Button Text"] || "").trim();
 
+
       const popupTitle =
-        String(item["Popup Title"] || date).trim();
+        String(
+          item["Popup Title"] ||
+          buttonText ||
+          date
+        ).trim();
+
 
       const popupContent =
         String(item["Popup Content"] || "").trim();
+
+
+      /*
+        Optional future Sheet columns.
+        These can be blank for now.
+      */
+
+      const objectives =
+        String(item["Objectives"] || "").trim();
+
+
+      const materials =
+        String(item["Materials"] || "").trim();
+
+
+      const instructions =
+        String(item["Instructions"] || "").trim();
+
 
       const status =
         String(item["Status"] || "Normal")
           .trim()
           .toLowerCase();
 
+
+      /* CLOSED DAY */
 
       if (status === "closed") {
 
@@ -472,35 +959,84 @@ function buildCalendar(data) {
               ${escapeHTML(date)}
             </div>
 
-            <div class="closed">
-              ${escapeHTML(popupContent)}
+
+            <div class="closed-card">
+
+              <div class="closed-title">
+                CLOSED
+              </div>
+
+              <div class="closed-text">
+                ${escapeHTML(
+                  popupContent || buttonText || "No School"
+                )}
+              </div>
+
             </div>
 
           </td>
 
         `;
 
+        return;
+
       }
 
-      else if (buttonText || popupContent) {
+
+      /* NORMAL ACTIVITY */
+
+      if (
+        buttonText ||
+        popupContent ||
+        objectives ||
+        materials ||
+        instructions
+      ) {
+
+        const popupId =
+          `popup-${weekNumber}-${day}`
+            .replace(/\s+/g, "-")
+            .toLowerCase();
+
+
+        popupData[popupId] = {
+
+          title: popupTitle,
+
+          date: date,
+
+          content: popupContent,
+
+          objectives: objectives,
+
+          materials: materials,
+
+          instructions: instructions
+
+        };
+
 
         html += `
 
           <td>
 
+            <div class="date">
+              ${escapeHTML(date)}
+            </div>
+
+
             <button
-              class="calendar-button"
-              onclick="openModal(
-                '${escapeJS(popupTitle)}',
-                '${escapeJS(popupContent)}'
-              )"
+              class="activity-button popup-trigger"
+              data-popup-id="${escapeHTML(popupId)}"
             >
 
-              <div class="date">
-                ${escapeHTML(date)}
-              </div>
+              <span class="button-icon">
+                🔧
+              </span>
 
-              ${escapeHTML(buttonText)}
+              <span class="button-label">
+                ${escapeHTML(buttonText || "View Activity")}
+              </span>
 
             </button>
 
@@ -509,6 +1045,9 @@ function buildCalendar(data) {
         `;
 
       }
+
+
+      /* DATE ONLY */
 
       else {
 
@@ -531,21 +1070,6 @@ function buildCalendar(data) {
 
     html += "</tr>";
 
-
-    if (index < weekNumbers.length - 1) {
-
-      html += `
-
-        <tr class="separator">
-
-          <td colspan="6"></td>
-
-        </tr>
-
-      `;
-
-    }
-
   });
 
 
@@ -558,26 +1082,89 @@ function buildCalendar(data) {
   `;
 
 
-  document.getElementById("calendarArea").innerHTML = html;
+  document.getElementById("calendarArea").innerHTML =
+    html;
+
+
+  /* ATTACH POPUP BUTTON EVENTS */
+
+  document
+    .querySelectorAll(".popup-trigger")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          const popup =
+            popupData[this.dataset.popupId];
+
+
+          if (popup) {
+
+            openModal(popup);
+
+          }
+
+        }
+      );
+
+    });
 
 }
 
 
+/* =========================================================
+   POPUP
+========================================================== */
 
-function openModal(title, content) {
+function openModal(data) {
 
-  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalTitle").textContent =
+    data.title || "Shop Activity";
 
-  document.getElementById("modalContent").textContent = content;
+
+  document.getElementById("modalDate").textContent =
+    data.date || "";
+
+
+  setSection(
+    "mainContentSection",
+    "modalContent",
+    data.content
+  );
+
+
+  setSection(
+    "objectivesSection",
+    "modalObjectives",
+    data.objectives
+  );
+
+
+  setSection(
+    "materialsSection",
+    "modalMaterials",
+    data.materials
+  );
+
+
+  setSection(
+    "instructionsSection",
+    "modalInstructions",
+    data.instructions
+  );
+
 
   document
     .getElementById("modalOverlay")
     .classList.add("open");
 
-  document.body.style.overflow = "hidden";
+
+  document.body.style.overflow =
+    "hidden";
 
 }
-
 
 
 function closeModal() {
@@ -586,35 +1173,99 @@ function closeModal() {
     .getElementById("modalOverlay")
     .classList.remove("open");
 
-  document.body.style.overflow = "";
+
+  document.body.style.overflow =
+    "";
 
 }
 
 
+function setSection(
+  sectionId,
+  contentId,
+  value
+) {
 
-function closeModalFromOverlay(event) {
+  const section =
+    document.getElementById(sectionId);
 
-  if (event.target.id === "modalOverlay") {
+  const content =
+    document.getElementById(contentId);
 
-    closeModal();
+
+  if (value && value.trim()) {
+
+    section.style.display =
+      "block";
+
+    content.textContent =
+      value;
+
+  }
+
+  else {
+
+    section.style.display =
+      "none";
+
+    content.textContent =
+      "";
 
   }
 
 }
 
 
+/* CLOSE BUTTON */
 
-document.addEventListener("keydown", event => {
+document
+  .getElementById("modalClose")
+  .addEventListener(
+    "click",
+    closeModal
+  );
 
-  if (event.key === "Escape") {
 
-    closeModal();
+/* CLICK OUTSIDE POPUP */
+
+document
+  .getElementById("modalOverlay")
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target.id ===
+        "modalOverlay"
+      ) {
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+
+/* ESCAPE KEY */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Escape") {
+
+      closeModal();
+
+    }
 
   }
+);
 
-});
 
-
+/* =========================================================
+   SECURITY / TEXT SAFETY
+========================================================== */
 
 function escapeHTML(value) {
 
@@ -629,22 +1280,6 @@ function escapeHTML(value) {
     .replaceAll('"', "&quot;")
 
     .replaceAll("'", "&#039;");
-
-}
-
-
-
-function escapeJS(value) {
-
-  return String(value)
-
-    .replaceAll("\\", "\\\\")
-
-    .replaceAll("'", "\\'")
-
-    .replaceAll("\n", "\\n")
-
-    .replaceAll("\r", "");
 
 }
 

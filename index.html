@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MP1 Classwork</title>
+  <title>Shop Schedule</title>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
@@ -39,59 +39,33 @@
 
     .hero {
       background: #2f5d78;
-      min-height: 242px;
-      display: grid;
-      grid-template-columns: 180px 1fr 180px;
-      align-items: center;
-      padding: 16px 36px;
-      margin: 0 14px 60px 14px;
-    }
-
-    .back-button {
-      font-size: 74px;
-      color: #ff6980;
-      text-decoration: none;
-      text-align: center;
-    }
-
-    .hero-center {
+      min-height: 230px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 30px;
+      gap: 55px;
+      padding: 24px 40px;
+      margin: 0 14px 60px 14px;
     }
 
-    .engine-icon {
-      font-size: 65px;
+    .hero-logo {
+      width: 210px;
+      max-width: 24vw;
+      height: auto;
+      display: block;
     }
 
     .hero-title {
-      font-size: 58px;
+      font-size: 64px;
       font-weight: 700;
       color: white;
       margin: 0;
+      text-align: center;
       text-shadow:
         -2px -2px 0 #1d4660,
          2px -2px 0 #1d4660,
         -2px  2px 0 #1d4660,
          2px  2px 0 #1d4660;
-    }
-
-    .safe-area {
-      text-align: center;
-      color: white;
-      font-weight: bold;
-    }
-
-    .safe-hand {
-      font-size: 70px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .safe-text {
-      font-size: 18px;
-      text-decoration: underline;
     }
 
     /* =========================
@@ -232,17 +206,28 @@
 
     @media (max-width: 850px) {
 
+      body {
+        padding: 10px;
+      }
+
+      .page-title {
+        font-size: 30px;
+      }
+
       .hero {
-        grid-template-columns: 70px 1fr 70px;
-        padding: 12px;
+        min-height: 170px;
+        gap: 24px;
+        padding: 18px;
+        margin-bottom: 35px;
+      }
+
+      .hero-logo {
+        width: 135px;
+        max-width: 32vw;
       }
 
       .hero-title {
-        font-size: 34px;
-      }
-
-      .engine-icon {
-        font-size: 38px;
+        font-size: 40px;
       }
 
       .week-row td {
@@ -253,6 +238,10 @@
       .date {
         font-size: 16px;
       }
+
+      .calendar th {
+        font-size: 14px;
+      }
     }
 
   </style>
@@ -262,21 +251,19 @@
 
 <div class="calendar-wrapper">
 
-  <h1 class="page-title">MP1 Classwork</h1>
+  <h1 class="page-title">Shop Schedule</h1>
 
   <div class="hero">
 
-    <a href="#" class="back-button">↩</a>
+    <img
+     src="RMCTC ATT LOGO.png"
+      alt="RMCTC Auto Tech"
+      class="hero-logo"
+    >
 
-    <div class="hero-center">
-      <div class="engine-icon">⚙️</div>
-      <h2 class="hero-title">MP1 Classwork</h2>
-    </div>
-
-    <div class="safe-area">
-      <div class="safe-hand">✌️</div>
-      <div class="safe-text">SAFE 2 SAY ➡</div>
-    </div>
+    <h2 class="hero-title">
+      Shop Schedule
+    </h2>
 
   </div>
 
@@ -284,7 +271,7 @@
   <div id="calendarArea">
 
     <div class="loading">
-      Loading calendar...
+      Loading schedule...
     </div>
 
   </div>
@@ -305,6 +292,7 @@
     <button
       class="modal-close"
       onclick="closeModal()"
+      aria-label="Close popup"
     >
       ×
     </button>
@@ -353,7 +341,7 @@ Papa.parse(SHEET_URL, {
   error: function(error) {
 
     document.getElementById("calendarArea").innerHTML =
-      "<div class='loading'>Unable to load calendar.</div>";
+      "<div class='loading'>Unable to load schedule.</div>";
 
     console.error(error);
   }

@@ -19,7 +19,6 @@
       --blue-row: #b9dcf4;
       --green-row: #c3efd3;
       --yellow: #ffc72c;
-      --danger: #df1717;
       --text: #0a1e31;
     }
 
@@ -36,9 +35,9 @@
       padding: 10px;
     }
 
-    /* =========================================================
-       HEADER IMAGE
-    ========================================================== */
+    /* =========================
+       HEADER
+    ========================== */
 
     .shop-header {
       width: 100%;
@@ -50,23 +49,19 @@
       width: 100%;
       height: auto;
       border-radius: 18px;
-      box-shadow:
-        0 6px 18px rgba(0,0,0,.22);
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
     }
 
-    /* =========================================================
+    /* =========================
        CALENDAR
-    ========================================================== */
+    ========================== */
 
     .calendar-shell {
       background: white;
       border-radius: 14px;
       overflow: hidden;
-
       border: 2px solid #6e8194;
-
-      box-shadow:
-        0 6px 18px rgba(0,0,0,.13);
+      box-shadow: 0 6px 18px rgba(0,0,0,.13);
     }
 
     .calendar {
@@ -135,14 +130,13 @@
       color: #071c2e;
     }
 
-    /* =========================================================
-       ACTIVITY CARDS
-    ========================================================== */
+    /* =========================
+       ACTIVITY BUTTON
+    ========================== */
 
     .activity-button {
       width: 92%;
       max-width: 245px;
-
       margin: 0 auto;
 
       border: 1px solid #021b30;
@@ -212,68 +206,19 @@
       line-height: 1.2;
     }
 
-    /* =========================================================
-       CLOSED DAYS
-    ========================================================== */
-
-    .closed-card {
-      width: 90%;
-      max-width: 225px;
-      margin: 0 auto;
-
-      background: white;
-
-      border-radius: 12px;
-
-      padding: 7px;
-
-      box-shadow:
-        0 5px 14px rgba(0,0,0,.17);
-    }
-
-    .closed-title {
-      background: var(--danger);
-      color: white;
-
-      border-radius: 7px 7px 0 0;
-
-      font-size: 25px;
-      font-weight: 900;
-
-      padding: 7px;
-    }
-
-    .closed-text {
-      color: var(--danger);
-
-      font-size: 18px;
-      font-weight: 800;
-      font-style: italic;
-
-      padding: 10px 6px;
-
-      white-space: pre-wrap;
-    }
-
-    /* =========================================================
-       LOADING
-    ========================================================== */
-
     .loading {
       padding: 50px;
       text-align: center;
-
       font-size: 22px;
       font-weight: 700;
     }
 
-    /* =========================================================
-       MODAL
-    ========================================================== */
+    /* =========================
+       POPUP
+    ========================== */
 
     .modal-overlay {
       display: none;
-
       position: fixed;
       inset: 0;
 
@@ -298,7 +243,6 @@
       overflow: hidden;
 
       border-radius: 18px;
-
       background: white;
 
       border: 3px solid #d5dde4;
@@ -340,25 +284,20 @@
 
     .modal-title {
       margin: 0;
-
       font-size: 30px;
       font-weight: 900;
-
       line-height: 1.15;
     }
 
     .modal-date {
       margin-top: 5px;
-
       color: var(--yellow);
-
       font-size: 21px;
       font-weight: 900;
     }
 
     .modal-close {
       position: absolute;
-
       right: 18px;
       top: 11px;
 
@@ -374,48 +313,28 @@
     }
 
     .modal-body {
-      padding: 26px;
-
+      padding: 28px;
       overflow-y: auto;
-
       max-height: calc(88vh - 125px);
     }
 
-    .modal-section {
-      margin-bottom: 24px;
-    }
-
-    .modal-section:last-child {
-      margin-bottom: 0;
-    }
-
-    .modal-section-title {
+    .agenda-heading {
       color: var(--navy);
-
       font-size: 21px;
       font-weight: 900;
-
-      margin-bottom: 9px;
+      margin-bottom: 12px;
     }
 
-    .modal-section-content {
+    .modal-content {
       font-size: 18px;
-      line-height: 1.55;
-
+      line-height: 1.6;
       white-space: pre-wrap;
-
       color: #1c2c3a;
     }
 
-    .modal-divider {
-      height: 1px;
-      background: #d3d9df;
-      margin: 20px 0;
-    }
-
-    /* =========================================================
+    /* =========================
        MOBILE
-    ========================================================== */
+    ========================== */
 
     @media (max-width: 950px) {
 
@@ -435,11 +354,11 @@
       .calendar {
         min-width: 900px;
       }
-
     }
 
   </style>
 </head>
+
 
 <body>
 
@@ -448,12 +367,10 @@
   <!-- HEADER -->
 
   <header class="shop-header">
-
     <img
       src="shopschedule.png"
       alt="RMCTC Auto Tech Shop Schedule"
     >
-
   </header>
 
 
@@ -505,84 +422,16 @@
 
     </div>
 
-
     <div class="modal-body">
 
-      <div
-        id="mainContentSection"
-        class="modal-section"
-      >
-
-        <div class="modal-section-title">
-          🔧 Today's Activity
-        </div>
-
-        <div
-          id="modalContent"
-          class="modal-section-content"
-        ></div>
-
+      <div class="agenda-heading">
+        🔧 Today's Agenda
       </div>
 
-
       <div
-        id="objectivesSection"
-        class="modal-section"
-        style="display:none;"
-      >
-
-        <div class="modal-divider"></div>
-
-        <div class="modal-section-title">
-          ✅ Today's Objectives
-        </div>
-
-        <div
-          id="modalObjectives"
-          class="modal-section-content"
-        ></div>
-
-      </div>
-
-
-      <div
-        id="materialsSection"
-        class="modal-section"
-        style="display:none;"
-      >
-
-        <div class="modal-divider"></div>
-
-        <div class="modal-section-title">
-          🧰 Materials / Tools
-        </div>
-
-        <div
-          id="modalMaterials"
-          class="modal-section-content"
-        ></div>
-
-      </div>
-
-
-      <div
-        id="instructionsSection"
-        class="modal-section"
-        style="display:none;"
-      >
-
-        <div class="modal-divider"></div>
-
-        <div class="modal-section-title">
-          📋 Instructions
-        </div>
-
-        <div
-          id="modalInstructions"
-          class="modal-section-content"
-        ></div>
-
-      </div>
+        id="modalContent"
+        class="modal-content"
+      ></div>
 
     </div>
 
@@ -593,9 +442,9 @@
 
 <script>
 
-/* =========================================================
+/* =========================
    GOOGLE SHEET
-========================================================== */
+========================== */
 
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?output=csv";
@@ -610,9 +459,9 @@ const DAYS = [
 ];
 
 
-/* =========================================================
-   LOAD DATA
-========================================================== */
+/* =========================
+   LOAD SHEET
+========================== */
 
 Papa.parse(SHEET_URL, {
 
@@ -622,13 +471,9 @@ Papa.parse(SHEET_URL, {
 
   skipEmptyLines: true,
 
-
   complete: function(results) {
-
     buildCalendar(results.data);
-
   },
-
 
   error: function(error) {
 
@@ -636,30 +481,40 @@ Papa.parse(SHEET_URL, {
       "<div class='loading'>Unable to load schedule.</div>";
 
     console.error(error);
-
   }
 
 });
 
 
-/* =========================================================
+/* =========================
    BUILD CALENDAR
-========================================================== */
+========================== */
 
 function buildCalendar(data) {
 
   const weeks = {};
-
   const popupData = {};
 
 
   data.forEach(row => {
 
     const week =
-      String(row["Week"] || "").trim();
+      String(row["WEEK"] || "").trim();
+
+    const date =
+      String(row["DATE"] || "").trim();
 
     const day =
-      String(row["Day"] || "").trim();
+      String(row["DAY"] || "").trim();
+
+    const buttonText =
+      String(row["BUTTON TEXT"] || "").trim();
+
+    const popupTitle =
+      String(row["POPUP TITLE (AGENDA)"] || "").trim();
+
+    const popupContent =
+      String(row["POPUP CONTENT"] || "").trim();
 
 
     if (!week || !day) {
@@ -672,14 +527,21 @@ function buildCalendar(data) {
     }
 
 
-    weeks[week][day] = row;
+    weeks[week][day] = {
+      week,
+      date,
+      day,
+      buttonText,
+      popupTitle,
+      popupContent
+    };
 
   });
 
 
   const weekNumbers =
     Object.keys(weeks)
-      .sort((a,b) => Number(a) - Number(b));
+      .sort((a, b) => Number(a) - Number(b));
 
 
   let html = `
@@ -694,25 +556,15 @@ function buildCalendar(data) {
             Week #
           </th>
 
-          <th>
-            Monday
-          </th>
+          <th>Monday</th>
 
-          <th>
-            Tuesday
-          </th>
+          <th>Tuesday</th>
 
-          <th>
-            Wednesday
-          </th>
+          <th>Wednesday</th>
 
-          <th>
-            Thursday
-          </th>
+          <th>Thursday</th>
 
-          <th>
-            Friday
-          </th>
+          <th>Friday</th>
 
         </tr>
 
@@ -761,170 +613,76 @@ function buildCalendar(data) {
       }
 
 
-      const date =
-        String(item["Date"] || "").trim();
-
-
-      const buttonText =
-        String(item["Button Text"] || "").trim();
-
-
-      const popupTitle =
-        String(
-          item["Popup Title"] ||
-          buttonText ||
-          date
-        ).trim();
-
-
-      const popupContent =
-        String(item["Popup Content"] || "").trim();
-
-
-      const objectives =
-        String(item["Objectives"] || "").trim();
-
-
-      const materials =
-        String(item["Materials"] || "").trim();
-
-
-      const instructions =
-        String(item["Instructions"] || "").trim();
-
-
-      const status =
-        String(item["Status"] || "Normal")
-          .trim()
+      const popupId =
+        `popup-${weekNumber}-${day}`
+          .replace(/\s+/g, "-")
           .toLowerCase();
 
 
-      /* CLOSED DAY */
+      popupData[popupId] = {
 
-      if (status === "closed") {
+        title:
+          item.popupTitle ||
+          "Today's Agenda",
 
-        html += `
+        date:
+          item.date,
 
-          <td>
+        content:
+          item.popupContent
 
-            <div class="date">
-              ${escapeHTML(date)}
-            </div>
-
-
-            <div class="closed-card">
-
-              <div class="closed-title">
-                CLOSED
-              </div>
-
-              <div class="closed-text">
-                ${escapeHTML(
-                  popupContent ||
-                  buttonText ||
-                  "No School"
-                )}
-              </div>
-
-            </div>
-
-          </td>
-
-        `;
-
-        return;
-
-      }
+      };
 
 
-      /* NORMAL ACTIVITY */
+      html += `
 
-      if (
-        buttonText ||
-        popupContent ||
-        objectives ||
-        materials ||
-        instructions
-      ) {
+        <td>
 
-        const popupId =
-          `popup-${weekNumber}-${day}`
-            .replace(/\s+/g, "-")
-            .toLowerCase();
+          <div class="date">
+            ${escapeHTML(item.date)}
+          </div>
+
+      `;
 
 
-        popupData[popupId] = {
-
-          title: popupTitle,
-
-          date: date,
-
-          content: popupContent,
-
-          objectives: objectives,
-
-          materials: materials,
-
-          instructions: instructions
-
-        };
-
+      if (item.buttonText) {
 
         html += `
 
-          <td>
+          <button
+            class="activity-button popup-trigger"
+            data-popup-id="${escapeHTML(popupId)}"
+          >
 
-            <div class="date">
-              ${escapeHTML(date)}
-            </div>
+            <span class="button-icon">
+              🔧
+            </span>
 
+            <span class="button-label">
+              ${escapeHTML(item.buttonText)}
+            </span>
 
-            <button
-              class="activity-button popup-trigger"
-              data-popup-id="${escapeHTML(popupId)}"
-            >
-
-              <span class="button-icon">
-                🔧
-              </span>
-
-              <span class="button-label">
-                ${escapeHTML(
-                  buttonText || "View Activity"
-                )}
-              </span>
-
-            </button>
-
-          </td>
+          </button>
 
         `;
 
       }
 
 
-      /* DATE ONLY */
+      html += `
 
-      else {
+        </td>
 
-        html += `
-
-          <td>
-
-            <div class="date">
-              ${escapeHTML(date)}
-            </div>
-
-          </td>
-
-        `;
-
-      }
+      `;
 
     });
 
 
-    html += "</tr>";
+    html += `
+
+      </tr>
+
+    `;
 
   });
 
@@ -942,6 +700,8 @@ function buildCalendar(data) {
     html;
 
 
+  /* CONNECT POPUPS */
+
   document
     .querySelectorAll(".popup-trigger")
     .forEach(button => {
@@ -955,9 +715,7 @@ function buildCalendar(data) {
 
 
           if (popup) {
-
             openModal(popup);
-
           }
 
         }
@@ -968,46 +726,22 @@ function buildCalendar(data) {
 }
 
 
-/* =========================================================
-   POPUP
-========================================================== */
+/* =========================
+   OPEN POPUP
+========================== */
 
 function openModal(data) {
 
   document.getElementById("modalTitle").textContent =
-    data.title || "Shop Activity";
+    data.title || "Today's Agenda";
 
 
   document.getElementById("modalDate").textContent =
     data.date || "";
 
 
-  setSection(
-    "mainContentSection",
-    "modalContent",
-    data.content
-  );
-
-
-  setSection(
-    "objectivesSection",
-    "modalObjectives",
-    data.objectives
-  );
-
-
-  setSection(
-    "materialsSection",
-    "modalMaterials",
-    data.materials
-  );
-
-
-  setSection(
-    "instructionsSection",
-    "modalInstructions",
-    data.instructions
-  );
+  document.getElementById("modalContent").textContent =
+    data.content || "No agenda has been posted yet.";
 
 
   document
@@ -1020,6 +754,10 @@ function openModal(data) {
 
 }
 
+
+/* =========================
+   CLOSE POPUP
+========================== */
 
 function closeModal() {
 
@@ -1034,42 +772,6 @@ function closeModal() {
 }
 
 
-function setSection(
-  sectionId,
-  contentId,
-  value
-) {
-
-  const section =
-    document.getElementById(sectionId);
-
-  const content =
-    document.getElementById(contentId);
-
-
-  if (value && value.trim()) {
-
-    section.style.display =
-      "block";
-
-    content.textContent =
-      value;
-
-  }
-
-  else {
-
-    section.style.display =
-      "none";
-
-    content.textContent =
-      "";
-
-  }
-
-}
-
-
 /* CLOSE BUTTON */
 
 document
@@ -1080,7 +782,7 @@ document
   );
 
 
-/* CLICK OUTSIDE POPUP */
+/* CLICK BACKGROUND */
 
 document
   .getElementById("modalOverlay")
@@ -1088,13 +790,8 @@ document
     "click",
     function(event) {
 
-      if (
-        event.target.id ===
-        "modalOverlay"
-      ) {
-
+      if (event.target.id === "modalOverlay") {
         closeModal();
-
       }
 
     }
@@ -1108,18 +805,16 @@ document.addEventListener(
   function(event) {
 
     if (event.key === "Escape") {
-
       closeModal();
-
     }
 
   }
 );
 
 
-/* =========================================================
-   ESCAPE TEXT
-========================================================== */
+/* =========================
+   SAFE TEXT
+========================== */
 
 function escapeHTML(value) {
 

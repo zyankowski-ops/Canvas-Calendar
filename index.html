@@ -141,8 +141,6 @@
 
 
 
-    /* HEADER ROW */
-
     .calendar thead th {
       background:
         linear-gradient(
@@ -166,8 +164,6 @@
     }
 
 
-
-    /* WEEK ROWS */
 
     .week-row td {
       height: 140px;
@@ -205,8 +201,6 @@
 
 
 
-    /* WEEK LABEL */
-
     .week-label {
       font-size: 19px;
 
@@ -216,8 +210,6 @@
     }
 
 
-
-    /* DATE */
 
     .date {
       font-size: 19px;
@@ -339,7 +331,7 @@
 
 
     /* =========================================================
-       STRONG TODAY HIGHLIGHT
+       TODAY HIGHLIGHT
     ========================================================== */
 
     .calendar td.today-cell {
@@ -636,8 +628,6 @@
 
 
 
-    /* POPUP HEADER */
-
     .modal-header {
       position: relative;
 
@@ -702,8 +692,6 @@
 
 
 
-    /* POPUP BODY */
-
     .modal-body {
       padding: 25px;
 
@@ -762,6 +750,39 @@
 
     .agenda-section-heading:not(:first-child) {
       margin-top: 24px;
+    }
+
+
+
+    /* =========================================================
+       BEFORE YOU LEAVE
+    ========================================================== */
+
+    .agenda-section-heading.before-you-leave {
+      color: #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #073b68,
+          #0b5798
+        );
+
+      border-left:
+        5px solid #ffc72c;
+
+      border-bottom:
+        3px solid #ffc72c;
+
+      padding:
+        9px 12px;
+
+      border-radius:
+        5px 9px 9px 5px;
+
+      box-shadow:
+        0 3px 8px
+        rgba(0,0,0,.16);
     }
 
 
@@ -916,8 +937,6 @@
 <div class="page-frame">
 
 
-  <!-- HEADER -->
-
   <header class="shop-header">
 
     <img
@@ -928,8 +947,6 @@
   </header>
 
 
-
-  <!-- CALENDAR -->
 
   <div class="calendar-shell">
 
@@ -1538,21 +1555,15 @@ function buildCalendar(data) {
             html += `
 
               <button
-
-                class="
-                  activity-button
-                  popup-trigger
-                "
-
-                data-popup-id="${escapeHTML(popupId)}"
-
+                class="activity-button popup-trigger"
+                data-popup-id="${escapeHTML(
+                  popupId
+                )}"
               >
 
 
                 <span class="button-icon">
-
                   🔧
-
                 </span>
 
 
@@ -1629,14 +1640,28 @@ function buildCalendar(data) {
 
 
               const popupId =
-  this.dataset.popupId.trim();
+                this.dataset
+                  .popupId
+                  .trim();
 
-const popup =
-  popupData[popupId];
 
-if (popup) {
-  openModal(popup);
-}
+              const popup =
+
+                popupData[
+                  popupId
+                ];
+
+
+
+              if (
+                popup
+              ) {
+
+                openModal(
+                  popup
+                );
+
+              }
 
 
             }
@@ -1870,13 +1895,6 @@ function appendFormattedText(
 ) {
 
 
-  /*
-    FORMAT:
-
-    [Visible Link Text](https://example.com)
-  */
-
-
   const linkPattern =
 
     /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
@@ -1900,8 +1918,6 @@ function appendFormattedText(
   ) {
 
 
-    /* NORMAL TEXT BEFORE LINK */
-
     if (
       match.index
       >
@@ -1922,8 +1938,6 @@ function appendFormattedText(
     }
 
 
-
-    /* LINK */
 
     const link =
       document
@@ -1965,8 +1979,6 @@ function appendFormattedText(
 
 
 
-  /* NORMAL TEXT AFTER LINK */
-
   if (
     lastIndex
     <
@@ -2005,12 +2017,6 @@ function isAgendaHeading(line) {
 
 
 
-  /*
-    Any line beginning with one
-    of these icons becomes
-    a section heading.
-  */
-
   if (
     /^(🔧|🎯|📋|📌|⚙️|🧰|📚|✅)/u
       .test(
@@ -2023,11 +2029,6 @@ function isAgendaHeading(line) {
   }
 
 
-
-  /*
-    Also recognize common
-    agenda heading wording.
-  */
 
   const normalized =
     value
@@ -2058,7 +2059,9 @@ function isAgendaHeading(line) {
 
     "TODAY'S AGENDA",
 
-    "TODAYS AGENDA"
+    "TODAYS AGENDA",
+
+    "BEFORE YOU LEAVE"
 
   ];
 
@@ -2159,10 +2162,6 @@ function openModal(data) {
 
 
 
-  /* =========================================================
-     SINGLE LINE
-  ========================================================== */
-
   if (
     agendaLines.length
     <= 1
@@ -2204,10 +2203,6 @@ function openModal(data) {
 
 
 
-  /* =========================================================
-     MULTIPLE LINES
-  ========================================================== */
-
   else {
 
 
@@ -2221,8 +2216,6 @@ function openModal(data) {
         line => {
 
 
-
-          /* REMOVE MANUAL BULLET */
 
           const cleanedLine =
 
@@ -2261,6 +2254,28 @@ function openModal(data) {
               "agenda-section-heading";
 
 
+            /* =============================================
+               SPECIAL BEFORE YOU LEAVE STYLE
+            ============================================== */
+
+            if (
+              cleanedLine
+                .trim()
+                .startsWith(
+                  "📌"
+                )
+            ) {
+
+              heading
+                .classList
+                .add(
+                  "before-you-leave"
+                );
+
+            }
+
+
+
             appendFormattedText(
               heading,
               cleanedLine
@@ -2280,7 +2295,7 @@ function openModal(data) {
 
 
           /* =============================================
-             CREATE LIST IF NEEDED
+             CREATE CHECKLIST
           ============================================== */
 
           if (

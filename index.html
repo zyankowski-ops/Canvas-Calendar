@@ -19,6 +19,7 @@
       --blue-row: #b9dcf4;
       --green-row: #c3efd3;
       --yellow: #ffc72c;
+      --danger: #d71920;
       --text: #0a1e31;
     }
 
@@ -35,9 +36,9 @@
       padding: 10px;
     }
 
-    /* =========================
+    /* =========================================================
        HEADER
-    ========================== */
+    ========================================================== */
 
     .shop-header {
       width: 100%;
@@ -52,9 +53,9 @@
       box-shadow: 0 6px 18px rgba(0,0,0,.22);
     }
 
-    /* =========================
+    /* =========================================================
        CALENDAR
-    ========================== */
+    ========================================================== */
 
     .calendar-shell {
       background: white;
@@ -98,6 +99,7 @@
       height: 175px;
       padding: 12px;
       vertical-align: middle;
+      position: relative;
     }
 
     .week-blue td {
@@ -130,9 +132,49 @@
       color: #071c2e;
     }
 
-    /* =========================
-       ACTIVITY BUTTONS
-    ========================== */
+    /* =========================================================
+       TODAY HIGHLIGHT
+    ========================================================== */
+
+    .calendar td.today-cell {
+      background:
+        linear-gradient(
+          135deg,
+          #fff7b8,
+          #ffe067
+        ) !important;
+
+      box-shadow:
+        inset 0 0 0 5px var(--yellow),
+        inset 0 0 22px rgba(255,199,44,.45);
+    }
+
+    .today-badge {
+      position: absolute;
+
+      top: 8px;
+      right: 8px;
+
+      background: var(--yellow);
+      color: #102235;
+
+      border: 2px solid #9b7200;
+      border-radius: 20px;
+
+      padding: 4px 9px;
+
+      font-size: 12px;
+      font-weight: 900;
+
+      letter-spacing: .5px;
+
+      box-shadow:
+        0 2px 5px rgba(0,0,0,.18);
+    }
+
+    /* =========================================================
+       ACTIVITY BUTTON
+    ========================================================== */
 
     .activity-button {
       width: 92%;
@@ -152,8 +194,10 @@
         );
 
       color: white;
+
       font-size: 18px;
       font-weight: 800;
+
       cursor: pointer;
 
       box-shadow:
@@ -204,9 +248,62 @@
       line-height: 1.2;
     }
 
-    /* =========================
+    /* =========================================================
+       CLOSED DAY
+    ========================================================== */
+
+    .closed-card {
+      width: 92%;
+      max-width: 245px;
+
+      margin: 0 auto;
+
+      background: white;
+
+      border: 3px solid var(--danger);
+      border-radius: 12px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 5px 12px rgba(0,0,0,.18);
+    }
+
+    .closed-heading {
+      background:
+        linear-gradient(
+          to bottom,
+          #ef3038,
+          #c81018
+        );
+
+      color: white;
+
+      font-size: 23px;
+      font-weight: 900;
+
+      padding: 7px;
+
+      letter-spacing: .5px;
+    }
+
+    .closed-content {
+      color: var(--danger);
+
+      font-size: 16px;
+      line-height: 1.3;
+
+      font-weight: 800;
+      font-style: italic;
+
+      padding: 10px;
+
+      white-space: pre-wrap;
+    }
+
+    /* =========================================================
        LOADING / ERROR
-    ========================== */
+    ========================================================== */
 
     .loading {
       padding: 50px;
@@ -224,12 +321,13 @@
       background: #fff0f0;
     }
 
-    /* =========================
+    /* =========================================================
        POPUP
-    ========================== */
+    ========================================================== */
 
     .modal-overlay {
       display: none;
+
       position: fixed;
       inset: 0;
 
@@ -345,9 +443,9 @@
       color: #1c2c3a;
     }
 
-    /* =========================
+    /* =========================================================
        MOBILE
-    ========================== */
+    ========================================================== */
 
     @media (max-width: 950px) {
 
@@ -371,6 +469,7 @@
 
   </style>
 </head>
+
 
 <body>
 
@@ -461,11 +560,10 @@ const BASE_SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv";
 
 
-/*
-  Prevents the browser from hanging onto stale Sheet data.
-*/
 const SHEET_URL =
-  BASE_SHEET_URL + "&cb=" + Date.now();
+  BASE_SHEET_URL +
+  "&cb=" +
+  Date.now();
 
 
 const DAYS = [
@@ -478,7 +576,7 @@ const DAYS = [
 
 
 /* =========================================================
-   CLEAN HEADER NAMES
+   HEADERS
 ========================================================= */
 
 function normalizeHeader(header) {
@@ -512,11 +610,6 @@ Papa.parse(SHEET_URL, {
 
 
   complete: function(results) {
-
-    console.log(
-      "Google Sheet Data:",
-      results.data
-    );
 
     buildCalendar(
       results.data
@@ -620,17 +713,12 @@ function buildCalendar(data) {
 
     weeks[week][normalizedDay] = {
 
-      week: week,
-
-      date: date,
-
+      week,
+      date,
       day: normalizedDay,
-
-      buttonText: buttonText,
-
-      popupTitle: popupTitle,
-
-      popupContent: popupContent
+      buttonText,
+      popupTitle,
+      popupContent
 
     };
 
@@ -640,7 +728,7 @@ function buildCalendar(data) {
   const weekNumbers =
     Object.keys(weeks)
       .sort(
-        (a, b) =>
+        (a,b) =>
           Number(a) - Number(b)
       );
 
@@ -652,10 +740,8 @@ function buildCalendar(data) {
       .innerHTML = `
 
         <div class="error-box">
-
           The Google Sheet loaded,
           but no schedule rows were found.
-
         </div>
 
       `;
@@ -677,25 +763,15 @@ function buildCalendar(data) {
             Week #
           </th>
 
-          <th>
-            Monday
-          </th>
+          <th>Monday</th>
 
-          <th>
-            Tuesday
-          </th>
+          <th>Tuesday</th>
 
-          <th>
-            Wednesday
-          </th>
+          <th>Wednesday</th>
 
-          <th>
-            Thursday
-          </th>
+          <th>Thursday</th>
 
-          <th>
-            Friday
-          </th>
+          <th>Friday</th>
 
         </tr>
 
@@ -722,9 +798,7 @@ function buildCalendar(data) {
           <td>
 
             <div class="week-label">
-
               Week ${escapeHTML(weekNumber)}
-
             </div>
 
           </td>
@@ -746,6 +820,89 @@ function buildCalendar(data) {
 
         }
 
+
+        const isToday =
+          dateIsToday(item.date);
+
+
+        const todayClass =
+          isToday
+            ? "today-cell"
+            : "";
+
+
+        html += `
+
+          <td class="${todayClass}">
+
+        `;
+
+
+        if (isToday) {
+
+          html += `
+
+            <div class="today-badge">
+              TODAY
+            </div>
+
+          `;
+
+        }
+
+
+        html += `
+
+            <div class="date">
+              ${escapeHTML(item.date)}
+            </div>
+
+        `;
+
+
+        /* =========================
+           CLOSED DAY
+        ========================== */
+
+        if (
+          item.buttonText
+            .trim()
+            .toUpperCase() ===
+          "CLOSED"
+        ) {
+
+          html += `
+
+            <div class="closed-card">
+
+              <div class="closed-heading">
+                CLOSED
+              </div>
+
+              <div class="closed-content">
+
+                ${escapeHTML(
+                  item.popupContent ||
+                  "No School"
+                )}
+
+              </div>
+
+            </div>
+
+          `;
+
+
+          html += "</td>";
+
+          return;
+
+        }
+
+
+        /* =========================
+           NORMAL DAY
+        ========================== */
 
         const popupId =
           `popup-${weekNumber}-${day}`
@@ -769,19 +926,6 @@ function buildCalendar(data) {
         };
 
 
-        html += `
-
-          <td>
-
-            <div class="date">
-
-              ${escapeHTML(item.date)}
-
-            </div>
-
-        `;
-
-
         if (item.buttonText) {
 
           html += `
@@ -792,16 +936,11 @@ function buildCalendar(data) {
             >
 
               <span class="button-icon">
-
                 🔧
-
               </span>
 
-
               <span class="button-label">
-
                 ${escapeHTML(item.buttonText)}
-
               </span>
 
             </button>
@@ -811,20 +950,12 @@ function buildCalendar(data) {
         }
 
 
-        html += `
-
-          </td>
-
-        `;
+        html += "</td>";
 
       });
 
 
-      html += `
-
-        </tr>
-
-      `;
+      html += "</tr>";
 
     }
   );
@@ -844,7 +975,7 @@ function buildCalendar(data) {
     .innerHTML = html;
 
 
-  /* CONNECT BUTTONS TO POPUPS */
+  /* CONNECT POPUPS */
 
   document
     .querySelectorAll(".popup-trigger")
@@ -875,7 +1006,59 @@ function buildCalendar(data) {
 
 
 /* =========================================================
-   CLEAN DAY NAMES
+   TODAY CHECK
+========================================================= */
+
+function dateIsToday(dateString) {
+
+  if (!dateString) {
+    return false;
+  }
+
+
+  const parts =
+    String(dateString)
+      .trim()
+      .split("/");
+
+
+  if (parts.length !== 3) {
+    return false;
+  }
+
+
+  const month =
+    Number(parts[0]);
+
+  const day =
+    Number(parts[1]);
+
+  let year =
+    Number(parts[2]);
+
+
+  if (year < 100) {
+
+    year += 2000;
+
+  }
+
+
+  const today =
+    new Date();
+
+
+  return (
+    today.getFullYear() === year &&
+    today.getMonth() + 1 === month &&
+    today.getDate() === day
+  );
+
+}
+
+
+/* =========================================================
+   DAY NAMES
 ========================================================= */
 
 function normalizeDay(day) {
@@ -945,7 +1128,7 @@ function normalizeDay(day) {
 
 
 /* =========================================================
-   OPEN POPUP
+   POPUP
 ========================================================= */
 
 function openModal(data) {
@@ -985,10 +1168,6 @@ function openModal(data) {
 }
 
 
-/* =========================================================
-   CLOSE POPUP
-========================================================= */
-
 function closeModal() {
 
   document
@@ -1002,8 +1181,6 @@ function closeModal() {
 }
 
 
-/* X BUTTON */
-
 document
   .getElementById("modalClose")
   .addEventListener(
@@ -1011,8 +1188,6 @@ document
     closeModal
   );
 
-
-/* CLICK OUTSIDE POPUP */
 
 document
   .getElementById("modalOverlay")
@@ -1032,8 +1207,6 @@ document
     }
   );
 
-
-/* ESCAPE KEY */
 
 document.addEventListener(
   "keydown",

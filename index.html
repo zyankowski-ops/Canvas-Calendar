@@ -1628,25 +1628,15 @@ function buildCalendar(data) {
             function() {
 
 
-              const popup =
+              const popupId =
+  this.dataset.popupId.trim();
 
-                popupData[
-                  this
-                    .dataset
-                    .popupId
-                ];
+const popup =
+  popupData[popupId];
 
-
-
-              if (
-                popup
-              ) {
-
-                openModal(
-                  popup
-                );
-
-              }
+if (popup) {
+  openModal(popup);
+}
 
 
             }

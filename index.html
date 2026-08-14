@@ -19,7 +19,7 @@
       --blue-row: #b9dcf4;
       --green-row: #c3efd3;
       --yellow: #ffc72c;
-      --danger: #d71920;
+      --danger: #c91920;
       --text: #0a1e31;
     }
 
@@ -36,9 +36,9 @@
       padding: 10px;
     }
 
-    /* =========================================================
+    /* =========================
        HEADER
-    ========================================================== */
+    ========================== */
 
     .shop-header {
       width: 100%;
@@ -53,9 +53,9 @@
       box-shadow: 0 6px 18px rgba(0,0,0,.22);
     }
 
-    /* =========================================================
+    /* =========================
        CALENDAR
-    ========================================================== */
+    ========================== */
 
     .calendar-shell {
       background: white;
@@ -132,9 +132,9 @@
       color: #071c2e;
     }
 
-    /* =========================================================
-       TODAY HIGHLIGHT
-    ========================================================== */
+    /* =========================
+       TODAY
+    ========================== */
 
     .calendar td.today-cell {
       background:
@@ -151,7 +151,6 @@
 
     .today-badge {
       position: absolute;
-
       top: 8px;
       right: 8px;
 
@@ -172,9 +171,9 @@
         0 2px 5px rgba(0,0,0,.18);
     }
 
-    /* =========================================================
+    /* =========================
        ACTIVITY BUTTON
-    ========================================================== */
+    ========================== */
 
     .activity-button {
       width: 92%;
@@ -248,62 +247,100 @@
       line-height: 1.2;
     }
 
-    /* =========================================================
-       CLOSED DAY
-    ========================================================== */
+    /* =========================
+       HANGING CLOSED SIGN
+    ========================== */
 
-    .closed-card {
-      width: 92%;
-      max-width: 245px;
-
-      margin: 0 auto;
-
-      background: white;
-
-      border: 3px solid var(--danger);
-      border-radius: 12px;
-
-      overflow: hidden;
-
-      box-shadow:
-        0 5px 12px rgba(0,0,0,.18);
+    .closed-sign-wrap {
+      width: 150px;
+      margin: 4px auto 0;
+      position: relative;
+      padding-top: 28px;
     }
 
-    .closed-heading {
+    .closed-sign-wrap::before,
+    .closed-sign-wrap::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      width: 2px;
+      height: 34px;
+      background: #394957;
+    }
+
+    .closed-sign-wrap::before {
+      left: 40px;
+      transform: rotate(27deg);
+    }
+
+    .closed-sign-wrap::after {
+      right: 40px;
+      transform: rotate(-27deg);
+    }
+
+    .closed-sign-hook {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      transform: translateX(-50%);
+      background: #394957;
+      border-radius: 50%;
+    }
+
+    .closed-sign {
       background:
         linear-gradient(
           to bottom,
-          #ef3038,
-          #c81018
+          #ffffff,
+          #edf1f4
+        );
+
+      border: 4px solid #132b3d;
+      border-radius: 7px;
+
+      box-shadow:
+        0 5px 10px rgba(0,0,0,.22);
+
+      overflow: hidden;
+    }
+
+    .closed-sign-title {
+      background:
+        linear-gradient(
+          to bottom,
+          #e42b31,
+          #b90910
         );
 
       color: white;
 
-      font-size: 23px;
+      font-size: 22px;
       font-weight: 900;
+      letter-spacing: 1px;
 
-      padding: 7px;
+      padding: 6px 4px;
 
-      letter-spacing: .5px;
+      text-shadow:
+        0 2px 2px rgba(0,0,0,.25);
     }
 
-    .closed-content {
-      color: var(--danger);
+    .closed-sign-note {
+      padding: 7px 6px 8px;
 
-      font-size: 16px;
-      line-height: 1.3;
+      color: #253645;
 
+      font-size: 14px;
+      line-height: 1.2;
       font-weight: 800;
-      font-style: italic;
-
-      padding: 10px;
 
       white-space: pre-wrap;
     }
 
-    /* =========================================================
+    /* =========================
        LOADING / ERROR
-    ========================================================== */
+    ========================== */
 
     .loading {
       padding: 50px;
@@ -321,13 +358,12 @@
       background: #fff0f0;
     }
 
-    /* =========================================================
+    /* =========================
        POPUP
-    ========================================================== */
+    ========================== */
 
     .modal-overlay {
       display: none;
-
       position: fixed;
       inset: 0;
 
@@ -443,9 +479,9 @@
       color: #1c2c3a;
     }
 
-    /* =========================================================
+    /* =========================
        MOBILE
-    ========================================================== */
+    ========================== */
 
     @media (max-width: 950px) {
 
@@ -465,6 +501,7 @@
       .calendar {
         min-width: 900px;
       }
+
     }
 
   </style>
@@ -475,8 +512,6 @@
 
 <div class="site-shell">
 
-  <!-- HEADER -->
-
   <header class="shop-header">
 
     <img
@@ -486,8 +521,6 @@
 
   </header>
 
-
-  <!-- CALENDAR -->
 
   <div class="calendar-shell">
 
@@ -503,8 +536,6 @@
 
 </div>
 
-
-<!-- POPUP -->
 
 <div
   id="modalOverlay"
@@ -552,18 +583,12 @@
 
 <script>
 
-/* =========================================================
+/* =========================
    GOOGLE SHEET
-========================================================= */
-
-const BASE_SHEET_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv";
-
+========================== */
 
 const SHEET_URL =
-  BASE_SHEET_URL +
-  "&cb=" +
-  Date.now();
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv";
 
 
 const DAYS = [
@@ -575,9 +600,9 @@ const DAYS = [
 ];
 
 
-/* =========================================================
-   HEADERS
-========================================================= */
+/* =========================
+   HEADER CLEANUP
+========================== */
 
 function normalizeHeader(header) {
 
@@ -589,9 +614,9 @@ function normalizeHeader(header) {
 }
 
 
-/* =========================================================
-   LOAD GOOGLE SHEET
-========================================================= */
+/* =========================
+   LOAD SHEET
+========================== */
 
 Papa.parse(SHEET_URL, {
 
@@ -601,22 +626,13 @@ Papa.parse(SHEET_URL, {
 
   skipEmptyLines: true,
 
-
   transformHeader: function(header) {
-
     return normalizeHeader(header);
-
   },
-
 
   complete: function(results) {
-
-    buildCalendar(
-      results.data
-    );
-
+    buildCalendar(results.data);
   },
-
 
   error: function(error) {
 
@@ -625,7 +641,6 @@ Papa.parse(SHEET_URL, {
     document
       .getElementById("calendarArea")
       .innerHTML =
-
       "<div class='error-box'>Unable to load the Google Sheet.</div>";
 
   }
@@ -633,14 +648,13 @@ Papa.parse(SHEET_URL, {
 });
 
 
-/* =========================================================
+/* =========================
    BUILD CALENDAR
-========================================================= */
+========================== */
 
 function buildCalendar(data) {
 
   const weeks = {};
-
   const popupData = {};
 
 
@@ -705,21 +719,17 @@ function buildCalendar(data) {
 
 
     if (!weeks[week]) {
-
       weeks[week] = {};
-
     }
 
 
     weeks[week][normalizedDay] = {
-
       week,
       date,
       day: normalizedDay,
       buttonText,
       popupTitle,
       popupContent
-
     };
 
   });
@@ -728,7 +738,7 @@ function buildCalendar(data) {
   const weekNumbers =
     Object.keys(weeks)
       .sort(
-        (a,b) =>
+        (a, b) =>
           Number(a) - Number(b)
       );
 
@@ -764,13 +774,9 @@ function buildCalendar(data) {
           </th>
 
           <th>Monday</th>
-
           <th>Tuesday</th>
-
           <th>Wednesday</th>
-
           <th>Thursday</th>
-
           <th>Friday</th>
 
         </tr>
@@ -825,15 +831,9 @@ function buildCalendar(data) {
           dateIsToday(item.date);
 
 
-        const todayClass =
-          isToday
-            ? "today-cell"
-            : "";
-
-
         html += `
 
-          <td class="${todayClass}">
+          <td class="${isToday ? "today-cell" : ""}">
 
         `;
 
@@ -860,9 +860,7 @@ function buildCalendar(data) {
         `;
 
 
-        /* =========================
-           CLOSED DAY
-        ========================== */
+        /* CLOSED DAY */
 
         if (
           item.buttonText
@@ -873,18 +871,22 @@ function buildCalendar(data) {
 
           html += `
 
-            <div class="closed-card">
+            <div class="closed-sign-wrap">
 
-              <div class="closed-heading">
-                CLOSED
-              </div>
+              <div class="closed-sign-hook"></div>
 
-              <div class="closed-content">
+              <div class="closed-sign">
 
-                ${escapeHTML(
-                  item.popupContent ||
-                  "No School"
-                )}
+                <div class="closed-sign-title">
+                  CLOSED
+                </div>
+
+                <div class="closed-sign-note">
+                  ${escapeHTML(
+                    item.popupContent ||
+                    "No School"
+                  )}
+                </div>
 
               </div>
 
@@ -900,9 +902,7 @@ function buildCalendar(data) {
         }
 
 
-        /* =========================
-           NORMAL DAY
-        ========================== */
+        /* NORMAL DAY */
 
         const popupId =
           `popup-${weekNumber}-${day}`
@@ -975,8 +975,6 @@ function buildCalendar(data) {
     .innerHTML = html;
 
 
-  /* CONNECT POPUPS */
-
   document
     .querySelectorAll(".popup-trigger")
     .forEach(button => {
@@ -992,9 +990,7 @@ function buildCalendar(data) {
 
 
           if (popup) {
-
             openModal(popup);
-
           }
 
         }
@@ -1005,9 +1001,9 @@ function buildCalendar(data) {
 }
 
 
-/* =========================================================
+/* =========================
    TODAY CHECK
-========================================================= */
+========================== */
 
 function dateIsToday(dateString) {
 
@@ -1038,9 +1034,7 @@ function dateIsToday(dateString) {
 
 
   if (year < 100) {
-
     year += 2000;
-
   }
 
 
@@ -1057,9 +1051,9 @@ function dateIsToday(dateString) {
 }
 
 
-/* =========================================================
+/* =========================
    DAY NAMES
-========================================================= */
+========================== */
 
 function normalizeDay(day) {
 
@@ -1073,9 +1067,7 @@ function normalizeDay(day) {
     value === "monday" ||
     value === "mon"
   ) {
-
     return "Monday";
-
   }
 
 
@@ -1084,9 +1076,7 @@ function normalizeDay(day) {
     value === "tue" ||
     value === "tues"
   ) {
-
     return "Tuesday";
-
   }
 
 
@@ -1094,9 +1084,7 @@ function normalizeDay(day) {
     value === "wednesday" ||
     value === "wed"
   ) {
-
     return "Wednesday";
-
   }
 
 
@@ -1106,9 +1094,7 @@ function normalizeDay(day) {
     value === "thur" ||
     value === "thurs"
   ) {
-
     return "Thursday";
-
   }
 
 
@@ -1116,9 +1102,7 @@ function normalizeDay(day) {
     value === "friday" ||
     value === "fri"
   ) {
-
     return "Friday";
-
   }
 
 
@@ -1127,16 +1111,15 @@ function normalizeDay(day) {
 }
 
 
-/* =========================================================
+/* =========================
    POPUP
-========================================================= */
+========================== */
 
 function openModal(data) {
 
   document
     .getElementById("modalTitle")
     .textContent =
-
     data.title ||
     "Today's Agenda";
 
@@ -1144,7 +1127,6 @@ function openModal(data) {
   document
     .getElementById("modalDate")
     .textContent =
-
     data.date ||
     "";
 
@@ -1152,7 +1134,6 @@ function openModal(data) {
   document
     .getElementById("modalContent")
     .textContent =
-
     data.content ||
     "No agenda has been posted yet.";
 
@@ -1199,9 +1180,7 @@ document
         event.target.id ===
         "modalOverlay"
       ) {
-
         closeModal();
-
       }
 
     }
@@ -1215,18 +1194,16 @@ document.addEventListener(
     if (
       event.key === "Escape"
     ) {
-
       closeModal();
-
     }
 
   }
 );
 
 
-/* =========================================================
+/* =========================
    SAFE TEXT
-========================================================= */
+========================== */
 
 function escapeHTML(value) {
 

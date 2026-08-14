@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MP1 Classwork Calendar</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 18px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: white;
+      color: #000;
+    }
+
+    .page-title {
+      font-size: 38px;
+      font-weight: 300;
+      color: #555;
+      margin: 0 0 32px 0;
+    }
+
+    .calendar-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .hero {
+      background: #2f5d78;
+      min-height: 242px;
+      display: grid;
+      grid-template-columns: 180px 1fr 180px;
+      align-items: center;
+      padding: 16px 36px;
+      margin: 0 14px 60px 14px;
+    }
+
+    .back-button {
+      font-size: 74px;
+      color: #ff6980;
+      text-decoration: none;
+      text-align: center;
+      filter: drop-shadow(1px 1px 0 #1e3240);
+      transform: translateY(-2px);
+    }
+
+    .hero-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .engine-icon {
+      font-size: 65px;
+    }
+
+    .hero-title {
+      font-size: 58px;
+      font-weight: 700;
+      color: white;
+      margin: 0;
+      text-shadow:
+        -2px -2px 0 #1d4660,
+        2px -2px 0 #1d4660,
+        -2px 2px 0 #1d4660,
+        2px 2px 0 #1d4660;
+    }
+
+    .safe-area {
+      text-align: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .safe-hand {
+      font-size: 70px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .safe-text {
+      font-size: 18px;
+      text-decoration: underline;
+    }
+
+    /* CALENDAR */
+    .calendar {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      border: 1px solid #333;
+    }
+
+    .calendar th,
+    .calendar td {
+      border: 1px solid #333;
+      text-align: center;
+    }
+
+    .calendar th {
+      background: #fff0b7;
+      font-size: 18px;
+      padding: 10px 6px;
+      height: 44px;
+    }
+
+    .week-column {
+      width: 125px;
+    }
+
+    .week-row td {
+      height: 170px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .week1 td {
+      background: #b9d8ed;
+    }
+
+    .week2 td {
+      background: #b9e8ce;
+    }
+
+    .separator td {
+      height: 18px;
+      background: #fff0b7;
+      padding: 0;
+    }
+
+    .date {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .calendar-button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    .calendar-button:hover {
+      background: rgba(255, 255, 255, 0.38);
+    }
+
+    .closed {
+      color: #ff0066;
+      font-size: 17px;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    /* MODAL / POPUP */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: 24px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(720px, 95vw);
+      max-height: 85vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      position: relative;
+      padding: 32px;
+      text-align: left;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      border: none;
+      background: none;
+      font-size: 34px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      padding-right: 40px;
+      color: #2f5d78;
+    }
+
+    .modal p {
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 850px) {
+      body {
+        padding: 10px;
+      }
+
+      .page-title {
+        font-size: 30px;
+      }
+
+      .hero {
+        grid-template-columns: 80px 1fr 80px;
+        padding: 14px;
+        min-height: 170px;
+      }
+
+      .hero-title {
+        font-size: 36px;
+      }
+
+      .engine-icon {
+        font-size: 42px;
+      }
+
+      .back-button {
+        font-size: 50px;
+      }
+
+      .safe-hand {
+        font-size: 44px;
+      }
+
+      .safe-text {
+        font-size: 12px;
+      }
+
+      .week-row td {
+        height: 125px;
+        font-size: 15px;
+      }
+
+      .date {
+        font-size: 16px;
+      }
+
+      .calendar th {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="calendar-wrapper">
+
+  <h1 class="page-title">MP1 Classwork</h1>
+
+  <div class="hero">
+
+    <a href="#" class="back-button">↩</a>
+
+    <div class="hero-center">
+      <div class="engine-icon">⚙️</div>
+      <h2 class="hero-title">MP1 Classwork</h2>
+    </div>
+
+    <div class="safe-area">
+      <div class="safe-hand">✌️</div>
+      <div class="safe-text">SAFE 2 SAY ➡</div>
+    </div>
+
+  </div>
+
+  <table class="calendar">
+
+    <thead>
+      <tr>
+        <th class="week-column">Week #</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr class="week-row week1">
+        <td>Week 1</td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('8/24/26','Auto Tech Content')">
+            <div class="date">8/24/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('8/25/26','Auto Tech Content')">
+            <div class="date">8/25/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('8/26/26','Auto Tech Content')">
+            <div class="date">8/26/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('8/27/26','Auto Tech Content')">
+            <div class="date">8/27/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('8/28/26','Auto Tech Content')">
+            <div class="date">8/28/26</div>
+            Test
+          </button>
+        </td>
+      </tr>
+
+      <tr class="separator">
+        <td colspan="6"></td>
+      </tr>
+
+      <tr class="week-row week2">
+        <td>Week 2</td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('8/31/26','Auto Tech Content')">
+            <div class="date">8/31/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('9/1/26','Auto Tech Content')">
+            <div class="date">9/1/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('9/2/26','Auto Tech Content')">
+            <div class="date">9/2/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <button
+            class="calendar-button"
+            onclick="openModal('9/3/26','Auto Tech Content')">
+            <div class="date">9/3/26</div>
+            Test
+          </button>
+        </td>
+
+        <td>
+          <div class="date">9/4/26</div>
+
+          <div class="closed">
+            Labor Day School<br>
+            Closed
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+
+<!-- POPUP -->
+<div
+  id="modalOverlay"
+  class="modal-overlay"
+  onclick="closeModalFromOverlay(event)">
+
+  <div class="modal">
+
+    <button
+      class="modal-close"
+      onclick="closeModal()">
+      ×
+    </button>
+
+    <h2 id="modalTitle"></h2>
+
+    <p id="modalContent"></p>
+
+  </div>
+</div>
+
+
+<script>
+
+  function openModal(title, content) {
+
+    document.getElementById("modalTitle").textContent = title;
+
+    document.getElementById("modalContent").textContent = content;
+
+    document.getElementById("modalOverlay").classList.add("open");
+
+    document.body.style.overflow = "hidden";
+  }
+
+
+  function closeModal() {
+
+    document.getElementById("modalOverlay").classList.remove("open");
+
+    document.body.style.overflow = "";
+  }
+
+
+  function closeModalFromOverlay(event) {
+
+    if (event.target.id === "modalOverlay") {
+      closeModal();
+    }
+  }
+
+
+  document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+      closeModal();
+    }
+
+  });
+
+</script>
+
+</body>
+</html>

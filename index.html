@@ -35,10 +35,6 @@
       padding: 10px;
     }
 
-    /* =========================
-       HEADER
-    ========================== */
-
     .shop-header {
       width: 100%;
       margin: 0 0 14px 0;
@@ -51,10 +47,6 @@
       border-radius: 18px;
       box-shadow: 0 6px 18px rgba(0,0,0,.22);
     }
-
-    /* =========================
-       CALENDAR
-    ========================== */
 
     .calendar-shell {
       background: white;
@@ -130,10 +122,6 @@
       color: #071c2e;
     }
 
-    /* =========================
-       ACTIVITY BUTTON
-    ========================== */
-
     .activity-button {
       width: 92%;
       max-width: 245px;
@@ -152,10 +140,8 @@
         );
 
       color: white;
-
       font-size: 18px;
       font-weight: 800;
-
       cursor: pointer;
 
       box-shadow:
@@ -213,22 +199,23 @@
       font-weight: 700;
     }
 
-    /* =========================
-       POPUP
-    ========================== */
+    .error-box {
+      padding: 30px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #9f1d1d;
+      background: #fff0f0;
+    }
 
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-
       background: rgba(0,0,0,.7);
-
       z-index: 999999;
-
       align-items: center;
       justify-content: center;
-
       padding: 25px;
     }
 
@@ -239,17 +226,11 @@
     .modal {
       width: min(760px, 95vw);
       max-height: 88vh;
-
       overflow: hidden;
-
       border-radius: 18px;
       background: white;
-
       border: 3px solid #d5dde4;
-
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.5);
-
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
       animation: popupIn .18s ease-out;
     }
 
@@ -274,11 +255,8 @@
         );
 
       color: white;
-
       padding: 22px 65px 20px 26px;
-
       position: relative;
-
       border-bottom: 5px solid var(--yellow);
     }
 
@@ -300,15 +278,11 @@
       position: absolute;
       right: 18px;
       top: 11px;
-
       border: none;
       background: transparent;
-
       color: white;
-
       font-size: 40px;
       font-weight: 700;
-
       cursor: pointer;
     }
 
@@ -332,12 +306,7 @@
       color: #1c2c3a;
     }
 
-    /* =========================
-       MOBILE
-    ========================== */
-
     @media (max-width: 950px) {
-
       .site-shell {
         padding: 5px;
       }
@@ -355,16 +324,12 @@
         min-width: 900px;
       }
     }
-
   </style>
 </head>
-
 
 <body>
 
 <div class="site-shell">
-
-  <!-- HEADER -->
 
   <header class="shop-header">
     <img
@@ -373,30 +338,17 @@
     >
   </header>
 
-
-  <!-- CALENDAR -->
-
   <div class="calendar-shell">
-
     <div id="calendarArea">
-
       <div class="loading">
         Loading shop schedule...
       </div>
-
     </div>
-
   </div>
 
 </div>
 
-
-<!-- POPUP -->
-
-<div
-  id="modalOverlay"
-  class="modal-overlay"
->
+<div id="modalOverlay" class="modal-overlay">
 
   <div class="modal">
 
@@ -439,15 +391,21 @@
 
 </div>
 
-
 <script>
 
-/* =========================
-   GOOGLE SHEET
-========================== */
+/* =========================================================
+   GOOGLE SHEET FEED
+========================================================= */
 
+const BASE_SHEET_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv";
+
+/*
+  Cache-buster:
+  forces the browser to request a fresh copy of the published sheet.
+*/
 const SHEET_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?output=csv";
+  BASE_SHEET_URL + "&cb=" + Date.now();
 
 
 const DAYS = [
@@ -459,9 +417,23 @@ const DAYS = [
 ];
 
 
-/* =========================
+/* =========================================================
+   NORMALIZE HEADER NAMES
+========================================================= */
+
+function normalizeHeader(header) {
+
+  return String(header || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, " ");
+
+}
+
+
+/* =========================================================
    LOAD SHEET
-========================== */
+========================================================= */
 
 Papa.parse(SHEET_URL, {
 
@@ -471,24 +443,33 @@ Papa.parse(SHEET_URL, {
 
   skipEmptyLines: true,
 
+  transformHeader: function(header) {
+    return normalizeHeader(header);
+  },
+
   complete: function(results) {
+
+    console.log("RAW SHEET DATA:", results.data);
+
     buildCalendar(results.data);
+
   },
 
   error: function(error) {
 
-    document.getElementById("calendarArea").innerHTML =
-      "<div class='loading'>Unable to load schedule.</div>";
-
     console.error(error);
+
+    document.getElementById("calendarArea").innerHTML =
+      "<div class='error-box'>Unable to load the Google Sheet.</div>";
+
   }
 
 });
 
 
-/* =========================
+/* =========================================================
    BUILD CALENDAR
-========================== */
+========================================================= */
 
 function buildCalendar(data) {
 
@@ -499,25 +480,59 @@ function buildCalendar(data) {
   data.forEach(row => {
 
     const week =
-      String(row["WEEK"] || "").trim();
+      String(
+        row["WEEK"] ||
+        row["WEEK #"] ||
+        ""
+      ).trim();
+
 
     const date =
-      String(row["DATE"] || "").trim();
+      String(
+        row["DATE"] ||
+        ""
+      ).trim();
+
 
     const day =
-      String(row["DAY"] || "").trim();
+      String(
+        row["DAY"] ||
+        ""
+      ).trim();
+
 
     const buttonText =
-      String(row["BUTTON TEXT"] || "").trim();
+      String(
+        row["BUTTON TEXT"] ||
+        ""
+      ).trim();
+
 
     const popupTitle =
-      String(row["POPUP TITLE (AGENDA)"] || "").trim();
+      String(
+        row["POPUP TITLE (AGENDA)"] ||
+        row["POPUP TITLE"] ||
+        ""
+      ).trim();
+
 
     const popupContent =
-      String(row["POPUP CONTENT"] || "").trim();
+      String(
+        row["POPUP CONTENT"] ||
+        ""
+      ).trim();
 
 
     if (!week || !day) {
+      return;
+    }
+
+
+    const normalizedDay =
+      normalizeDay(day);
+
+
+    if (!normalizedDay) {
       return;
     }
 
@@ -527,13 +542,13 @@ function buildCalendar(data) {
     }
 
 
-    weeks[week][day] = {
-      week,
-      date,
-      day,
-      buttonText,
-      popupTitle,
-      popupContent
+    weeks[week][normalizedDay] = {
+      week: week,
+      date: date,
+      day: normalizedDay,
+      buttonText: buttonText,
+      popupTitle: popupTitle,
+      popupContent: popupContent
     };
 
   });
@@ -542,6 +557,20 @@ function buildCalendar(data) {
   const weekNumbers =
     Object.keys(weeks)
       .sort((a, b) => Number(a) - Number(b));
+
+
+  if (weekNumbers.length === 0) {
+
+    document.getElementById("calendarArea").innerHTML =
+      `
+        <div class="error-box">
+          The Google Sheet loaded, but no schedule rows were found.
+          Check that WEEK and DAY contain data.
+        </div>
+      `;
+
+    return;
+  }
 
 
   let html = `
@@ -629,7 +658,8 @@ function buildCalendar(data) {
           item.date,
 
         content:
-          item.popupContent
+          item.popupContent ||
+          "No agenda has been posted yet."
 
       };
 
@@ -700,8 +730,6 @@ function buildCalendar(data) {
     html;
 
 
-  /* CONNECT POPUPS */
-
   document
     .querySelectorAll(".popup-trigger")
     .forEach(button => {
@@ -726,9 +754,46 @@ function buildCalendar(data) {
 }
 
 
-/* =========================
-   OPEN POPUP
-========================== */
+/* =========================================================
+   NORMALIZE DAY
+========================================================= */
+
+function normalizeDay(day) {
+
+  const value =
+    String(day || "")
+      .trim()
+      .toLowerCase();
+
+
+  if (value === "monday" || value === "mon") {
+    return "Monday";
+  }
+
+  if (value === "tuesday" || value === "tue" || value === "tues") {
+    return "Tuesday";
+  }
+
+  if (value === "wednesday" || value === "wed") {
+    return "Wednesday";
+  }
+
+  if (value === "thursday" || value === "thu" || value === "thur" || value === "thurs") {
+    return "Thursday";
+  }
+
+  if (value === "friday" || value === "fri") {
+    return "Friday";
+  }
+
+  return "";
+
+}
+
+
+/* =========================================================
+   POPUP
+========================================================= */
 
 function openModal(data) {
 
@@ -755,10 +820,6 @@ function openModal(data) {
 }
 
 
-/* =========================
-   CLOSE POPUP
-========================== */
-
 function closeModal() {
 
   document
@@ -772,8 +833,6 @@ function closeModal() {
 }
 
 
-/* CLOSE BUTTON */
-
 document
   .getElementById("modalClose")
   .addEventListener(
@@ -781,8 +840,6 @@ document
     closeModal
   );
 
-
-/* CLICK BACKGROUND */
 
 document
   .getElementById("modalOverlay")
@@ -798,8 +855,6 @@ document
   );
 
 
-/* ESCAPE KEY */
-
 document.addEventListener(
   "keydown",
   function(event) {
@@ -812,9 +867,9 @@ document.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    SAFE TEXT
-========================== */
+========================================================= */
 
 function escapeHTML(value) {
 

@@ -14,47 +14,50 @@
       box-sizing: border-box;
     }
 
-    :root {
-      --navy: #073b68;
-      --navy-dark: #052a4a;
-      --blue-row: #b9dcf4;
-      --green-row: #c3efd3;
-      --yellow: #ffc72c;
-      --text: #0a1e31;
+    html {
+      width: 100%;
+      min-height: 100%;
+      background: #f3f5f7;
     }
 
     body {
       margin: 0;
-      background: #f3f5f7;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-    }
-
-
-    /* =========================
-       MAIN PAGE CONTAINER
-    ========================== */
-
-    .site-shell {
       width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 10px;
+      min-height: 100vh;
+
+      background: #f3f5f7;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      color: #0a1e31;
     }
 
 
-    /* =========================
+    /* =========================================================
+       ENTIRE SITE CONTAINER
+    ========================================================== */
+
+    .page-frame {
+      width: min(1100px, calc(100vw - 40px));
+      margin: 20px auto 40px auto;
+    }
+
+
+    /* =========================================================
        HEADER
-    ========================== */
+    ========================================================== */
 
     .shop-header {
       width: 100%;
-      margin: 0 0 12px 0;
+      margin: 0 0 14px 0;
     }
 
     .shop-header img {
       display: block;
+
       width: 100%;
+      max-width: 100%;
+
       height: auto;
 
       border-radius: 14px;
@@ -64,24 +67,32 @@
     }
 
 
-    /* =========================
-       CALENDAR
-    ========================== */
+    /* =========================================================
+       CALENDAR WRAPPER
+    ========================================================== */
 
     .calendar-shell {
+      width: 100%;
+
       background: white;
 
-      border-radius: 12px;
-      overflow: hidden;
-
       border: 2px solid #6e8194;
+      border-radius: 12px;
+
+      overflow: hidden;
 
       box-shadow:
         0 5px 14px rgba(0,0,0,.13);
     }
 
+
+    /* =========================================================
+       CALENDAR
+    ========================================================== */
+
     .calendar {
       width: 100%;
+
       border-collapse: collapse;
       table-layout: fixed;
     }
@@ -92,8 +103,10 @@
       text-align: center;
     }
 
-    .calendar thead th {
 
+    /* HEADER ROW */
+
+    .calendar thead th {
       background:
         linear-gradient(
           to bottom,
@@ -103,52 +116,62 @@
 
       color: #111;
 
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 900;
 
-      padding: 11px 6px;
+      padding: 11px 5px;
     }
 
     .week-column {
       width: 105px;
     }
 
+
+    /* WEEK ROWS */
+
     .week-row td {
-      height: 145px;
-      padding: 9px;
+      height: 140px;
+
+      padding: 8px;
+
       vertical-align: middle;
+
       position: relative;
     }
 
     .week-blue td {
-
       background:
         linear-gradient(
           to bottom,
           #cceafd,
-          var(--blue-row)
+          #b9dcf4
         );
-
     }
 
     .week-green td {
-
       background:
         linear-gradient(
           to bottom,
           #d5f4df,
-          var(--green-row)
+          #c3efd3
         );
-
     }
+
+
+    /* WEEK LABEL */
 
     .week-label {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
+
+      white-space: nowrap;
     }
 
+
+    /* DATE */
+
     .date {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
 
       margin-bottom: 12px;
@@ -157,68 +180,22 @@
     }
 
 
-    /* =========================
-       TODAY
-    ========================== */
-
-    .calendar td.today-cell {
-
-      background:
-        linear-gradient(
-          135deg,
-          #fff7b8,
-          #ffe067
-        ) !important;
-
-      box-shadow:
-        inset 0 0 0 4px var(--yellow),
-        inset 0 0 18px rgba(255,199,44,.45);
-
-    }
-
-    .today-badge {
-
-      position: absolute;
-
-      top: 6px;
-      right: 6px;
-
-      background: var(--yellow);
-      color: #102235;
-
-      border: 2px solid #9b7200;
-      border-radius: 20px;
-
-      padding: 3px 7px;
-
-      font-size: 10px;
-      font-weight: 900;
-
-      letter-spacing: .5px;
-
-      box-shadow:
-        0 2px 5px rgba(0,0,0,.18);
-
-    }
-
-
-    /* =========================
-       ACTIVITY BUTTONS
-    ========================== */
+    /* =========================================================
+       ACTIVITY BUTTON
+    ========================================================== */
 
     .activity-button {
-
       width: 92%;
-      max-width: 185px;
+      max-width: 180px;
 
-      min-height: 52px;
+      min-height: 50px;
 
       margin: 0 auto;
 
+      padding: 9px 8px;
+
       border: 1px solid #021b30;
       border-radius: 10px;
-
-      padding: 10px 9px;
 
       background:
         linear-gradient(
@@ -229,7 +206,7 @@
 
       color: white;
 
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
 
       cursor: pointer;
@@ -238,21 +215,20 @@
         0 4px 0 #022440,
         0 6px 10px rgba(0,0,0,.20);
 
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 7px;
+
       transition:
         transform .15s ease,
         box-shadow .15s ease,
         background .15s ease;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 8px;
-
     }
 
     .activity-button:hover {
-
       transform: translateY(-2px);
 
       background:
@@ -265,157 +241,199 @@
       box-shadow:
         0 6px 0 #022440,
         0 8px 14px rgba(0,0,0,.24);
-
     }
 
     .activity-button:active {
-
       transform: translateY(2px);
 
       box-shadow:
         0 2px 0 #022440,
         0 3px 6px rgba(0,0,0,.18);
-
     }
 
     .button-icon {
-      color: var(--yellow);
-      font-size: 18px;
+      font-size: 17px;
       flex: 0 0 auto;
     }
 
     .button-label {
-      line-height: 1.15;
+      line-height: 1.1;
     }
 
 
-    /* =========================
-       SMALL CLOSED SIGN
-    ========================== */
+    /* =========================================================
+       TODAY HIGHLIGHT
+    ========================================================== */
+
+    .calendar td.today-cell {
+      background:
+        linear-gradient(
+          135deg,
+          #fff7b8,
+          #ffe067
+        ) !important;
+
+      box-shadow:
+        inset 0 0 0 4px #ffc72c,
+        inset 0 0 18px rgba(255,199,44,.45);
+    }
+
+    .today-badge {
+      position: absolute;
+
+      top: 6px;
+      right: 6px;
+
+      padding: 3px 7px;
+
+      border: 2px solid #9b7200;
+      border-radius: 20px;
+
+      background: #ffc72c;
+
+      color: #102235;
+
+      font-size: 9px;
+      font-weight: 900;
+
+      letter-spacing: .5px;
+
+      box-shadow:
+        0 2px 5px rgba(0,0,0,.18);
+    }
+
+
+    /* =========================================================
+       CLOSED SIGN
+    ========================================================== */
 
     .closed-sign-wrap {
+      width: 82px;
 
-      width: 88px;
-
-      margin: -2px auto 0;
-
-      position: relative;
+      margin: -2px auto 0 auto;
 
       padding-top: 14px;
 
+      position: relative;
     }
 
+
+    /* LITTLE WALL HOOK */
+
     .closed-sign-hook {
+      width: 6px;
+      height: 6px;
 
       position: absolute;
 
       top: 0;
       left: 50%;
 
-      width: 6px;
-      height: 6px;
-
       transform: translateX(-50%);
-
-      background: #334454;
 
       border-radius: 50%;
 
+      background: #334454;
     }
 
-    .closed-wire-left,
-    .closed-wire-right {
+
+    /* LEFT STRING */
+
+    .closed-wire-left {
+      width: 2px;
+      height: 16px;
 
       position: absolute;
 
       top: 5px;
-
-      width: 2px;
-      height: 17px;
+      left: 50%;
 
       background: #455563;
 
       transform-origin: top;
 
-    }
-
-    .closed-wire-left {
-
-      left: 50%;
-
       transform:
         translateX(-1px)
         rotate(55deg);
-
     }
 
-    .closed-wire-right {
 
+    /* RIGHT STRING */
+
+    .closed-wire-right {
+      width: 2px;
+      height: 16px;
+
+      position: absolute;
+
+      top: 5px;
       left: 50%;
+
+      background: #455563;
+
+      transform-origin: top;
 
       transform:
         translateX(-1px)
         rotate(-55deg);
-
     }
 
-    .closed-sign {
 
+    /* SIGN */
+
+    .closed-sign {
       position: relative;
+
       z-index: 2;
+
+      overflow: hidden;
+
+      border: 2px solid #152d40;
+      border-radius: 6px;
 
       background:
         linear-gradient(
           to bottom,
-          #ed3036,
-          #bd0d14
+          #ef343a,
+          #be0c14
         );
-
-      border: 2px solid #152d40;
-
-      border-radius: 6px;
-
-      overflow: hidden;
 
       box-shadow:
         0 4px 7px rgba(0,0,0,.18);
-
     }
 
+
+    /* CLOSED TEXT */
+
     .closed-sign-title {
+      padding: 5px 2px;
 
       color: white;
 
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
 
       letter-spacing: .6px;
 
-      padding: 6px 3px;
-
       text-shadow:
         0 1px 2px rgba(0,0,0,.25);
-
     }
 
 
-    /* =========================
+    /* =========================================================
        LOADING / ERROR
-    ========================== */
+    ========================================================== */
 
     .loading {
-
       padding: 40px;
 
       text-align: center;
 
       font-size: 18px;
       font-weight: 700;
-
     }
 
     .error-box {
-
       padding: 25px;
 
       text-align: center;
@@ -426,86 +444,84 @@
       color: #9f1d1d;
 
       background: #fff0f0;
-
     }
 
 
-    /* =========================
+    /* =========================================================
        POPUP
-    ========================== */
+    ========================================================== */
 
     .modal-overlay {
-
       display: none;
 
       position: fixed;
 
       inset: 0;
 
-      background:
-        rgba(0,0,0,.70);
-
-      z-index: 999999;
+      padding: 25px;
 
       align-items: center;
       justify-content: center;
 
-      padding: 25px;
+      background: rgba(0,0,0,.70);
 
+      z-index: 999999;
     }
 
     .modal-overlay.open {
       display: flex;
     }
 
-    .modal {
 
-      width: min(700px, 95vw);
+    .modal {
+      width: min(680px, 94vw);
 
       max-height: 88vh;
 
       overflow: hidden;
 
+      border: 3px solid #d5dde4;
       border-radius: 18px;
 
       background: white;
-
-      border:
-        3px solid #d5dde4;
 
       box-shadow:
         0 20px 60px rgba(0,0,0,.5);
 
       animation:
         popupIn .18s ease-out;
-
     }
+
 
     @keyframes popupIn {
 
       from {
-
         opacity: 0;
 
         transform:
           translateY(15px)
           scale(.97);
-
       }
 
       to {
-
         opacity: 1;
 
         transform:
           translateY(0)
           scale(1);
-
       }
 
     }
 
+
     .modal-header {
+      position: relative;
+
+      padding:
+        20px 60px
+        18px 24px;
+
+      color: white;
 
       background:
         linear-gradient(
@@ -514,54 +530,40 @@
           #0b5798
         );
 
-      color: white;
-
-      padding:
-        20px 60px
-        18px 24px;
-
-      position: relative;
-
       border-bottom:
-        5px solid
-        var(--yellow);
-
+        5px solid #ffc72c;
     }
 
-    .modal-title {
 
+    .modal-title {
       margin: 0;
 
-      font-size: 28px;
+      font-size: 27px;
       font-weight: 900;
 
       line-height: 1.15;
-
     }
+
 
     .modal-date {
-
       margin-top: 5px;
 
-      color:
-        var(--yellow);
+      color: #ffc72c;
 
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
-
     }
 
-    .modal-close {
 
+    .modal-close {
       position: absolute;
 
-      right: 17px;
-      top: 10px;
+      top: 9px;
+      right: 16px;
 
       border: none;
 
-      background:
-        transparent;
+      background: transparent;
 
       color: white;
 
@@ -569,54 +571,51 @@
       font-weight: 700;
 
       cursor: pointer;
-
     }
 
-    .modal-body {
 
-      padding: 26px;
+    .modal-body {
+      padding: 25px;
 
       overflow-y: auto;
 
       max-height:
         calc(88vh - 120px);
-
     }
 
-    .modal-content {
 
-      font-size: 18px;
+    .modal-content {
+      color: #1c2c3a;
+
+      font-size: 17px;
 
       line-height: 1.6;
 
       white-space: pre-wrap;
-
-      color: #1c2c3a;
-
     }
 
 
-    /* =========================
-       SMALLER SCREENS
-    ========================== */
+    /* =========================================================
+       TABLETS / SMALLER SCREENS
+    ========================================================== */
 
-    @media (max-width: 950px) {
+    @media (max-width: 900px) {
 
-      .site-shell {
-        padding: 5px;
-      }
-
-      .shop-header img {
-        border-radius: 10px;
+      .page-frame {
+        width: calc(100vw - 10px);
+        margin-top: 5px;
       }
 
       .calendar-shell {
         overflow-x: auto;
-        border-radius: 10px;
       }
 
       .calendar {
-        min-width: 850px;
+        min-width: 820px;
+      }
+
+      .shop-header img {
+        border-radius: 10px;
       }
 
     }
@@ -627,10 +626,13 @@
 
 <body>
 
-<div class="site-shell">
+
+<div class="page-frame">
 
 
-  <!-- SHOP SCHEDULE HEADER -->
+  <!-- =======================================================
+       HEADER
+  ======================================================== -->
 
   <header class="shop-header">
 
@@ -642,27 +644,31 @@
   </header>
 
 
-  <!-- CALENDAR -->
+
+  <!-- =======================================================
+       CALENDAR
+  ======================================================== -->
 
   <div class="calendar-shell">
 
     <div id="calendarArea">
 
       <div class="loading">
-
         Loading shop schedule...
-
       </div>
 
     </div>
 
   </div>
 
+
 </div>
 
 
 
-<!-- POPUP -->
+<!-- =========================================================
+     POPUP
+========================================================== -->
 
 <div
   id="modalOverlay"
@@ -671,7 +677,9 @@
 
   <div class="modal">
 
+
     <div class="modal-header">
+
 
       <button
         id="modalClose"
@@ -693,17 +701,22 @@
         class="modal-date"
       ></div>
 
+
     </div>
 
 
+
     <div class="modal-body">
+
 
       <div
         id="modalContent"
         class="modal-content"
       ></div>
 
+
     </div>
+
 
   </div>
 
@@ -714,9 +727,9 @@
 <script>
 
 
-/* =========================
+/* =========================================================
    GOOGLE SHEET
-========================== */
+========================================================== */
 
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv";
@@ -732,24 +745,30 @@ const DAYS = [
 
 
 
-/* =========================
+/* =========================================================
    HEADER CLEANUP
-========================== */
+========================================================== */
 
 function normalizeHeader(header) {
 
   return String(header || "")
+
     .trim()
+
     .toUpperCase()
-    .replace(/\s+/g, " ");
+
+    .replace(
+      /\s+/g,
+      " "
+    );
 
 }
 
 
 
-/* =========================
+/* =========================================================
    LOAD GOOGLE SHEET
-========================== */
+========================================================== */
 
 Papa.parse(
   SHEET_URL,
@@ -765,7 +784,9 @@ Papa.parse(
     transformHeader:
       function(header) {
 
-        return normalizeHeader(header);
+        return normalizeHeader(
+          header
+        );
 
       },
 
@@ -783,13 +804,17 @@ Papa.parse(
     error:
       function(error) {
 
-        console.error(error);
+        console.error(
+          error
+        );
+
 
         document
           .getElementById(
             "calendarArea"
           )
           .innerHTML =
+
           "<div class='error-box'>Unable to load the Google Sheet.</div>";
 
       }
@@ -799,9 +824,9 @@ Papa.parse(
 
 
 
-/* =========================
+/* =========================================================
    BUILD CALENDAR
-========================== */
+========================================================== */
 
 function buildCalendar(data) {
 
@@ -809,6 +834,7 @@ function buildCalendar(data) {
   const weeks = {};
 
   const popupData = {};
+
 
 
   data.forEach(
@@ -820,28 +846,36 @@ function buildCalendar(data) {
           row["WEEK"] ||
           row["WEEK #"] ||
           ""
-        ).trim();
+        )
+        .trim();
+
 
 
       const date =
         String(
           row["DATE"] ||
           ""
-        ).trim();
+        )
+        .trim();
+
 
 
       const day =
         String(
           row["DAY"] ||
           ""
-        ).trim();
+        )
+        .trim();
+
 
 
       const buttonText =
         String(
           row["BUTTON TEXT"] ||
           ""
-        ).trim();
+        )
+        .trim();
+
 
 
       const popupTitle =
@@ -849,43 +883,68 @@ function buildCalendar(data) {
           row["POPUP TITLE (AGENDA)"] ||
           row["POPUP TITLE"] ||
           ""
-        ).trim();
+        )
+        .trim();
+
 
 
       const popupContent =
         String(
           row["POPUP CONTENT"] ||
           ""
-        ).trim();
+        )
+        .trim();
 
 
 
-      if (!week || !day) {
+      if (
+        !week ||
+        !day
+      ) {
+
         return;
+
       }
+
 
 
       const normalizedDay =
-        normalizeDay(day);
+        normalizeDay(
+          day
+        );
 
 
-      if (!normalizedDay) {
+
+      if (
+        !normalizedDay
+      ) {
+
         return;
+
       }
 
 
-      if (!weeks[week]) {
+
+      if (
+        !weeks[week]
+      ) {
+
         weeks[week] = {};
+
       }
 
 
-      weeks[week][normalizedDay] = {
+
+      weeks[week][
+        normalizedDay
+      ] = {
 
         week,
 
         date,
 
-        day: normalizedDay,
+        day:
+          normalizedDay,
 
         buttonText,
 
@@ -895,6 +954,7 @@ function buildCalendar(data) {
 
       };
 
+
     }
   );
 
@@ -903,10 +963,13 @@ function buildCalendar(data) {
   const weekNumbers =
 
     Object
-      .keys(weeks)
+      .keys(
+        weeks
+      )
       .sort(
         (a, b) =>
-          Number(a) -
+          Number(a)
+          -
           Number(b)
       );
 
@@ -915,6 +978,7 @@ function buildCalendar(data) {
   if (
     weekNumbers.length === 0
   ) {
+
 
     document
       .getElementById(
@@ -931,6 +995,7 @@ function buildCalendar(data) {
 
       `;
 
+
     return;
 
   }
@@ -940,6 +1005,7 @@ function buildCalendar(data) {
   let html = `
 
     <table class="calendar">
+
 
       <thead>
 
@@ -964,6 +1030,7 @@ function buildCalendar(data) {
       </thead>
 
 
+
       <tbody>
 
   `;
@@ -986,12 +1053,8 @@ function buildCalendar(data) {
 
       html += `
 
-        <tr
-          class="
-            week-row
-            ${colorClass}
-          "
-        >
+        <tr class="week-row ${colorClass}">
+
 
           <td>
 
@@ -1014,13 +1077,16 @@ function buildCalendar(data) {
 
 
           const item =
+
             weeks[
               weekNumber
             ][day];
 
 
 
-          if (!item) {
+          if (
+            !item
+          ) {
 
             html +=
               "<td></td>";
@@ -1032,6 +1098,7 @@ function buildCalendar(data) {
 
 
           const isToday =
+
             dateIsToday(
               item.date
             );
@@ -1041,20 +1108,20 @@ function buildCalendar(data) {
           html += `
 
             <td
-              class="
-                ${
-                  isToday
-                    ? "today-cell"
-                    : ""
-                }
-              "
+              class="${
+                isToday
+                  ? "today-cell"
+                  : ""
+              }"
             >
 
           `;
 
 
 
-          if (isToday) {
+          if (
+            isToday
+          ) {
 
             html += `
 
@@ -1084,9 +1151,9 @@ function buildCalendar(data) {
 
 
 
-          /* =====================
+          /* =================================================
              CLOSED DAY
-          ====================== */
+          ================================================== */
 
           if (
 
@@ -1101,49 +1168,30 @@ function buildCalendar(data) {
 
             html += `
 
-              <div
-                class="
-                  closed-sign-wrap
-                "
-              >
+              <div class="closed-sign-wrap">
 
 
-                <div
-                  class="
-                    closed-sign-hook
-                  "
-                ></div>
+                <div class="closed-sign-hook">
+                </div>
 
 
-                <div
-                  class="
-                    closed-wire-left
-                  "
-                ></div>
+                <div class="closed-wire-left">
+                </div>
 
 
-                <div
-                  class="
-                    closed-wire-right
-                  "
-                ></div>
+                <div class="closed-wire-right">
+                </div>
 
 
-                <div
-                  class="
-                    closed-sign
-                  "
-                >
+                <div class="closed-sign">
 
-                  <div
-                    class="
-                      closed-sign-title
-                    "
-                  >
+
+                  <div class="closed-sign-title">
 
                     CLOSED
 
                   </div>
+
 
                 </div>
 
@@ -1163,9 +1211,9 @@ function buildCalendar(data) {
 
 
 
-          /* =====================
+          /* =================================================
              NORMAL DAY
-          ====================== */
+          ================================================== */
 
 
           const popupId =
@@ -1188,9 +1236,12 @@ function buildCalendar(data) {
 
             title:
 
-              item.popupTitle ||
+              item.popupTitle
+
+              ||
 
               "Today's Agenda",
+
 
 
             date:
@@ -1198,9 +1249,12 @@ function buildCalendar(data) {
               item.date,
 
 
+
             content:
 
-              item.popupContent ||
+              item.popupContent
+
+              ||
 
               "No agenda has been posted yet."
 
@@ -1216,37 +1270,19 @@ function buildCalendar(data) {
             html += `
 
               <button
-
-                class="
-                  activity-button
-                  popup-trigger
-                "
-
-                data-popup-id="
-                  ${escapeHTML(
-                    popupId
-                  )}
-                "
-
+                class="activity-button popup-trigger"
+                data-popup-id="${escapeHTML(
+                  popupId
+                )}"
               >
 
 
-                <span
-                  class="
-                    button-icon
-                  "
-                >
-
+                <span class="button-icon">
                   🔧
-
                 </span>
 
 
-                <span
-                  class="
-                    button-label
-                  "
-                >
+                <span class="button-label">
 
                   ${escapeHTML(
                     item.buttonText
@@ -1300,6 +1336,10 @@ function buildCalendar(data) {
 
 
 
+  /* =========================================================
+     CONNECT POPUP BUTTONS
+  ========================================================== */
+
   document
     .querySelectorAll(
       ".popup-trigger"
@@ -1317,12 +1357,16 @@ function buildCalendar(data) {
               const popup =
 
                 popupData[
-                  this.dataset
+                  this
+                    .dataset
                     .popupId
                 ];
 
 
-              if (popup) {
+
+              if (
+                popup
+              ) {
 
                 openModal(
                   popup
@@ -1330,28 +1374,36 @@ function buildCalendar(data) {
 
               }
 
+
             }
           );
 
+
       }
     );
+
 
 }
 
 
 
-/* =========================
+/* =========================================================
    TODAY CHECK
-========================== */
+========================================================== */
 
 function dateIsToday(
   dateString
 ) {
 
 
-  if (!dateString) {
+  if (
+    !dateString
+  ) {
+
     return false;
+
   }
+
 
 
   const parts =
@@ -1365,6 +1417,7 @@ function dateIsToday(
       .split("/");
 
 
+
   if (
     parts.length !== 3
   ) {
@@ -1372,6 +1425,7 @@ function dateIsToday(
     return false;
 
   }
+
 
 
   const month =
@@ -1392,43 +1446,59 @@ function dateIsToday(
     );
 
 
+
   if (
     year < 100
   ) {
 
-    year += 2000;
+    year +=
+      2000;
 
   }
+
 
 
   const today =
     new Date();
 
 
+
   return (
 
-    today.getFullYear()
-      === year
+    today
+      .getFullYear()
+
+    === year
+
 
     &&
 
-    today.getMonth() + 1
-      === month
+
+    today
+      .getMonth()
+      + 1
+
+    === month
+
 
     &&
 
-    today.getDate()
-      === day
+
+    today
+      .getDate()
+
+    === day
 
   );
+
 
 }
 
 
 
-/* =========================
+/* =========================================================
    DAY NAME CLEANUP
-========================== */
+========================================================== */
 
 function normalizeDay(day) {
 
@@ -1455,6 +1525,7 @@ function normalizeDay(day) {
   }
 
 
+
   if (
     value === "tuesday" ||
     value === "tue" ||
@@ -1466,6 +1537,7 @@ function normalizeDay(day) {
   }
 
 
+
   if (
     value === "wednesday" ||
     value === "wed"
@@ -1474,6 +1546,7 @@ function normalizeDay(day) {
     return "Wednesday";
 
   }
+
 
 
   if (
@@ -1488,6 +1561,7 @@ function normalizeDay(day) {
   }
 
 
+
   if (
     value === "friday" ||
     value === "fri"
@@ -1498,15 +1572,16 @@ function normalizeDay(day) {
   }
 
 
+
   return "";
 
 }
 
 
 
-/* =========================
-   POPUP
-========================== */
+/* =========================================================
+   OPEN POPUP
+========================================================== */
 
 function openModal(data) {
 
@@ -1517,7 +1592,9 @@ function openModal(data) {
     )
     .textContent =
 
-      data.title ||
+      data.title
+
+      ||
 
       "Today's Agenda";
 
@@ -1529,7 +1606,9 @@ function openModal(data) {
     )
     .textContent =
 
-      data.date ||
+      data.date
+
+      ||
 
       "";
 
@@ -1541,7 +1620,9 @@ function openModal(data) {
     )
     .textContent =
 
-      data.content ||
+      data.content
+
+      ||
 
       "No agenda has been posted yet.";
 
@@ -1552,16 +1633,27 @@ function openModal(data) {
       "modalOverlay"
     )
     .classList
-    .add("open");
+    .add(
+      "open"
+    );
 
 
 
-  document.body.style.overflow =
-    "hidden";
+  document
+    .body
+    .style
+    .overflow =
+
+      "hidden";
+
 
 }
 
 
+
+/* =========================================================
+   CLOSE POPUP
+========================================================== */
 
 function closeModal() {
 
@@ -1571,11 +1663,19 @@ function closeModal() {
       "modalOverlay"
     )
     .classList
-    .remove("open");
+    .remove(
+      "open"
+    );
 
 
-  document.body.style.overflow =
-    "";
+
+  document
+    .body
+    .style
+    .overflow =
+
+      "";
+
 
 }
 
@@ -1604,13 +1704,17 @@ document
       if (
 
         event.target.id
-        === "modalOverlay"
+
+        ===
+
+        "modalOverlay"
 
       ) {
 
         closeModal();
 
       }
+
 
     }
   );
@@ -1632,19 +1736,22 @@ document
 
       }
 
+
     }
   );
 
 
 
-/* =========================
+/* =========================================================
    SAFE TEXT
-========================== */
+========================================================== */
 
 function escapeHTML(value) {
 
 
-  return String(value)
+  return String(
+    value
+  )
 
     .replaceAll(
       "&",
@@ -1670,6 +1777,7 @@ function escapeHTML(value) {
       "'",
       "&#039;"
     );
+
 
 }
 

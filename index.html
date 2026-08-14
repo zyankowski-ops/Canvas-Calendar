@@ -16,141 +16,42 @@
     :root {
       --navy: #073b68;
       --navy-dark: #052a4a;
-      --blue: #0c5fa8;
-      --yellow: #ffc72c;
-      --yellow-light: #ffe28a;
-      --silver: #dbe2e8;
       --blue-row: #b9dcf4;
       --green-row: #c3efd3;
-      --danger: #e32222;
-      --text: #102235;
+      --yellow: #ffc72c;
+      --danger: #df1717;
+      --text: #0a1e31;
     }
 
     body {
       margin: 0;
-      background: #f4f6f8;
+      background: #f3f5f7;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
     }
 
     .site-shell {
-      max-width: 1500px;
+      max-width: 1540px;
       margin: 0 auto;
-      padding: 18px;
+      padding: 10px;
     }
 
     /* =========================================================
-       HEADER
+       HEADER IMAGE
     ========================================================== */
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 260px;
-      border-radius: 18px;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,255,255,.03),
-          rgba(255,255,255,0)
-        ),
-        linear-gradient(
-          135deg,
-          var(--navy-dark),
-          var(--blue)
-        );
-
-      border: 3px solid #c7d2dc;
-      box-shadow:
-        0 8px 20px rgba(0,0,0,.22),
-        inset 0 0 0 2px rgba(255,255,255,.18);
-
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      align-items: center;
-      gap: 35px;
-
-      padding: 25px 40px;
-      margin-bottom: 22px;
+    .shop-header {
+      width: 100%;
+      margin: 0 0 14px 0;
     }
 
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 28px;
-      background: var(--yellow);
-      transform: rotate(35deg);
-      opacity: .95;
-      z-index: 0;
-    }
-
-    .hero::before {
-      top: 15px;
-      right: -100px;
-    }
-
-    .hero::after {
-      bottom: 5px;
-      left: -150px;
-    }
-
-    .hero-logo-wrap,
-    .hero-title-wrap {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-logo-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .hero-logo {
-      width: 260px;
-      max-height: 220px;
-      object-fit: contain;
+    .shop-header img {
       display: block;
-
-      /*
-        This does not remove a baked-in white PNG background,
-        but it makes a transparent version look perfect.
-      */
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,.28));
-    }
-
-    .hero-title-wrap {
-      text-align: center;
-    }
-
-    .hero-title {
-      margin: 0;
-      font-size: clamp(54px, 7vw, 100px);
-      line-height: .9;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-
-      color: white;
-
-      text-shadow:
-        -3px -3px 0 #071f34,
-         3px -3px 0 #071f34,
-        -3px  3px 0 #071f34,
-         3px  3px 0 #071f34,
-         0 8px 0 rgba(0,0,0,.20);
-    }
-
-    .hero-subtitle {
-      margin-top: 10px;
-      color: var(--yellow);
-      font-size: clamp(24px, 3vw, 44px);
-      font-weight: 800;
-      text-transform: uppercase;
-      font-style: italic;
-      letter-spacing: 1px;
+      width: 100%;
+      height: auto;
+      border-radius: 18px;
+      box-shadow:
+        0 6px 18px rgba(0,0,0,.22);
     }
 
     /* =========================================================
@@ -162,10 +63,10 @@
       border-radius: 14px;
       overflow: hidden;
 
-      border: 1px solid #94a3b3;
+      border: 2px solid #6e8194;
 
       box-shadow:
-        0 6px 18px rgba(0,0,0,.12);
+        0 6px 18px rgba(0,0,0,.13);
     }
 
     .calendar {
@@ -176,7 +77,7 @@
 
     .calendar th,
     .calendar td {
-      border: 1px solid #526273;
+      border: 1px solid #3c5063;
       text-align: center;
     }
 
@@ -184,17 +85,14 @@
       background:
         linear-gradient(
           to bottom,
-          #ffe35e,
-          #ffc928
+          #ffe467,
+          #ffc72c
         );
 
       color: #111;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
       padding: 14px 8px;
-
-      text-shadow:
-        0 1px 0 rgba(255,255,255,.5);
     }
 
     .week-column {
@@ -202,8 +100,8 @@
     }
 
     .week-row td {
-      height: 180px;
-      padding: 14px;
+      height: 175px;
+      padding: 12px;
       vertical-align: middle;
     }
 
@@ -211,7 +109,7 @@
       background:
         linear-gradient(
           to bottom,
-          #c7e8fb,
+          #cceafd,
           var(--blue-row)
         );
     }
@@ -220,43 +118,42 @@
       background:
         linear-gradient(
           to bottom,
-          #d2f5df,
+          #d5f4df,
           var(--green-row)
         );
     }
 
     .week-label {
-      font-size: 25px;
+      font-size: 26px;
       font-weight: 900;
-      line-height: 1.1;
     }
 
     .date {
       font-size: 25px;
       font-weight: 900;
-      margin-bottom: 14px;
+      margin-bottom: 15px;
       color: #071c2e;
     }
 
     /* =========================================================
-       ACTIVITY BUTTONS
+       ACTIVITY CARDS
     ========================================================== */
 
     .activity-button {
-      width: 90%;
-      max-width: 250px;
+      width: 92%;
+      max-width: 245px;
 
       margin: 0 auto;
 
-      border: none;
+      border: 1px solid #021b30;
       border-radius: 12px;
 
-      padding: 16px 15px;
+      padding: 15px 14px;
 
       background:
         linear-gradient(
           to bottom,
-          #0a4d88,
+          #0b4f8a,
           #053765
         );
 
@@ -268,8 +165,8 @@
       cursor: pointer;
 
       box-shadow:
-        0 5px 0 #022541,
-        0 8px 14px rgba(0,0,0,.22);
+        0 5px 0 #022440,
+        0 8px 14px rgba(0,0,0,.20);
 
       transition:
         transform .15s ease,
@@ -288,26 +185,26 @@
       background:
         linear-gradient(
           to bottom,
-          #1170bd,
-          #064778
+          #126db8,
+          #074676
         );
 
       box-shadow:
-        0 7px 0 #022541,
+        0 7px 0 #022440,
         0 10px 18px rgba(0,0,0,.24);
     }
 
     .activity-button:active {
-      transform: translateY(3px);
+      transform: translateY(2px);
 
       box-shadow:
-        0 2px 0 #022541,
-        0 5px 10px rgba(0,0,0,.20);
+        0 2px 0 #022440,
+        0 4px 8px rgba(0,0,0,.18);
     }
 
     .button-icon {
-      font-size: 25px;
-      line-height: 1;
+      color: var(--yellow);
+      font-size: 24px;
       flex: 0 0 auto;
     }
 
@@ -316,22 +213,22 @@
     }
 
     /* =========================================================
-       CLOSED DAY
+       CLOSED DAYS
     ========================================================== */
 
     .closed-card {
-      width: 88%;
-      max-width: 240px;
+      width: 90%;
+      max-width: 225px;
       margin: 0 auto;
 
       background: white;
 
       border-radius: 12px;
 
-      padding: 8px;
+      padding: 7px;
 
       box-shadow:
-        0 5px 14px rgba(0,0,0,.18);
+        0 5px 14px rgba(0,0,0,.17);
     }
 
     .closed-title {
@@ -353,8 +250,21 @@
       font-weight: 800;
       font-style: italic;
 
-      padding: 11px 7px;
+      padding: 10px 6px;
+
       white-space: pre-wrap;
+    }
+
+    /* =========================================================
+       LOADING
+    ========================================================== */
+
+    .loading {
+      padding: 50px;
+      text-align: center;
+
+      font-size: 22px;
+      font-weight: 700;
     }
 
     /* =========================================================
@@ -367,7 +277,7 @@
       position: fixed;
       inset: 0;
 
-      background: rgba(0,0,0,.68);
+      background: rgba(0,0,0,.7);
 
       z-index: 999999;
 
@@ -382,7 +292,7 @@
     }
 
     .modal {
-      width: min(780px, 96vw);
+      width: min(760px, 95vw);
       max-height: 88vh;
 
       overflow: hidden;
@@ -391,10 +301,10 @@
 
       background: white;
 
-      border: 3px solid #ced7df;
+      border: 3px solid #d5dde4;
 
       box-shadow:
-        0 20px 60px rgba(0,0,0,.48);
+        0 20px 60px rgba(0,0,0,.5);
 
       animation: popupIn .18s ease-out;
     }
@@ -415,13 +325,13 @@
       background:
         linear-gradient(
           135deg,
-          #05335c,
+          #052d50,
           #0b5798
         );
 
       color: white;
 
-      padding: 22px 60px 22px 26px;
+      padding: 22px 65px 20px 26px;
 
       position: relative;
 
@@ -443,21 +353,21 @@
       color: var(--yellow);
 
       font-size: 21px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .modal-close {
       position: absolute;
 
       right: 18px;
-      top: 13px;
+      top: 11px;
 
       border: none;
       background: transparent;
 
       color: white;
 
-      font-size: 38px;
+      font-size: 40px;
       font-weight: 700;
 
       cursor: pointer;
@@ -467,7 +377,8 @@
       padding: 26px;
 
       overflow-y: auto;
-      max-height: calc(88vh - 130px);
+
+      max-height: calc(88vh - 125px);
     }
 
     .modal-section {
@@ -485,10 +396,6 @@
       font-weight: 900;
 
       margin-bottom: 9px;
-
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .modal-section-content {
@@ -506,14 +413,6 @@
       margin: 20px 0;
     }
 
-    .loading {
-      padding: 50px;
-      text-align: center;
-
-      font-size: 22px;
-      font-weight: 700;
-    }
-
     /* =========================================================
        MOBILE
     ========================================================== */
@@ -521,37 +420,20 @@
     @media (max-width: 950px) {
 
       .site-shell {
-        padding: 8px;
+        padding: 5px;
       }
 
-      .hero {
-        grid-template-columns: 180px 1fr;
-        min-height: 190px;
-
-        padding: 18px 20px;
-
-        border-radius: 12px;
-      }
-
-      .hero-logo {
-        width: 165px;
-        max-height: 160px;
-      }
-
-      .hero-title {
-        font-size: clamp(36px, 8vw, 65px);
-      }
-
-      .hero-subtitle {
-        font-size: 20px;
-      }
-
-      .calendar {
-        min-width: 900px;
+      .shop-header img {
+        border-radius: 10px;
       }
 
       .calendar-shell {
         overflow-x: auto;
+        border-radius: 10px;
+      }
+
+      .calendar {
+        min-width: 900px;
       }
 
     }
@@ -559,46 +441,23 @@
   </style>
 </head>
 
-
 <body>
 
 <div class="site-shell">
 
-  <!-- =======================================================
-       HEADER
-  ======================================================== -->
+  <!-- HEADER -->
 
-  <header class="hero">
+  <header class="shop-header">
 
-    <div class="hero-logo-wrap">
-
-      <img
-        src="RMCTC ATT LOGO.png"
-        alt="RMCTC Auto Tech"
-        class="hero-logo"
-      >
-
-    </div>
-
-
-    <div class="hero-title-wrap">
-
-      <h1 class="hero-title">
-        Shop
-      </h1>
-
-      <div class="hero-subtitle">
-        Schedule
-      </div>
-
-    </div>
+    <img
+      src="shopschedule.png"
+      alt="RMCTC Auto Tech Shop Schedule"
+    >
 
   </header>
 
 
-  <!-- =======================================================
-       CALENDAR
-  ======================================================== -->
+  <!-- CALENDAR -->
 
   <div class="calendar-shell">
 
@@ -615,9 +474,7 @@
 </div>
 
 
-<!-- =========================================================
-     POPUP
-========================================================== -->
+<!-- POPUP -->
 
 <div
   id="modalOverlay"
@@ -924,11 +781,6 @@ function buildCalendar(data) {
         String(item["Popup Content"] || "").trim();
 
 
-      /*
-        Optional future Sheet columns.
-        These can be blank for now.
-      */
-
       const objectives =
         String(item["Objectives"] || "").trim();
 
@@ -968,7 +820,9 @@ function buildCalendar(data) {
 
               <div class="closed-text">
                 ${escapeHTML(
-                  popupContent || buttonText || "No School"
+                  popupContent ||
+                  buttonText ||
+                  "No School"
                 )}
               </div>
 
@@ -1035,7 +889,9 @@ function buildCalendar(data) {
               </span>
 
               <span class="button-label">
-                ${escapeHTML(buttonText || "View Activity")}
+                ${escapeHTML(
+                  buttonText || "View Activity"
+                )}
               </span>
 
             </button>
@@ -1085,8 +941,6 @@ function buildCalendar(data) {
   document.getElementById("calendarArea").innerHTML =
     html;
 
-
-  /* ATTACH POPUP BUTTON EVENTS */
 
   document
     .querySelectorAll(".popup-trigger")
@@ -1264,7 +1118,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   SECURITY / TEXT SAFETY
+   ESCAPE TEXT
 ========================================================== */
 
 function escapeHTML(value) {

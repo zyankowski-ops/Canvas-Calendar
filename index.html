@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Shop Schedule</title>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
+
   <style>
+
     * {
       box-sizing: border-box;
     }
+
 
     html {
       width: 100%;
@@ -19,23 +27,41 @@
       background: #f3f5f7;
     }
 
+
     body {
       margin: 0;
+
       width: 100%;
       min-height: 100vh;
+
       background: #f3f5f7;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       color: #0a1e31;
     }
 
+
+
     /* =========================================================
-       ENTIRE SITE CONTAINER
+       ENTIRE SITE
     ========================================================== */
 
     .page-frame {
-      width: min(1000px, calc(100vw - 40px));
-      margin: 20px auto 40px auto;
+      width:
+        min(
+          1000px,
+          calc(100vw - 40px)
+        );
+
+      margin:
+        20px auto 40px auto;
     }
+
+
 
     /* =========================================================
        HEADER
@@ -43,20 +69,31 @@
 
     .shop-header {
       width: 100%;
-      margin: 0 0 8px 0;
+
+      margin:
+        0 0 8px 0;
     }
+
 
     .shop-header img {
       display: block;
+
       width: 88%;
       max-width: 820px;
+
       height: auto;
-      margin: 0 auto;
+
+      margin:
+        0 auto;
+
       border-radius: 14px;
 
       box-shadow:
-        0 5px 14px rgba(0,0,0,.22);
+        0 5px 14px
+        rgba(0,0,0,.22);
     }
+
+
 
     /* =========================================================
        CALENDAR WRAPPER
@@ -64,14 +101,22 @@
 
     .calendar-shell {
       width: 100%;
+
       background: white;
-      border: 2px solid #6e8194;
+
+      border:
+        2px solid #6e8194;
+
       border-radius: 12px;
+
       overflow: hidden;
 
       box-shadow:
-        0 5px 14px rgba(0,0,0,.13);
+        0 5px 14px
+        rgba(0,0,0,.13);
     }
+
+
 
     /* =========================================================
        CALENDAR
@@ -79,15 +124,24 @@
 
     .calendar {
       width: 100%;
+
       border-collapse: collapse;
+
       table-layout: fixed;
     }
 
+
     .calendar th,
     .calendar td {
-      border: 1px solid #3c5063;
+      border:
+        1px solid #3c5063;
+
       text-align: center;
     }
+
+
+
+    /* HEADER ROW */
 
     .calendar thead th {
       background:
@@ -98,21 +152,37 @@
         );
 
       color: #111;
+
       font-size: 18px;
       font-weight: 900;
-      padding: 11px 5px;
+
+      padding:
+        11px 5px;
     }
+
 
     .week-column {
       width: 105px;
     }
 
+
+
+    /* WEEK ROWS */
+
     .week-row td {
       height: 140px;
+
       padding: 8px;
+
       vertical-align: middle;
+
       position: relative;
+
+      transition:
+        background .2s ease,
+        box-shadow .2s ease;
     }
+
 
     .week-blue td {
       background:
@@ -123,6 +193,7 @@
         );
     }
 
+
     .week-green td {
       background:
         linear-gradient(
@@ -132,18 +203,37 @@
         );
     }
 
+
+
+    /* WEEK LABEL */
+
     .week-label {
       font-size: 19px;
+
       font-weight: 900;
+
       white-space: nowrap;
     }
 
+
+
+    /* DATE */
+
     .date {
       font-size: 19px;
+
       font-weight: 900;
+
       margin-bottom: 12px;
+
       color: #071c2e;
+
+      position: relative;
+
+      z-index: 3;
     }
+
+
 
     /* =========================================================
        ACTIVITY BUTTON
@@ -152,11 +242,18 @@
     .activity-button {
       width: 92%;
       max-width: 180px;
-      min-height: 50px;
-      margin: 0 auto;
-      padding: 9px 8px;
 
-      border: 1px solid #021b30;
+      min-height: 50px;
+
+      margin:
+        0 auto;
+
+      padding:
+        9px 8px;
+
+      border:
+        1px solid #021b30;
+
       border-radius: 10px;
 
       background:
@@ -167,18 +264,29 @@
         );
 
       color: white;
+
       font-size: 13px;
+
       font-weight: 800;
+
       cursor: pointer;
 
       box-shadow:
         0 4px 0 #022440,
-        0 6px 10px rgba(0,0,0,.20);
+        0 6px 10px
+        rgba(0,0,0,.20);
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 7px;
+
+      position: relative;
+
+      z-index: 3;
 
       transition:
         transform .15s ease,
@@ -186,8 +294,10 @@
         background .15s ease;
     }
 
+
     .activity-button:hover {
-      transform: translateY(-2px);
+      transform:
+        translateY(-2px);
 
       background:
         linear-gradient(
@@ -198,63 +308,114 @@
 
       box-shadow:
         0 6px 0 #022440,
-        0 8px 14px rgba(0,0,0,.24);
+        0 8px 14px
+        rgba(0,0,0,.24);
     }
 
+
     .activity-button:active {
-      transform: translateY(2px);
+      transform:
+        translateY(2px);
 
       box-shadow:
         0 2px 0 #022440,
-        0 3px 6px rgba(0,0,0,.18);
+        0 3px 6px
+        rgba(0,0,0,.18);
     }
+
 
     .button-icon {
       font-size: 17px;
-      flex: 0 0 auto;
+
+      flex:
+        0 0 auto;
     }
+
 
     .button-label {
       line-height: 1.1;
     }
 
+
+
     /* =========================================================
-       TODAY HIGHLIGHT
+       STRONG TODAY HIGHLIGHT
     ========================================================== */
 
     .calendar td.today-cell {
       background:
         linear-gradient(
           135deg,
-          #fff7b8,
-          #ffe067
+          #fff8bf 0%,
+          #ffe676 55%,
+          #ffd84a 100%
         ) !important;
 
       box-shadow:
-        inset 0 0 0 4px #ffc72c,
-        inset 0 0 18px rgba(255,199,44,.45);
+        inset 0 0 0 5px #ffc400,
+        inset 0 0 25px
+        rgba(255,196,0,.30);
+
+      isolation: isolate;
     }
+
+
+    .calendar td.today-cell::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 4px;
+
+      border-radius: 4px;
+
+      pointer-events: none;
+
+      box-shadow:
+        0 0 18px
+        rgba(255,196,0,.55);
+
+      z-index: 1;
+    }
+
 
     .today-badge {
       position: absolute;
+
       top: 6px;
       right: 6px;
 
-      padding: 3px 7px;
+      padding:
+        4px 9px;
 
-      border: 2px solid #9b7200;
+      border:
+        2px solid #8e6800;
+
       border-radius: 20px;
 
-      background: #ffc72c;
-      color: #102235;
+      background:
+        linear-gradient(
+          to bottom,
+          #ffe36d,
+          #ffc400
+        );
 
-      font-size: 9px;
+      color: #071c2e;
+
+      font-size: 10px;
+
       font-weight: 900;
-      letter-spacing: .5px;
+
+      letter-spacing: .7px;
 
       box-shadow:
-        0 2px 5px rgba(0,0,0,.18);
+        0 2px 5px
+        rgba(0,0,0,.22);
+
+      z-index: 5;
     }
+
+
 
     /* =========================================================
        CLOSED SIGN
@@ -262,24 +423,35 @@
 
     .closed-sign-wrap {
       width: 82px;
-      margin: -2px auto 0 auto;
+
+      margin:
+        -2px auto 0 auto;
+
       padding-top: 14px;
+
       position: relative;
+
+      z-index: 3;
     }
+
 
     .closed-sign-hook {
       width: 6px;
       height: 6px;
 
       position: absolute;
+
       top: 0;
       left: 50%;
 
-      transform: translateX(-50%);
+      transform:
+        translateX(-50%);
 
       border-radius: 50%;
+
       background: #334454;
     }
+
 
     .closed-wire-left,
     .closed-wire-right {
@@ -287,12 +459,15 @@
       height: 16px;
 
       position: absolute;
+
       top: 5px;
       left: 50%;
 
       background: #455563;
+
       transform-origin: top;
     }
+
 
     .closed-wire-left {
       transform:
@@ -300,18 +475,24 @@
         rotate(55deg);
     }
 
+
     .closed-wire-right {
       transform:
         translateX(-1px)
         rotate(-55deg);
     }
 
+
     .closed-sign {
       position: relative;
+
       z-index: 2;
+
       overflow: hidden;
 
-      border: 2px solid #152d40;
+      border:
+        2px solid #152d40;
+
       border-radius: 6px;
 
       background:
@@ -322,21 +503,29 @@
         );
 
       box-shadow:
-        0 4px 7px rgba(0,0,0,.18);
+        0 4px 7px
+        rgba(0,0,0,.18);
     }
 
+
     .closed-sign-title {
-      padding: 5px 2px;
+      padding:
+        5px 2px;
 
       color: white;
 
       font-size: 12px;
+
       font-weight: 900;
+
       letter-spacing: .6px;
 
       text-shadow:
-        0 1px 2px rgba(0,0,0,.25);
+        0 1px 2px
+        rgba(0,0,0,.25);
     }
+
+
 
     /* =========================================================
        LOADING / ERROR
@@ -344,19 +533,30 @@
 
     .loading {
       padding: 40px;
+
       text-align: center;
+
       font-size: 18px;
+
       font-weight: 700;
     }
 
+
     .error-box {
       padding: 25px;
+
       text-align: center;
+
       font-size: 16px;
+
       font-weight: 700;
+
       color: #9f1d1d;
+
       background: #fff0f0;
     }
+
+
 
     /* =========================================================
        POPUP
@@ -366,40 +566,56 @@
       display: none;
 
       position: fixed;
+
       inset: 0;
 
       padding: 25px;
 
       align-items: center;
+
       justify-content: center;
 
-      background: rgba(0,0,0,.70);
+      background:
+        rgba(0,0,0,.70);
 
       z-index: 999999;
     }
+
 
     .modal-overlay.open {
       display: flex;
     }
 
+
     .modal {
-      width: min(680px, 94vw);
+      width:
+        min(
+          680px,
+          94vw
+        );
+
       max-height: 88vh;
+
       overflow: hidden;
 
-      border: 3px solid #d5dde4;
+      border:
+        3px solid #d5dde4;
+
       border-radius: 18px;
 
       background: white;
 
       box-shadow:
-        0 20px 60px rgba(0,0,0,.5);
+        0 20px 60px
+        rgba(0,0,0,.5);
 
       animation:
         popupIn .18s ease-out;
     }
 
+
     @keyframes popupIn {
+
       from {
         opacity: 0;
 
@@ -415,7 +631,12 @@
           translateY(0)
           scale(1);
       }
+
     }
+
+
+
+    /* POPUP HEADER */
 
     .modal-header {
       position: relative;
@@ -437,12 +658,17 @@
         5px solid #ffc72c;
     }
 
+
     .modal-title {
       margin: 0;
+
       font-size: 27px;
+
       font-weight: 900;
+
       line-height: 1.15;
     }
+
 
     .modal-date {
       margin-top: 5px;
@@ -450,8 +676,10 @@
       color: #ffc72c;
 
       font-size: 19px;
+
       font-weight: 900;
     }
+
 
     .modal-close {
       position: absolute;
@@ -460,53 +688,113 @@
       right: 16px;
 
       border: none;
+
       background: transparent;
 
       color: white;
 
       font-size: 38px;
+
       font-weight: 700;
 
       cursor: pointer;
     }
 
+
+
+    /* POPUP BODY */
+
     .modal-body {
       padding: 25px;
+
       overflow-y: auto;
 
       max-height:
-        calc(88vh - 120px);
+        calc(
+          88vh - 120px
+        );
     }
+
 
     .modal-content {
       color: #1c2c3a;
+
       font-size: 17px;
+
       line-height: 1.6;
     }
 
+
+
     /* =========================================================
-       AGENDA BULLETS
+       POPUP SECTION HEADINGS
+    ========================================================== */
+
+    .agenda-section-heading {
+      margin:
+        5px 0 15px 0;
+
+      padding:
+        8px 10px;
+
+      color: #073b68;
+
+      font-size: 19px;
+
+      font-weight: 900;
+
+      line-height: 1.25;
+
+      border-left:
+        5px solid #ffc72c;
+
+      background:
+        linear-gradient(
+          to right,
+          #fff4bf,
+          #ffffff
+        );
+
+      border-radius:
+        4px 8px 8px 4px;
+    }
+
+
+    .agenda-section-heading:not(:first-child) {
+      margin-top: 24px;
+    }
+
+
+
+    /* =========================================================
+       POPUP CHECKLIST
     ========================================================== */
 
     .agenda-list {
       margin: 0;
+
       padding: 0;
+
       list-style: none;
     }
+
 
     .agenda-item {
       position: relative;
 
-      margin: 0 0 14px 0;
+      margin:
+        0 0 14px 0;
 
       padding-left: 32px;
 
       line-height: 1.5;
     }
 
+
     .agenda-item:last-child {
       margin-bottom: 0;
     }
+
 
     .agenda-item::before {
       content: "✓";
@@ -520,7 +808,9 @@
       height: 21px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       border-radius: 50%;
@@ -530,19 +820,25 @@
       color: #052d50;
 
       font-size: 13px;
+
       font-weight: 900;
 
       box-shadow:
-        0 1px 3px rgba(0,0,0,.18);
+        0 1px 3px
+        rgba(0,0,0,.18);
     }
+
 
     .agenda-paragraph {
       margin: 0;
+
       line-height: 1.6;
     }
 
+
+
     /* =========================================================
-       POPUP LINKS
+       LINKS
     ========================================================== */
 
     .agenda-link {
@@ -553,46 +849,65 @@
       text-decoration: underline;
 
       text-decoration-thickness: 2px;
+
       text-underline-offset: 2px;
 
       cursor: pointer;
     }
 
+
     .agenda-link:hover {
       color: #003d70;
     }
 
+
     .agenda-link:focus {
-      outline: 3px solid #ffc72c;
+      outline:
+        3px solid #ffc72c;
+
       outline-offset: 3px;
+
       border-radius: 2px;
     }
+
+
 
     /* =========================================================
        SMALLER SCREENS
     ========================================================== */
 
     @media (max-width: 900px) {
+
       .page-frame {
-        width: calc(100vw - 10px);
+        width:
+          calc(
+            100vw - 10px
+          );
+
         margin-top: 5px;
       }
+
 
       .calendar-shell {
         overflow-x: auto;
       }
 
+
       .calendar {
         min-width: 820px;
       }
 
+
       .shop-header img {
         border-radius: 10px;
       }
+
     }
 
   </style>
+
 </head>
+
 
 
 <body>
@@ -600,6 +915,8 @@
 
 <div class="page-frame">
 
+
+  <!-- HEADER -->
 
   <header class="shop-header">
 
@@ -610,6 +927,9 @@
 
   </header>
 
+
+
+  <!-- CALENDAR -->
 
   <div class="calendar-shell">
 
@@ -627,7 +947,10 @@
 </div>
 
 
-<!-- POPUP -->
+
+<!-- =========================================================
+     POPUP
+========================================================== -->
 
 <div
   id="modalOverlay"
@@ -636,7 +959,9 @@
 
   <div class="modal">
 
+
     <div class="modal-header">
+
 
       <button
         id="modalClose"
@@ -646,17 +971,21 @@
         ×
       </button>
 
+
       <h2
         id="modalTitle"
         class="modal-title"
       ></h2>
+
 
       <div
         id="modalDate"
         class="modal-date"
       ></div>
 
+
     </div>
+
 
 
     <div class="modal-body">
@@ -668,6 +997,7 @@
 
     </div>
 
+
   </div>
 
 </div>
@@ -675,6 +1005,7 @@
 
 
 <script>
+
 
 /* =========================================================
    GOOGLE SHEET
@@ -693,6 +1024,7 @@ const DAYS = [
 ];
 
 
+
 /* =========================================================
    HEADER CLEANUP
 ========================================================== */
@@ -707,6 +1039,7 @@ function normalizeHeader(header) {
 }
 
 
+
 /* =========================================================
    LOAD GOOGLE SHEET
 ========================================================== */
@@ -714,30 +1047,55 @@ function normalizeHeader(header) {
 Papa.parse(
   SHEET_URL,
   {
+
     download: true,
+
     header: true,
+
     skipEmptyLines: true,
 
-    transformHeader: function(header) {
-      return normalizeHeader(header);
-    },
 
-    complete: function(results) {
-      buildCalendar(results.data);
-    },
+    transformHeader:
+      function(header) {
 
-    error: function(error) {
+        return normalizeHeader(
+          header
+        );
 
-      console.error(error);
+      },
 
-      document
-        .getElementById("calendarArea")
-        .innerHTML =
-        "<div class='error-box'>Unable to load the Google Sheet.</div>";
 
-    }
+    complete:
+      function(results) {
+
+        buildCalendar(
+          results.data
+        );
+
+      },
+
+
+    error:
+      function(error) {
+
+        console.error(
+          error
+        );
+
+
+        document
+          .getElementById(
+            "calendarArea"
+          )
+          .innerHTML =
+
+          "<div class='error-box'>Unable to load the Google Sheet.</div>";
+
+      }
+
   }
 );
+
 
 
 /* =========================================================
@@ -746,102 +1104,157 @@ Papa.parse(
 
 function buildCalendar(data) {
 
+
   const weeks = {};
 
   const popupData = {};
 
 
-  data.forEach(row => {
 
-    const week =
-      String(
-        row["WEEK"] ||
-        row["WEEK #"] ||
-        ""
-      ).trim();
+  data.forEach(
+    row => {
 
 
-    const date =
-      String(
-        row["DATE"] ||
-        ""
-      ).trim();
+      const week =
+        String(
+          row["WEEK"] ||
+          row["WEEK #"] ||
+          ""
+        )
+        .trim();
 
 
-    const day =
-      String(
-        row["DAY"] ||
-        ""
-      ).trim();
+
+      const date =
+        String(
+          row["DATE"] ||
+          ""
+        )
+        .trim();
 
 
-    const buttonText =
-      String(
-        row["BUTTON TEXT"] ||
-        ""
-      ).trim();
+
+      const day =
+        String(
+          row["DAY"] ||
+          ""
+        )
+        .trim();
 
 
-    const popupTitle =
-      String(
-        row["POPUP TITLE (AGENDA)"] ||
-        row["POPUP TITLE"] ||
-        ""
-      ).trim();
+
+      const buttonText =
+        String(
+          row["BUTTON TEXT"] ||
+          ""
+        )
+        .trim();
 
 
-    const popupContent =
-      String(
-        row["POPUP CONTENT"] ||
-        ""
-      ).trim();
+
+      const popupTitle =
+        String(
+          row["POPUP TITLE (AGENDA)"] ||
+          row["POPUP TITLE"] ||
+          ""
+        )
+        .trim();
 
 
-    if (!week || !day) {
-      return;
+
+      const popupContent =
+        String(
+          row["POPUP CONTENT"] ||
+          ""
+        )
+        .trim();
+
+
+
+      if (
+        !week ||
+        !day
+      ) {
+
+        return;
+
+      }
+
+
+
+      const normalizedDay =
+        normalizeDay(
+          day
+        );
+
+
+
+      if (
+        !normalizedDay
+      ) {
+
+        return;
+
+      }
+
+
+
+      if (
+        !weeks[week]
+      ) {
+
+        weeks[week] = {};
+
+      }
+
+
+
+      weeks[week][
+        normalizedDay
+      ] = {
+
+        week,
+
+        date,
+
+        day:
+          normalizedDay,
+
+        buttonText,
+
+        popupTitle,
+
+        popupContent
+
+      };
+
+
     }
+  );
 
-
-    const normalizedDay =
-      normalizeDay(day);
-
-
-    if (!normalizedDay) {
-      return;
-    }
-
-
-    if (!weeks[week]) {
-      weeks[week] = {};
-    }
-
-
-    weeks[week][normalizedDay] = {
-      week,
-      date,
-      day: normalizedDay,
-      buttonText,
-      popupTitle,
-      popupContent
-    };
-
-  });
 
 
   const weekNumbers =
+
     Object
       .keys(weeks)
       .sort(
         (a, b) =>
-          Number(a) -
+          Number(a)
+          -
           Number(b)
       );
 
 
-  if (weekNumbers.length === 0) {
+
+  if (
+    weekNumbers.length === 0
+  ) {
 
     document
-      .getElementById("calendarArea")
+      .getElementById(
+        "calendarArea"
+      )
       .innerHTML = `
 
         <div class="error-box">
@@ -856,6 +1269,7 @@ function buildCalendar(data) {
     return;
 
   }
+
 
 
   let html = `
@@ -890,24 +1304,37 @@ function buildCalendar(data) {
   `;
 
 
+
   weekNumbers.forEach(
     (weekNumber, index) => {
 
+
       const colorClass =
+
         index % 2 === 0
+
           ? "week-blue"
+
           : "week-green";
+
 
 
       html += `
 
-        <tr class="week-row ${colorClass}">
+        <tr
+          class="
+            week-row
+            ${colorClass}
+          "
+        >
 
           <td>
 
             <div class="week-label">
 
-              Week ${escapeHTML(weekNumber)}
+              Week ${escapeHTML(
+                weekNumber
+              )}
 
             </div>
 
@@ -916,164 +1343,256 @@ function buildCalendar(data) {
       `;
 
 
-      DAYS.forEach(day => {
 
-        const item =
-          weeks[weekNumber][day];
-
-
-        if (!item) {
-
-          html += "<td></td>";
-
-          return;
-
-        }
+      DAYS.forEach(
+        day => {
 
 
-        const isToday =
-          dateIsToday(item.date);
+          const item =
+            weeks[
+              weekNumber
+            ][day];
 
 
-        html += `
 
-          <td
-            class="${
-              isToday
-                ? "today-cell"
-                : ""
-            }"
-          >
+          if (
+            !item
+          ) {
 
-        `;
+            html +=
+              "<td></td>";
+
+            return;
+
+          }
 
 
-        if (isToday) {
+
+          const isToday =
+            dateIsToday(
+              item.date
+            );
+
+
 
           html += `
 
-            <div class="today-badge">
-              TODAY
-            </div>
+            <td
+              class="${
+                isToday
+                  ? "today-cell"
+                  : ""
+              }"
+            >
 
           `;
 
-        }
 
 
-        html += `
+          if (
+            isToday
+          ) {
 
-          <div class="date">
+            html += `
 
-            ${escapeHTML(item.date)}
+              <div class="today-badge">
 
-          </div>
-
-        `;
-
-
-        /* =================================================
-           CLOSED DAY
-        ================================================== */
-
-        if (
-          item.buttonText
-            .trim()
-            .toUpperCase()
-          === "CLOSED"
-        ) {
-
-          html += `
-
-            <div class="closed-sign-wrap">
-
-              <div class="closed-sign-hook"></div>
-
-              <div class="closed-wire-left"></div>
-
-              <div class="closed-wire-right"></div>
-
-              <div class="closed-sign">
-
-                <div class="closed-sign-title">
-                  CLOSED
-                </div>
+                TODAY
 
               </div>
 
+            `;
+
+          }
+
+
+
+          html += `
+
+            <div class="date">
+
+              ${escapeHTML(
+                item.date
+              )}
+
             </div>
 
           `;
 
 
-          html += "</td>";
 
-          return;
+          /* =================================================
+             CLOSED DAY
+          ================================================== */
+
+          if (
+
+            item.buttonText
+              .trim()
+              .toUpperCase()
+
+            === "CLOSED"
+
+          ) {
+
+
+            html += `
+
+              <div class="closed-sign-wrap">
+
+
+                <div class="closed-sign-hook">
+                </div>
+
+
+                <div class="closed-wire-left">
+                </div>
+
+
+                <div class="closed-wire-right">
+                </div>
+
+
+                <div class="closed-sign">
+
+                  <div class="closed-sign-title">
+
+                    CLOSED
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+            `;
+
+
+            html +=
+              "</td>";
+
+
+            return;
+
+          }
+
+
+
+          /* =================================================
+             NORMAL DAY
+          ================================================== */
+
+
+          const popupId =
+
+            `popup-${weekNumber}-${day}`
+
+              .replace(
+                /\s+/g,
+                "-"
+              )
+
+              .toLowerCase();
+
+
+
+          popupData[
+            popupId
+          ] = {
+
+
+            title:
+
+              item.popupTitle
+
+              ||
+
+              "Today's Agenda",
+
+
+
+            date:
+
+              item.date,
+
+
+
+            content:
+
+              item.popupContent
+
+              ||
+
+              "No agenda has been posted yet."
+
+          };
+
+
+
+          if (
+            item.buttonText
+          ) {
+
+
+            html += `
+
+              <button
+
+                class="
+                  activity-button
+                  popup-trigger
+                "
+
+                data-popup-id="
+                  ${escapeHTML(
+                    popupId
+                  )}
+                "
+
+              >
+
+
+                <span class="button-icon">
+
+                  🔧
+
+                </span>
+
+
+                <span class="button-label">
+
+                  ${escapeHTML(
+                    item.buttonText
+                  )}
+
+                </span>
+
+
+              </button>
+
+            `;
+
+          }
+
+
+
+          html +=
+            "</td>";
+
 
         }
+      );
 
 
-        /* =================================================
-           NORMAL DAY
-        ================================================== */
 
-        const popupId =
-          `popup-${weekNumber}-${day}`
-            .replace(/\s+/g, "-")
-            .toLowerCase();
+      html +=
+        "</tr>";
 
-
-        popupData[popupId] = {
-
-          title:
-            item.popupTitle ||
-            "Today's Agenda",
-
-          date:
-            item.date,
-
-          content:
-            item.popupContent ||
-            "No agenda has been posted yet."
-
-        };
-
-
-        if (item.buttonText) {
-
-          html += `
-
-            <button
-              class="activity-button popup-trigger"
-              data-popup-id="${escapeHTML(popupId)}"
-            >
-
-              <span class="button-icon">
-                🔧
-              </span>
-
-              <span class="button-label">
-
-                ${escapeHTML(item.buttonText)}
-
-              </span>
-
-            </button>
-
-          `;
-
-        }
-
-
-        html += "</td>";
-
-      });
-
-
-      html += "</tr>";
 
     }
   );
+
 
 
   html += `
@@ -1085,10 +1604,14 @@ function buildCalendar(data) {
   `;
 
 
+
   document
-    .getElementById("calendarArea")
+    .getElementById(
+      "calendarArea"
+    )
     .innerHTML =
     html;
+
 
 
   /* =========================================================
@@ -1096,85 +1619,176 @@ function buildCalendar(data) {
   ========================================================== */
 
   document
-    .querySelectorAll(".popup-trigger")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        function() {
-
-          const popup =
-            popupData[
-              this.dataset.popupId
-            ];
+    .querySelectorAll(
+      ".popup-trigger"
+    )
+    .forEach(
+      button => {
 
 
-          if (popup) {
+        button
+          .addEventListener(
+            "click",
+            function() {
 
-            openModal(popup);
 
-          }
+              const popup =
 
-        }
-      );
+                popupData[
+                  this
+                    .dataset
+                    .popupId
+                ];
 
-    });
+
+
+              if (
+                popup
+              ) {
+
+                openModal(
+                  popup
+                );
+
+              }
+
+
+            }
+          );
+
+
+      }
+    );
+
 
 }
+
 
 
 /* =========================================================
    TODAY CHECK
 ========================================================== */
 
-function dateIsToday(dateString) {
+function dateIsToday(
+  dateString
+) {
 
-  if (!dateString) {
+
+  if (
+    !dateString
+  ) {
+
     return false;
+
   }
+
+
+
+  const cleanedDate =
+    String(
+      dateString
+    )
+      .trim()
+      .replace(
+        /-/g,
+        "/"
+      );
+
 
 
   const parts =
-    String(dateString)
-      .trim()
+    cleanedDate
       .split("/");
 
 
-  if (parts.length !== 3) {
+
+  if (
+    parts.length !== 3
+  ) {
+
     return false;
+
   }
+
 
 
   const month =
-    Number(parts[0]);
+    Number(
+      parts[0]
+    );
 
 
   const day =
-    Number(parts[1]);
+    Number(
+      parts[1]
+    );
 
 
   let year =
-    Number(parts[2]);
+    Number(
+      parts[2]
+    );
 
 
-  if (year < 100) {
-    year += 2000;
+
+  if (
+    !month ||
+    !day ||
+    !year
+  ) {
+
+    return false;
+
   }
+
+
+
+  if (
+    year < 100
+  ) {
+
+    year += 2000;
+
+  }
+
 
 
   const today =
     new Date();
 
 
+
   return (
-    today.getFullYear() === year
+
+    today
+      .getFullYear()
+
+    === year
+
+
     &&
-    today.getMonth() + 1 === month
+
+
+    today
+      .getMonth()
+      + 1
+
+    === month
+
+
     &&
-    today.getDate() === day
+
+
+    today
+      .getDate()
+
+    === day
+
   );
 
+
 }
+
 
 
 /* =========================================================
@@ -1183,18 +1797,28 @@ function dateIsToday(dateString) {
 
 function normalizeDay(day) {
 
+
   const value =
-    String(day || "")
+
+    String(
+      day || ""
+    )
+
       .trim()
+
       .toLowerCase();
+
 
 
   if (
     value === "monday" ||
     value === "mon"
   ) {
+
     return "Monday";
+
   }
+
 
 
   if (
@@ -1202,16 +1826,22 @@ function normalizeDay(day) {
     value === "tue" ||
     value === "tues"
   ) {
+
     return "Tuesday";
+
   }
+
 
 
   if (
     value === "wednesday" ||
     value === "wed"
   ) {
+
     return "Wednesday";
+
   }
+
 
 
   if (
@@ -1220,16 +1850,22 @@ function normalizeDay(day) {
     value === "thur" ||
     value === "thurs"
   ) {
+
     return "Thursday";
+
   }
+
 
 
   if (
     value === "friday" ||
     value === "fri"
   ) {
+
     return "Friday";
+
   }
+
 
 
   return "";
@@ -1237,24 +1873,28 @@ function normalizeDay(day) {
 }
 
 
+
 /* =========================================================
-   BUILD INLINE LINKS
+   LINK FORMATTER
 ========================================================== */
 
-function appendFormattedText(container, text) {
+function appendFormattedText(
+  container,
+  text
+) {
+
 
   /*
-    Link format:
+    FORMAT:
 
-    [Visible Text](https://example.com)
-
-    Example:
-
-    Open the [Shop Safety Assignment](https://canvas.example.com)
+    [Visible Link Text](https://example.com)
   */
 
+
   const linkPattern =
+
     /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+
 
 
   let lastIndex = 0;
@@ -1262,39 +1902,48 @@ function appendFormattedText(container, text) {
   let match;
 
 
+
   while (
-    (match = linkPattern.exec(text))
+    (
+      match =
+        linkPattern.exec(
+          text
+        )
+    )
     !== null
   ) {
 
 
-    /* TEXT BEFORE THE LINK */
+    /* NORMAL TEXT BEFORE LINK */
 
     if (
-      match.index >
+      match.index
+      >
       lastIndex
     ) {
 
-      const beforeText =
-        text.slice(
-          lastIndex,
-          match.index
+      container
+        .appendChild(
+          document
+            .createTextNode(
+              text.slice(
+                lastIndex,
+                match.index
+              )
+            )
         );
-
-
-      container.appendChild(
-        document.createTextNode(
-          beforeText
-        )
-      );
 
     }
 
 
-    /* CREATE CLICKABLE LINK */
+
+    /* LINK */
 
     const link =
-      document.createElement("a");
+      document
+        .createElement(
+          "a"
+        );
 
 
     link.className =
@@ -1317,9 +1966,10 @@ function appendFormattedText(container, text) {
       "noopener noreferrer";
 
 
-    container.appendChild(
-      link
-    );
+    container
+      .appendChild(
+        link
+      );
 
 
     lastIndex =
@@ -1328,24 +1978,116 @@ function appendFormattedText(container, text) {
   }
 
 
-  /* TEXT AFTER LAST LINK */
+
+  /* NORMAL TEXT AFTER LINK */
 
   if (
-    lastIndex <
+    lastIndex
+    <
     text.length
   ) {
 
-    container.appendChild(
-      document.createTextNode(
-        text.slice(
-          lastIndex
-        )
-      )
-    );
+    container
+      .appendChild(
+        document
+          .createTextNode(
+            text.slice(
+              lastIndex
+            )
+          )
+      );
 
   }
 
+
 }
+
+
+
+/* =========================================================
+   SECTION HEADING CHECK
+========================================================== */
+
+function isAgendaHeading(line) {
+
+
+  const value =
+    String(
+      line || ""
+    )
+      .trim();
+
+
+
+  /*
+    Any line beginning with one
+    of these icons becomes
+    a section heading.
+  */
+
+  if (
+    /^(🔧|🎯|📋|📌|⚙️|🧰|📚|✅)/u
+      .test(
+        value
+      )
+  ) {
+
+    return true;
+
+  }
+
+
+
+  /*
+    Also recognize common
+    agenda heading wording.
+  */
+
+  const normalized =
+    value
+      .replace(
+        /[^A-Za-z0-9' ]/g,
+        ""
+      )
+      .trim()
+      .toUpperCase();
+
+
+
+  const knownHeadings = [
+
+    "TODAY'S FOCUS",
+
+    "TODAYS FOCUS",
+
+    "TODAY'S OBJECTIVE",
+
+    "TODAY'S OBJECTIVES",
+
+    "TODAYS OBJECTIVE",
+
+    "TODAYS OBJECTIVES",
+
+    "OBJECTIVES",
+
+    "TODAY'S AGENDA",
+
+    "TODAYS AGENDA"
+
+  ];
+
+
+
+  return (
+    knownHeadings
+      .includes(
+        normalized
+      )
+  );
+
+
+}
+
 
 
 /* =========================================================
@@ -1354,61 +2096,99 @@ function appendFormattedText(container, text) {
 
 function openModal(data) {
 
-  document
-    .getElementById("modalTitle")
-    .textContent =
-    data.title ||
-    "Today's Agenda";
-
 
   document
-    .getElementById("modalDate")
+    .getElementById(
+      "modalTitle"
+    )
     .textContent =
-    data.date ||
-    "";
+
+      data.title
+
+      ||
+
+      "Today's Agenda";
+
+
+
+  document
+    .getElementById(
+      "modalDate"
+    )
+    .textContent =
+
+      data.date
+
+      ||
+
+      "";
+
 
 
   const contentArea =
+
     document
       .getElementById(
         "modalContent"
       );
 
 
+
   contentArea.innerHTML =
     "";
 
 
+
   const rawContent =
+
     String(
-      data.content ||
+
+      data.content
+
+      ||
+
       "No agenda has been posted yet."
+
     );
 
 
+
   const agendaLines =
+
     rawContent
-      .split(/\r?\n/)
+
+      .split(
+        /\r?\n/
+      )
+
       .map(
         line =>
           line.trim()
       )
+
       .filter(
         line =>
           line.length > 0
       );
 
 
+
   /* =========================================================
-     SINGLE LINE = PARAGRAPH
+     SINGLE LINE
   ========================================================== */
 
   if (
-    agendaLines.length <= 1
+    agendaLines.length
+    <= 1
   ) {
 
+
     const paragraph =
-      document.createElement("p");
+
+      document
+        .createElement(
+          "p"
+        );
 
 
     paragraph.className =
@@ -1416,92 +2196,190 @@ function openModal(data) {
 
 
     appendFormattedText(
+
       paragraph,
 
-      agendaLines[0] ||
+      agendaLines[0]
+
+      ||
+
       "No agenda has been posted yet."
+
     );
 
 
-    contentArea.appendChild(
-      paragraph
-    );
+    contentArea
+      .appendChild(
+        paragraph
+      );
+
 
   }
 
 
+
   /* =========================================================
-     MULTIPLE LINES = BULLET LIST
+     MULTIPLE LINES
   ========================================================== */
 
   else {
 
-    const list =
-      document.createElement("ul");
+
+    let currentList =
+      null;
 
 
-    list.className =
-      "agenda-list";
+
+    agendaLines
+      .forEach(
+        line => {
 
 
-    agendaLines.forEach(
-      line => {
 
-        const item =
-          document.createElement("li");
+          /* REMOVE MANUAL BULLET */
+
+          const cleanedLine =
+
+            line.replace(
+              /^[-•*]\s*/,
+              ""
+            );
 
 
-        item.className =
-          "agenda-item";
+
+          /* =============================================
+             SECTION HEADING
+          ============================================== */
+
+          if (
+            isAgendaHeading(
+              cleanedLine
+            )
+          ) {
 
 
-        /*
-          Removes manually typed
-          bullets if you happen
-          to include them.
-        */
+            currentList =
+              null;
 
-        const cleanedLine =
-          line.replace(
-            /^[-•*]\s*/,
-            ""
+
+
+            const heading =
+
+              document
+                .createElement(
+                  "div"
+                );
+
+
+            heading.className =
+              "agenda-section-heading";
+
+
+            appendFormattedText(
+              heading,
+              cleanedLine
+            );
+
+
+            contentArea
+              .appendChild(
+                heading
+              );
+
+
+            return;
+
+          }
+
+
+
+          /* =============================================
+             CREATE LIST IF NEEDED
+          ============================================== */
+
+          if (
+            !currentList
+          ) {
+
+
+            currentList =
+
+              document
+                .createElement(
+                  "ul"
+                );
+
+
+            currentList.className =
+              "agenda-list";
+
+
+            contentArea
+              .appendChild(
+                currentList
+              );
+
+          }
+
+
+
+          /* =============================================
+             NORMAL CHECKLIST ITEM
+          ============================================== */
+
+          const item =
+
+            document
+              .createElement(
+                "li"
+              );
+
+
+          item.className =
+            "agenda-item";
+
+
+          appendFormattedText(
+            item,
+            cleanedLine
           );
 
 
-        appendFormattedText(
-          item,
-          cleanedLine
-        );
+          currentList
+            .appendChild(
+              item
+            );
 
 
-        list.appendChild(
-          item
-        );
+        }
+      );
 
-      }
-    );
-
-
-    contentArea.appendChild(
-      list
-    );
 
   }
 
 
+
   document
-    .getElementById("modalOverlay")
+    .getElementById(
+      "modalOverlay"
+    )
     .classList
-    .add("open");
+    .add(
+      "open"
+    );
+
 
 
   document
     .body
     .style
     .overflow =
-    "hidden";
+
+      "hidden";
+
 
 }
+
 
 
 /* =========================================================
@@ -1510,52 +2388,75 @@ function openModal(data) {
 
 function closeModal() {
 
+
   document
-    .getElementById("modalOverlay")
+    .getElementById(
+      "modalOverlay"
+    )
     .classList
-    .remove("open");
+    .remove(
+      "open"
+    );
+
 
 
   document
     .body
     .style
     .overflow =
-    "";
+
+      "";
+
 
 }
 
 
+
 document
-  .getElementById("modalClose")
+  .getElementById(
+    "modalClose"
+  )
   .addEventListener(
     "click",
     closeModal
   );
 
 
+
 document
-  .getElementById("modalOverlay")
+  .getElementById(
+    "modalOverlay"
+  )
   .addEventListener(
     "click",
     function(event) {
 
+
       if (
-        event.target.id ===
+
+        event.target.id
+
+        ===
+
         "modalOverlay"
+
       ) {
 
         closeModal();
 
       }
 
+
     }
   );
+
 
 
 document
   .addEventListener(
     "keydown",
     function(event) {
+
 
       if (
         event.key ===
@@ -1566,8 +2467,10 @@ document
 
       }
 
+
     }
   );
+
 
 
 /* =========================================================
@@ -1576,7 +2479,10 @@ document
 
 function escapeHTML(value) {
 
-  return String(value)
+
+  return String(
+    value
+  )
 
     .replaceAll(
       "&",
@@ -1603,9 +2509,13 @@ function escapeHTML(value) {
       "&#039;"
     );
 
+
 }
+
 
 </script>
 
+
 </body>
+
 </html>

@@ -1029,7 +1029,8 @@
 ========================================================== */
 
 const SHEET_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv";
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv&cb=" +
+Date.now();
 
 
 const DAYS = [
@@ -1119,6 +1120,28 @@ Papa.parse(
    BUILD CALENDAR
 ========================================================== */
 
+function getButtonIcon(iconName) {
+
+  const icons = {
+    orientation: "📋",
+    instruction: "📘",
+    safety: "🥽",
+    shop: "🔧",
+    diagnostic: "⚡",
+    assessment: "📝",
+    maintenance: "🧰"
+  };
+
+  const key =
+    String(iconName || "")
+      .trim()
+      .toLowerCase();
+
+  return icons[key] || "🔧";
+
+}
+
+
 function buildCalendar(data) {
 
 
@@ -1169,10 +1192,26 @@ function buildCalendar(data) {
 
 
 
+      /*
+        Read ICON by header first.
+        Object.values(row)[4] is a fallback for the fifth CSV column
+        in case Google's published header metadata is stale.
+      */
+      const icon =
+        String(
+          row["ICON"] ||
+          Object.values(row)[4] ||
+          ""
+        )
+        .trim()
+        .toLowerCase();
+
+
       const popupTitle =
         String(
           row["POPUP TITLE (AGENDA)"] ||
           row["POPUP TITLE"] ||
+          Object.values(row)[5] ||
           ""
         )
         .trim();
@@ -1182,6 +1221,7 @@ function buildCalendar(data) {
       const popupContent =
         String(
           row["POPUP CONTENT"] ||
+          Object.values(row)[6] ||
           ""
         )
         .trim();
@@ -1238,6 +1278,8 @@ function buildCalendar(data) {
           normalizedDay,
 
         buttonText,
+
+        icon,
 
         popupTitle,
 
@@ -1563,7 +1605,7 @@ function buildCalendar(data) {
 
 
                 <span class="button-icon">
-                  🔧
+                  ${getButtonIcon(item.icon)}
                 </span>
 
 

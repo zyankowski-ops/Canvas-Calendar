@@ -324,6 +324,14 @@
     }
 
 
+    .button-icon-image {
+      display: block;
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+
     .button-label {
       line-height: 1.1;
     }
@@ -1123,13 +1131,13 @@ Papa.parse(
 function getButtonIcon(iconName) {
 
   const icons = {
-    orientation: "📋",
-    instruction: "📘",
-    safety: "🥽",
-    shop: "🔧",
-    diagnostic: "⚡",
-    assessment: "📝",
-    maintenance: "🧰"
+    orientation: { type: "emoji", value: "📋" },
+    instruction: { type: "emoji", value: "📘" },
+    safety: { type: "image", value: "icons/safety.png" },
+    shop: { type: "emoji", value: "🔧" },
+    diagnostic: { type: "emoji", value: "⚡" },
+    assessment: { type: "emoji", value: "📝" },
+    maintenance: { type: "emoji", value: "🧰" }
   };
 
   const key =
@@ -1137,7 +1145,29 @@ function getButtonIcon(iconName) {
       .trim()
       .toLowerCase();
 
-  return icons[key] || "🔧";
+  return icons[key] || icons.shop;
+
+}
+
+
+function renderButtonIcon(iconName) {
+
+  const icon =
+    getButtonIcon(iconName);
+
+  if (icon.type === "image") {
+
+    return `
+      <img
+        src="${escapeHTML(icon.value)}"
+        alt=""
+        class="button-icon-image"
+      >
+    `;
+
+  }
+
+  return escapeHTML(icon.value);
 
 }
 
@@ -1605,7 +1635,7 @@ function buildCalendar(data) {
 
 
                 <span class="button-icon">
-                  ${getButtonIcon(item.icon)}
+                  ${renderButtonIcon(item.icon)}
                 </span>
 
 

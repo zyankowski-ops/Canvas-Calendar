@@ -1131,13 +1131,13 @@ Papa.parse(
 function getButtonIcon(iconName) {
 
   const icons = {
-    orientation: { type: "emoji", value: "📋" },
-    instruction: { type: "emoji", value: "📘" },
+    orientation: { type: "image", value: "icons/orientation.png" },
+    instruction: { type: "image", value: "icons/instruction.png" },
     safety: { type: "image", value: "icons/safety.png" },
-    shop: { type: "emoji", value: "🔧" },
-    diagnostic: { type: "emoji", value: "⚡" },
-    assessment: { type: "emoji", value: "📝" },
-    maintenance: { type: "emoji", value: "🧰" }
+    shop: { type: "image", value: "icons/shop.png" },
+    diagnostic: { type: "image", value: "icons/diagnostic.png" },
+    assessment: { type: "image", value: "icons/assessment.png" },
+    maintenance: { type: "image", value: "icons/maintenance.png" }
   };
 
   const key =
@@ -1155,19 +1155,13 @@ function renderButtonIcon(iconName) {
   const icon =
     getButtonIcon(iconName);
 
-  if (icon.type === "image") {
-
-    return `
-      <img
-        src="${escapeHTML(icon.value)}"
-        alt=""
-        class="button-icon-image"
-      >
-    `;
-
-  }
-
-  return escapeHTML(icon.value);
+  return `
+    <img
+      src="${escapeHTML(icon.value)}"
+      alt=""
+      class="button-icon-image"
+    >
+  `;
 
 }
 

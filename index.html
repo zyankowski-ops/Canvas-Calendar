@@ -1889,117 +1889,107 @@ function normalizeDay(day) {
    LINK FORMATTER
 ========================================================== */
 
-function appendFormattedText(
-  container,
-  text
-) {
+function appendFormattedText(container, text) {
 
+  const source = String(text || "");
 
-  const linkPattern =
+  /*
+    Supported formatting:
 
-    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+    Markdown links:
+    [Google](https://google.com)
 
+    Agenda Manager colors:
+    [color=#c62828]Red text[/color]
+  */
 
+  const tokenPattern =
+    /\[color=(#[0-9A-Fa-f]{6})\]([\s\S]*?)\[\/color\]|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
 
   let lastIndex = 0;
-
   let match;
 
 
-
   while (
-    (
-      match =
-        linkPattern.exec(
-          text
-        )
-    )
-    !== null
+    (match = tokenPattern.exec(source)) !== null
   ) {
 
+    if (match.index > lastIndex) {
 
-    if (
-      match.index
-      >
-      lastIndex
-    ) {
-
-      container
-        .appendChild(
-          document
-            .createTextNode(
-              text.slice(
-                lastIndex,
-                match.index
-              )
-            )
-        );
+      container.appendChild(
+        document.createTextNode(
+          source.slice(
+            lastIndex,
+            match.index
+          )
+        )
+      );
 
     }
 
 
+    if (match[1] && match[2] !== undefined) {
 
-    const link =
-      document
-        .createElement(
-          "a"
-        );
+      const span =
+        document.createElement("span");
 
+      span.style.color =
+        match[1];
 
-    link.className =
-      "agenda-link";
+      span.textContent =
+        match[2];
 
+      container.appendChild(
+        span
+      );
 
-    link.textContent =
-      match[1];
-
-
-    link.href =
-      match[2];
+    }
 
 
-    link.target =
-      "_blank";
+    else if (match[3] && match[4]) {
 
+      const link =
+        document.createElement("a");
 
-    link.rel =
-      "noopener noreferrer";
+      link.className =
+        "agenda-link";
 
+      link.textContent =
+        match[3];
 
-    container
-      .appendChild(
+      link.href =
+        match[4];
+
+      link.target =
+        "_blank";
+
+      link.rel =
+        "noopener noreferrer";
+
+      container.appendChild(
         link
       );
 
+    }
+
 
     lastIndex =
-      linkPattern.lastIndex;
+      tokenPattern.lastIndex;
 
   }
 
 
+  if (lastIndex < source.length) {
 
-  if (
-    lastIndex
-    <
-    text.length
-  ) {
-
-    container
-      .appendChild(
-        document
-          .createTextNode(
-            text.slice(
-              lastIndex
-            )
-          )
-      );
+    container.appendChild(
+      document.createTextNode(
+        source.slice(lastIndex)
+      )
+    );
 
   }
-
 
 }
-
 
 
 /* =========================================================

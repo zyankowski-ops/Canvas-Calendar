@@ -445,262 +445,138 @@
     ========================================================== */
 
     .closed-sign-wrap {
-      width: 108px;
-
-      margin:
-        -2px auto 0 auto;
-
-      padding-top: 14px;
-
+      width: 122px;
+      margin: -2px auto 0 auto;
+      padding-top: 15px;
       position: relative;
-
       z-index: 3;
     }
 
-
     .closed-sign-hook {
-      width: 6px;
-      height: 6px;
-
+      width: 7px;
+      height: 7px;
       position: absolute;
-
       top: 0;
       left: 50%;
-
-      transform:
-        translateX(-50%);
-
+      transform: translateX(-50%);
       border-radius: 50%;
-
-      background: #334454;
+      background: #253746;
     }
-
 
     .closed-wire-left,
     .closed-wire-right {
       width: 2px;
-      height: 16px;
-
+      height: 18px;
       position: absolute;
-
       top: 5px;
       left: 50%;
-
       background: #455563;
-
       transform-origin: top;
     }
 
-
-    .closed-wire-left {
-      transform:
-        translateX(-1px)
-        rotate(55deg);
-    }
-
-
-    .closed-wire-right {
-      transform:
-        translateX(-1px)
-        rotate(-55deg);
-    }
-
+    .closed-wire-left { transform: translateX(-1px) rotate(55deg); }
+    .closed-wire-right { transform: translateX(-1px) rotate(-55deg); }
 
     .closed-sign {
       position: relative;
-
       z-index: 2;
-
       overflow: hidden;
-
-      border:
-        2px solid #152d40;
-
-      border-radius: 6px;
-
-      background:
-        linear-gradient(
-          to bottom,
-          #ef343a,
-          #be0c14
-        );
-
+      border: 3px solid #172b3a;
+      border-radius: 8px;
+      background: linear-gradient(145deg, #d9232e 0%, #b70d17 58%, #930810 100%);
       box-shadow:
-        0 4px 7px
-        rgba(0,0,0,.18);
+        inset 0 1px 0 rgba(255,255,255,.25),
+        0 5px 8px rgba(0,0,0,.22);
     }
-
 
     .closed-sign-date {
-      padding:
-        10px 4px 6px 4px;
-
+      padding: 7px 4px 6px 4px;
+      margin: 0 9px;
       color: white;
-
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
-
       line-height: 1;
-
-      border-bottom:
-        2px solid rgba(255,255,255,.85);
-
-      margin:
-        0 10px;
+      border-bottom: 2px solid rgba(255,255,255,.82);
+      text-shadow: 0 1px 2px rgba(0,0,0,.25);
     }
 
+    .closed-sign-sorry {
+      padding-top: 6px;
+      color: #ffd75a;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      text-shadow: 0 1px 2px rgba(0,0,0,.28);
+    }
 
     .closed-sign-title {
-      padding:
-        7px 2px 9px 2px;
-
+      padding: 4px 3px 10px 3px;
       color: white;
-
-      font-size: 16px;
-
+      font-size: 15px;
       font-weight: 900;
-
-      letter-spacing: .7px;
-
-      text-shadow:
-        0 1px 2px
-        rgba(0,0,0,.25);
+      line-height: 1.05;
+      letter-spacing: .35px;
+      text-shadow: 0 1px 2px rgba(0,0,0,.28);
     }
+
+
     /* =========================================================
        VIRTUAL DAY
     ========================================================== */
 
-    .virtual-laptop-wrap {
-      width: 124px;
+    .virtual-card {
+      width: 122px;
       margin: 0 auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
       position: relative;
       z-index: 3;
-      cursor: pointer;
-      border: 0;
-      padding: 0;
-      background: transparent;
-      font: inherit;
-      transition: transform .15s ease;
-    }
-
-    .virtual-laptop-wrap:hover {
-      transform: translateY(-2px);
-    }
-
-    .virtual-laptop-wrap:hover .virtual-laptop-screen {
-      background:
-        linear-gradient(
-          135deg,
-          #126db8,
-          #074676
-        );
-
-      box-shadow:
-        0 6px 0 #022440,
-        0 8px 14px
-        rgba(0,0,0,.24);
-    }
-
-    .virtual-laptop-wrap:hover .virtual-laptop-base {
-      background:
-        linear-gradient(
-          to bottom,
-          #f1f5f7,
-          #c8d2d9
-        );
-    }
-
-    .virtual-laptop-wrap:active {
-      transform: translateY(2px);
-    }
-
-    .virtual-laptop-wrap:focus-visible {
-      outline: 3px solid #ffc72c;
-      outline-offset: 5px;
-      border-radius: 8px;
-    }
-
-    .virtual-laptop-screen {
-      width: 112px;
-      height: 76px;
-      margin: 0 auto;
-      border: 4px solid #152d40;
-      border-radius: 8px 8px 5px 5px;
-      background:
-        linear-gradient(
-          135deg,
-          #0b5798,
-          #073b68
-        );
-      box-shadow:
-        0 4px 8px
-        rgba(0,0,0,.20);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: white;
+      gap: 2px;
+      font: inherit;
+      transition: transform .15s ease, filter .15s ease;
     }
 
-    .virtual-icon-image {
+    .virtual-card:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.08) drop-shadow(0 7px 7px rgba(0,0,0,.25));
+    }
+
+    .virtual-card:active {
+      transform: translateY(1px);
+      filter: brightness(1.02) drop-shadow(0 3px 4px rgba(0,0,0,.20));
+    }
+
+    .virtual-card:focus-visible {
+      outline: 3px solid #ffc72c;
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+
+    .virtual-card-image {
       display: block;
-      width: 48px;
-      height: 48px;
+      width: 118px;
+      height: 105px;
       object-fit: contain;
-      margin-bottom: 2px;
-      filter:
-        drop-shadow(
-          0 1px 2px rgba(0,0,0,.30)
-        );
     }
 
-    .virtual-laptop-title {
-      font-size: 14px;
+    .virtual-card-date {
+      width: 100%;
+      color: #073b68;
+      font-size: 18px;
       font-weight: 900;
-      letter-spacing: .7px;
-      color: #ffc72c;
-      text-shadow:
-        0 1px 2px
-        rgba(0,0,0,.30);
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(255,255,255,.75);
     }
 
-    .virtual-laptop-base {
-      width: 124px;
-      height: 12px;
-      margin: -1px auto 0 auto;
-      border: 2px solid #152d40;
-      border-radius: 2px 2px 8px 8px;
-      background:
-        linear-gradient(
-          to bottom,
-          #dfe6ea,
-          #aebbc4
-        );
-      box-shadow:
-        0 3px 5px
-        rgba(0,0,0,.18);
-      position: relative;
-    }
-
-    .virtual-laptop-base::after {
-      content: "";
-      width: 32px;
-      height: 3px;
-      position: absolute;
-      top: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 3px;
-      background: #7e8d98;
-    }
-
-    .virtual-session {
-      margin: 0 0 22px 0;
-    }
-
-    .virtual-session:last-child {
-      margin-bottom: 0;
-    }
+    .virtual-session { margin: 0 0 22px 0; }
+    .virtual-session:last-child { margin-bottom: 0; }
 
     .virtual-session-title {
       margin: 0 0 9px 0;
@@ -1784,9 +1660,11 @@ function buildCalendar(data) {
 
                   </div>
 
-                  <div class="closed-sign-title">
+                  <div class="closed-sign-sorry">SORRY</div>
 
-                    CLOSED
+                    <div class="closed-sign-title">
+
+                    WE\'RE CLOSED
 
                   </div>
 
@@ -1838,27 +1716,20 @@ function buildCalendar(data) {
 
               <button
                 type="button"
-                class="virtual-laptop-wrap popup-trigger"
+                class="virtual-card popup-trigger"
                 data-popup-id="${escapeHTML(virtualPopupId)}"
                 aria-label="Open virtual day links for ${escapeHTML(item.date)}"
               >
 
-                <div class="virtual-laptop-screen">
+                <img
+                  src="icons/Virtual.png"
+                  alt="Virtual day"
+                  class="virtual-card-image"
+                  decoding="async"
+                >
 
-                  <img
-                    src="icons/Virtual.png"
-                    alt=""
-                    class="virtual-icon-image"
-                    decoding="async"
-                  >
-
-                  <div class="virtual-laptop-title">
-                    VIRTUAL
-                  </div>
-
-                </div>
-
-                <div class="virtual-laptop-base">
+                <div class="virtual-card-date">
+                  ${escapeHTML(item.date)}
                 </div>
 
               </button>

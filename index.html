@@ -176,7 +176,7 @@
 
 
     .week-row td {
-      height: 140px;
+      height: 190px;
 
       padding: 8px;
 
@@ -232,21 +232,21 @@
     ========================================================== */
 
     .activity-button {
-      width: 96%;
-      max-width: 205px;
+      width: 88%;
+      max-width: 180px;
 
-      min-height: 104px;
+      min-height: 150px;
 
       margin:
         0 auto;
 
       padding:
-        9px 14px 9px 8px;
+        12px 10px 14px 10px;
 
       border:
         1px solid #021b30;
 
-      border-radius: 10px;
+      border-radius: 12px;
 
       background:
         linear-gradient(
@@ -265,16 +265,18 @@
 
       box-shadow:
         0 4px 0 #022440,
-        0 6px 10px
+        0 7px 12px
         rgba(0,0,0,.20);
 
       display: flex;
+
+      flex-direction: column;
 
       align-items: center;
 
       justify-content: center;
 
-      gap: 2px;
+      gap: 8px;
 
       position: relative;
 
@@ -317,15 +319,15 @@
 
 
     .button-icon {
-      width: 82px;
-      height: 80px;
+      width: 100%;
+      height: 92px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
       flex:
-        0 0 82px;
+        0 0 92px;
     }
 
 
@@ -338,20 +340,21 @@
 
 
     .button-label {
-      flex: 1 1 0;
-      min-width: 0;
+      width: 100%;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 900;
       line-height: 1;
       text-align: center;
       white-space: nowrap;
 
-      padding-right: 2px;
+      text-shadow:
+        0 1px 2px
+        rgba(0,0,0,.35);
     }
 
 
@@ -441,7 +444,7 @@
     ========================================================== */
 
     .closed-sign-wrap {
-      width: 82px;
+      width: 108px;
 
       margin:
         -2px auto 0 auto;
@@ -527,17 +530,36 @@
     }
 
 
-    .closed-sign-title {
+    .closed-sign-date {
       padding:
-        5px 2px;
+        10px 4px 6px 4px;
 
       color: white;
 
-      font-size: 12px;
+      font-size: 18px;
+      font-weight: 900;
+
+      line-height: 1;
+
+      border-bottom:
+        2px solid rgba(255,255,255,.85);
+
+      margin:
+        0 10px;
+    }
+
+
+    .closed-sign-title {
+      padding:
+        7px 2px 9px 2px;
+
+      color: white;
+
+      font-size: 16px;
 
       font-weight: 900;
 
-      letter-spacing: .6px;
+      letter-spacing: .7px;
 
       text-shadow:
         0 1px 2px
@@ -1543,10 +1565,6 @@ function buildCalendar(data) {
 
               <div class="closed-sign-wrap">
 
-                <div style="font-size:16px;font-weight:900;color:#071c2e;margin-bottom:6px;">
-                  ${escapeHTML(item.date)}
-                </div>
-
                 <div class="closed-sign-hook">
                 </div>
 
@@ -1560,6 +1578,12 @@ function buildCalendar(data) {
 
 
                 <div class="closed-sign">
+
+                  <div class="closed-sign-date">
+
+                    ${escapeHTML(item.date)}
+
+                  </div>
 
                   <div class="closed-sign-title">
 

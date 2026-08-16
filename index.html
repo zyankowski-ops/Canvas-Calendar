@@ -35,8 +35,7 @@
 
     html {
       width: 100%;
-      height: auto;
-      min-height: 0;
+      min-height: 100%;
       background: #f3f5f7;
     }
 
@@ -45,8 +44,7 @@
       margin: 0;
 
       width: 100%;
-      height: auto;
-      min-height: 0;
+      min-height: 100vh;
 
       background: #f3f5f7;
 
@@ -72,7 +70,7 @@
         );
 
       margin:
-        20px auto 8px auto;
+        20px auto 40px auto;
     }
 
 
@@ -815,6 +813,37 @@
       margin-top: 24px;
     }
 
+    .agenda-section-heading.with-clock-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .agenda-section-heading .heading-clock-link {
+      margin-left: auto;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      font-size: 16px;
+      font-weight: 900;
+      color: #075ea7;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .agenda-section-heading .heading-clock-link:hover {
+      color: #003d70;
+    }
+
+    .agenda-section-heading.before-you-leave .heading-clock-link {
+      color: #ffc72c;
+    }
+
+    .agenda-section-heading.before-you-leave .heading-clock-link:hover {
+      color: #ffe27a;
+    }
+
+
 
 
     /* =========================================================
@@ -984,6 +1013,14 @@
 
       .shop-header img {
         border-radius: 10px;
+      }
+
+      .agenda-section-heading.with-clock-link {
+        flex-wrap: wrap;
+      }
+
+      .agenda-section-heading .heading-clock-link {
+        margin-left: 0;
       }
 
     }
@@ -2496,9 +2533,28 @@ function openModal(data) {
       );
 
 
+  const clockInLine =
+    agendaLines.find(
+      line =>
+        /CLOCK\s*IN/i.test(line)
+    ) || "";
+
+  const clockOutLine =
+    agendaLines.find(
+      line =>
+        /CLOCK\s*OUT/i.test(line)
+    ) || "";
+
+  const displayAgendaLines =
+    agendaLines.filter(
+      line =>
+        !/CLOCK\s*(IN|OUT)/i.test(line)
+    );
+
+
 
   if (
-    agendaLines.length
+    displayAgendaLines.length
     <= 1
   ) {
 
@@ -2519,7 +2575,7 @@ function openModal(data) {
 
       paragraph,
 
-      agendaLines[0]
+      displayAgendaLines[0]
 
       ||
 
@@ -2546,7 +2602,7 @@ function openModal(data) {
 
 
 
-    agendaLines
+    displayAgendaLines
       .forEach(
         line => {
 
@@ -2615,6 +2671,68 @@ function openModal(data) {
               heading,
               cleanedLine
             );
+
+
+            let headingClockLine =
+              "";
+
+            if (
+              /TODAY'?S\s+FOCUS/i.test(
+                cleanedLine
+              )
+            ) {
+              headingClockLine =
+                clockInLine;
+            }
+
+            else if (
+              /BEFORE\s+YOU\s+LEAVE/i.test(
+                cleanedLine
+              )
+            ) {
+              headingClockLine =
+                clockOutLine;
+            }
+
+
+            if (
+              headingClockLine
+            ) {
+
+              heading.classList.add(
+                "with-clock-link"
+              );
+
+              const clockHolder =
+                document.createElement(
+                  "span"
+                );
+
+              appendFormattedText(
+                clockHolder,
+                headingClockLine
+              );
+
+              const clockLink =
+                clockHolder.querySelector(
+                  "a"
+                );
+
+              if (
+                clockLink
+              ) {
+
+                clockLink.classList.add(
+                  "heading-clock-link"
+                );
+
+                heading.appendChild(
+                  clockLink
+                );
+
+              }
+
+            }
 
 
             contentArea

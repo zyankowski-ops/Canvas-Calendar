@@ -586,6 +586,33 @@
       transform: translateY(-2px);
     }
 
+    .virtual-laptop-wrap:hover .virtual-laptop-screen {
+      background:
+        linear-gradient(
+          135deg,
+          #126db8,
+          #074676
+        );
+
+      box-shadow:
+        0 6px 0 #022440,
+        0 8px 14px
+        rgba(0,0,0,.24);
+    }
+
+    .virtual-laptop-wrap:hover .virtual-laptop-base {
+      background:
+        linear-gradient(
+          to bottom,
+          #f1f5f7,
+          #c8d2d9
+        );
+    }
+
+    .virtual-laptop-wrap:active {
+      transform: translateY(2px);
+    }
+
     .virtual-laptop-wrap:focus-visible {
       outline: 3px solid #ffc72c;
       outline-offset: 5px;
@@ -618,7 +645,6 @@
       font-size: 31px;
       line-height: 1;
       margin-bottom: 4px;
-      color: #ffc72c;
       filter:
         drop-shadow(
           0 1px 1px rgba(0,0,0,.30)
@@ -1817,7 +1843,7 @@ function buildCalendar(data) {
                 <div class="virtual-laptop-screen">
 
                   <div class="virtual-gear" aria-hidden="true">
-                    ⚙
+                    ⚙️
                   </div>
 
                   <div class="virtual-laptop-title">

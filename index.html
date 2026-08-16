@@ -574,6 +574,12 @@
     }
 
 
+    /* Virtual popup only: position higher in the visible window */
+    .modal-overlay.virtual-modal-open {
+      align-items: flex-start;
+      padding-top: 10vh;
+    }
+
     /* =========================================================
        LOADING / ERROR
     ========================================================== */
@@ -2271,6 +2277,15 @@ function isAgendaHeading(line) {
 ========================================================== */
 
 function openModal(data) {
+  const modalOverlay =
+    document.getElementById("modalOverlay");
+
+  modalOverlay.classList.toggle(
+    "virtual-modal-open",
+    !!data.virtual
+  );
+
+
 
 
   document
@@ -2706,6 +2721,12 @@ function openModal(data) {
 ========================================================== */
 
 function closeModal() {
+  document
+    .getElementById("modalOverlay")
+    .classList
+    .remove("virtual-modal-open");
+
+
 
 
   document

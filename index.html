@@ -574,6 +574,22 @@
       margin: 0 auto;
       position: relative;
       z-index: 3;
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      font: inherit;
+      transition: transform .15s ease;
+    }
+
+    .virtual-laptop-wrap:hover {
+      transform: translateY(-2px);
+    }
+
+    .virtual-laptop-wrap:focus-visible {
+      outline: 3px solid #ffc72c;
+      outline-offset: 5px;
+      border-radius: 8px;
     }
 
     .virtual-laptop-screen {
@@ -598,10 +614,15 @@
       color: white;
     }
 
-    .virtual-laptop-icon {
-      font-size: 30px;
+    .virtual-gear {
+      font-size: 31px;
       line-height: 1;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
+      color: #ffc72c;
+      filter:
+        drop-shadow(
+          0 1px 1px rgba(0,0,0,.30)
+        );
     }
 
     .virtual-laptop-title {
@@ -644,9 +665,40 @@
       background: #7e8d98;
     }
 
+    .virtual-session {
+      margin: 0 0 22px 0;
+    }
 
+    .virtual-session:last-child {
+      margin-bottom: 0;
+    }
 
+    .virtual-session-title {
+      margin: 0 0 9px 0;
+      padding: 8px 10px;
+      color: #073b68;
+      font-size: 19px;
+      font-weight: 900;
+      border-left: 5px solid #ffc72c;
+      background: linear-gradient(to right, #fff4bf, #ffffff);
+      border-radius: 4px 8px 8px 4px;
+    }
 
+    .virtual-session-link {
+      display: inline-block;
+      padding: 10px 14px;
+      border: 2px solid #073b68;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, #0b5798, #073b68);
+      color: white;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 3px 0 #052d50;
+    }
+
+    .virtual-session-link:hover {
+      background: linear-gradient(to bottom, #126db8, #074676);
+    }
 
 
     /* =========================================================
@@ -1374,6 +1426,35 @@ function buildCalendar(data) {
         .trim();
 
 
+      const amLabel =
+        String(
+          row["AM LABEL"] ||
+          ""
+        )
+        .trim();
+
+      const amLink =
+        String(
+          row["AM LINK"] ||
+          ""
+        )
+        .trim();
+
+      const pmLabel =
+        String(
+          row["PM LABEL"] ||
+          ""
+        )
+        .trim();
+
+      const pmLink =
+        String(
+          row["PM LINK"] ||
+          ""
+        )
+        .trim();
+
+
 
       if (
         !week ||
@@ -1430,7 +1511,15 @@ function buildCalendar(data) {
 
         popupTitle,
 
-        popupContent
+        popupContent,
+
+        amLabel,
+
+        amLink,
+
+        pmLabel,
+
+        pmLink
 
       };
 
@@ -1701,15 +1790,34 @@ function buildCalendar(data) {
 
           ) {
 
+            const virtualPopupId =
+              `virtual-${weekNumber}-${day}`
+                .replace(/\s+/g, "-")
+                .toLowerCase();
+
+            popupData[virtualPopupId] = {
+              title: "Virtual Day",
+              date: item.date,
+              virtual: true,
+              amLabel: item.amLabel,
+              amLink: item.amLink,
+              pmLabel: item.pmLabel,
+              pmLink: item.pmLink
+            };
 
             html += `
 
-              <div class="virtual-laptop-wrap">
+              <button
+                type="button"
+                class="virtual-laptop-wrap popup-trigger"
+                data-popup-id="${escapeHTML(virtualPopupId)}"
+                aria-label="Open virtual day links for ${escapeHTML(item.date)}"
+              >
 
                 <div class="virtual-laptop-screen">
 
-                  <div class="virtual-laptop-icon">
-                    💻
+                  <div class="virtual-gear" aria-hidden="true">
+                    ⚙
                   </div>
 
                   <div class="virtual-laptop-title">
@@ -1721,22 +1829,16 @@ function buildCalendar(data) {
                 <div class="virtual-laptop-base">
                 </div>
 
-              </div>
+              </button>
 
             `;
-
 
             html +=
               "</td>";
 
-
             return;
 
           }
-
-
-
-
 
 
 
@@ -2359,6 +2461,137 @@ function openModal(data) {
 
   contentArea.innerHTML =
     "";
+
+
+  if (data.virtual) {
+
+    const sessions = [
+      {
+        title: "AM",
+        label: data.amLabel,
+        link: data.amLink
+      },
+      {
+        title: "PM",
+        label: data.pmLabel,
+        link: data.pmLink
+      }
+    ];
+
+    sessions.forEach(session => {
+
+      if (!session.label && !session.link) {
+        return;
+      }
+
+      const section =
+        document.createElement("div");
+
+      section.className =
+        "virtual-session";
+
+
+      const heading =
+        document.createElement("div");
+
+      heading.className =
+        "virtual-session-title";
+
+      heading.textContent =
+        `${session.title} SESSION`;
+
+      section.appendChild(
+        heading
+      );
+
+
+      if (session.link) {
+
+        const link =
+          document.createElement("a");
+
+        link.className =
+          "virtual-session-link";
+
+        link.href =
+          session.link;
+
+        link.target =
+          "_blank";
+
+        link.rel =
+          "noopener noreferrer";
+
+        link.textContent =
+          session.label ||
+          `Open ${session.title} Link`;
+
+        section.appendChild(
+          link
+        );
+
+      } else if (session.label) {
+
+        const paragraph =
+          document.createElement("p");
+
+        paragraph.className =
+          "agenda-paragraph";
+
+        paragraph.textContent =
+          session.label;
+
+        section.appendChild(
+          paragraph
+        );
+
+      }
+
+      contentArea.appendChild(
+        section
+      );
+
+    });
+
+
+    if (!contentArea.children.length) {
+
+      const paragraph =
+        document.createElement("p");
+
+      paragraph.className =
+        "agenda-paragraph";
+
+      paragraph.textContent =
+        "No virtual links have been posted yet.";
+
+      contentArea.appendChild(
+        paragraph
+      );
+
+    }
+
+
+    document
+      .getElementById(
+        "modalOverlay"
+      )
+      .classList
+      .add(
+        "open"
+      );
+
+
+    document
+      .body
+      .style
+      .overflow =
+        "hidden";
+
+
+    return;
+
+  }
 
 
 

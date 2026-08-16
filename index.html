@@ -222,17 +222,7 @@
 
 
     .date {
-      font-size: 19px;
-
-      font-weight: 900;
-
-      margin-bottom: 12px;
-
-      color: #071c2e;
-
-      position: relative;
-
-      z-index: 3;
+      display: none;
     }
 
 
@@ -245,7 +235,7 @@
       width: 96%;
       max-width: 205px;
 
-      min-height: 82px;
+      min-height: 96px;
 
       margin:
         0 auto;
@@ -327,15 +317,15 @@
 
 
     .button-icon {
-      width: 60px;
-      height: 52px;
+      width: 76px;
+      height: 72px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
       flex:
-        0 0 60px;
+        0 0 76px;
     }
 
 
@@ -355,24 +345,13 @@
       align-items: center;
       justify-content: center;
 
-      line-height: 1.12;
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1;
       text-align: center;
-
-      white-space: normal;
-      overflow-wrap: normal;
-      word-break: keep-all;
-      hyphens: none;
+      white-space: nowrap;
     }
 
-
-    /* Give Basic Maintenance a little extra room on the right */
-    .maintenance-balance .button-icon {
-      transform: translateX(-6px);
-    }
-
-    .maintenance-balance .button-label {
-      transform: translateX(-2px);
-    }
 
 
 
@@ -1562,6 +1541,9 @@ function buildCalendar(data) {
 
               <div class="closed-sign-wrap">
 
+                <div style="font-size:16px;font-weight:900;color:#071c2e;margin-bottom:6px;">
+                  ${escapeHTML(item.date)}
+                </div>
 
                 <div class="closed-sign-hook">
                 </div>
@@ -1660,11 +1642,7 @@ function buildCalendar(data) {
             html += `
 
               <button
-                class="activity-button popup-trigger${
-                  item.buttonText.trim().toLowerCase() === "basic maintenance"
-                    ? " maintenance-balance"
-                    : ""
-                }"
+                class="activity-button popup-trigger"
                 data-popup-id="${escapeHTML(
                   popupId
                 )}"
@@ -1679,7 +1657,7 @@ function buildCalendar(data) {
                 <span class="button-label">
 
                   ${escapeHTML(
-                    item.buttonText
+                    item.date
                   )}
 
                 </span>

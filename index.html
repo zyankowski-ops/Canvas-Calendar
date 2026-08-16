@@ -13,6 +13,16 @@
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
+  <!-- Preload calendar icons so they are ready before the Sheet finishes loading -->
+  <link rel="preload" as="image" href="icons/orientation.png">
+  <link rel="preload" as="image" href="icons/instruction.png">
+  <link rel="preload" as="image" href="icons/safety.png">
+  <link rel="preload" as="image" href="icons/shop.png">
+  <link rel="preload" as="image" href="icons/diagnostic.png">
+  <link rel="preload" as="image" href="icons/assessment.png">
+  <link rel="preload" as="image" href="icons/maintenance.png">
+
+
 
   <style>
 
@@ -235,7 +245,7 @@
       width: 92%;
       max-width: 180px;
 
-      min-height: 74px;
+      min-height: 82px;
 
       margin:
         0 auto;
@@ -274,7 +284,7 @@
 
       justify-content: center;
 
-      gap: 9px;
+      gap: 7px;
 
       position: relative;
 
@@ -338,7 +348,15 @@
 
 
     .button-label {
+      flex: 1 1 auto;
+      min-width: 0;
+
       line-height: 1.1;
+      text-align: center;
+
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
 
@@ -1043,7 +1061,7 @@
 
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vQRZ071dUf8OcCEjIQe8g5dMWafYYBolUTy2Y-IPP8uyGZPJn_rjgkBjrjSTNXH0CmAeMSgd_5z23hy/pub?gid=0&single=true&output=csv&cb=" +
-Date.now();
+Math.floor(Date.now() / 60000);
 
 
 const DAYS = [
@@ -1165,6 +1183,7 @@ function renderButtonIcon(iconName) {
       src="${escapeHTML(icon.value)}"
       alt=""
       class="button-icon-image"
+      decoding="async"
     >
   `;
 

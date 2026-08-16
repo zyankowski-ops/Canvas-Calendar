@@ -365,6 +365,16 @@
     }
 
 
+    /* Give Basic Maintenance a little extra room on the right */
+    .maintenance-balance .button-icon {
+      transform: translateX(-6px);
+    }
+
+    .maintenance-balance .button-label {
+      transform: translateX(-2px);
+    }
+
+
 
     /* =========================================================
        TODAY HIGHLIGHT
@@ -1650,7 +1660,11 @@ function buildCalendar(data) {
             html += `
 
               <button
-                class="activity-button popup-trigger"
+                class="activity-button popup-trigger${
+                  item.buttonText.trim().toLowerCase() === "basic maintenance"
+                    ? " maintenance-balance"
+                    : ""
+                }"
                 data-popup-id="${escapeHTML(
                   popupId
                 )}"

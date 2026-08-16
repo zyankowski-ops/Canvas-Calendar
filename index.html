@@ -565,6 +565,87 @@
         0 1px 2px
         rgba(0,0,0,.25);
     }
+    /* =========================================================
+       VIRTUAL DAY
+    ========================================================== */
+
+    .virtual-laptop-wrap {
+      width: 124px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 3;
+    }
+
+    .virtual-laptop-screen {
+      width: 112px;
+      height: 76px;
+      margin: 0 auto;
+      border: 4px solid #152d40;
+      border-radius: 8px 8px 5px 5px;
+      background:
+        linear-gradient(
+          135deg,
+          #0b5798,
+          #073b68
+        );
+      box-shadow:
+        0 4px 8px
+        rgba(0,0,0,.20);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .virtual-laptop-icon {
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .virtual-laptop-title {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .7px;
+      color: #ffc72c;
+      text-shadow:
+        0 1px 2px
+        rgba(0,0,0,.30);
+    }
+
+    .virtual-laptop-base {
+      width: 124px;
+      height: 12px;
+      margin: -1px auto 0 auto;
+      border: 2px solid #152d40;
+      border-radius: 2px 2px 8px 8px;
+      background:
+        linear-gradient(
+          to bottom,
+          #dfe6ea,
+          #aebbc4
+        );
+      box-shadow:
+        0 3px 5px
+        rgba(0,0,0,.18);
+      position: relative;
+    }
+
+    .virtual-laptop-base::after {
+      content: "";
+      width: 32px;
+      height: 3px;
+      position: absolute;
+      top: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 3px;
+      background: #7e8d98;
+    }
+
+
+
 
 
 
@@ -1606,6 +1687,56 @@ function buildCalendar(data) {
             return;
 
           }
+          /* =================================================
+             VIRTUAL DAY
+          ================================================== */
+
+          if (
+
+            item.buttonText
+              .trim()
+              .toUpperCase()
+
+            === "VIRTUAL"
+
+          ) {
+
+
+            html += `
+
+              <div class="virtual-laptop-wrap">
+
+                <div class="virtual-laptop-screen">
+
+                  <div class="virtual-laptop-icon">
+                    💻
+                  </div>
+
+                  <div class="virtual-laptop-title">
+                    VIRTUAL
+                  </div>
+
+                </div>
+
+                <div class="virtual-laptop-base">
+                </div>
+
+              </div>
+
+            `;
+
+
+            html +=
+              "</td>";
+
+
+            return;
+
+          }
+
+
+
+
 
 
 

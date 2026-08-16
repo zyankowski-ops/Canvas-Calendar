@@ -22,6 +22,7 @@
   <link rel="preload" as="image" href="icons/assessment.png">
   <link rel="preload" as="image" href="icons/maintenance.png">
   <link rel="preload" as="image" href="icons/Virtual.png">
+  <link rel="preload" as="image" href="icons/Closed.png">
 
 
 
@@ -444,80 +445,43 @@
        CLOSED SIGN
     ========================================================== */
 
-    .closed-sign-wrap {
-      width: 122px;
-      margin: -2px auto 0 auto;
-      padding-top: 15px;
+    .closed-image-wrap {
+      width: 132px;
+      margin: 0 auto;
       position: relative;
       z-index: 3;
+      filter:
+        drop-shadow(
+          0 5px 5px rgba(0,0,0,.22)
+        );
     }
 
-    .closed-sign-hook {
-      width: 7px;
-      height: 7px;
+    .closed-image {
+      display: block;
+      width: 132px;
+      height: auto;
+    }
+
+    .closed-image-date {
       position: absolute;
-      top: 0;
       left: 50%;
+      bottom: 5.7%;
       transform: translateX(-50%);
-      border-radius: 50%;
-      background: #253746;
-    }
-
-    .closed-wire-left,
-    .closed-wire-right {
-      width: 2px;
-      height: 18px;
-      position: absolute;
-      top: 5px;
-      left: 50%;
-      background: #455563;
-      transform-origin: top;
-    }
-
-    .closed-wire-left { transform: translateX(-1px) rotate(55deg); }
-    .closed-wire-right { transform: translateX(-1px) rotate(-55deg); }
-
-    .closed-sign {
-      position: relative;
-      z-index: 2;
-      overflow: hidden;
-      border: 3px solid #172b3a;
-      border-radius: 8px;
-      background: linear-gradient(145deg, #d9232e 0%, #b70d17 58%, #930810 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.25),
-        0 5px 8px rgba(0,0,0,.22);
-    }
-
-    .closed-sign-date {
-      padding: 7px 4px 6px 4px;
-      margin: 0 9px;
-      color: white;
-      font-size: 17px;
-      font-weight: 900;
-      line-height: 1;
-      border-bottom: 2px solid rgba(255,255,255,.82);
-      text-shadow: 0 1px 2px rgba(0,0,0,.25);
-    }
-
-    .closed-sign-sorry {
-      padding-top: 6px;
-      color: #ffd75a;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      line-height: 1;
-      text-shadow: 0 1px 2px rgba(0,0,0,.28);
-    }
-
-    .closed-sign-title {
-      padding: 4px 3px 10px 3px;
+      width: 62%;
       color: white;
       font-size: 15px;
       font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: .35px;
-      text-shadow: 0 1px 2px rgba(0,0,0,.28);
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      letter-spacing: .15px;
+      text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         0 2px 2px rgba(0,0,0,.55);
+      pointer-events: none;
     }
 
 
@@ -1638,38 +1602,18 @@ function buildCalendar(data) {
 
             html += `
 
-              <div class="closed-sign-wrap">
+              <div class="closed-image-wrap">
 
-                <div class="closed-sign-hook">
+                <img
+                  src="icons/Closed.png"
+                  alt="Sorry, we're closed"
+                  class="closed-image"
+                  decoding="async"
+                >
+
+                <div class="closed-image-date">
+                  ${escapeHTML(item.date)}
                 </div>
-
-
-                <div class="closed-wire-left">
-                </div>
-
-
-                <div class="closed-wire-right">
-                </div>
-
-
-                <div class="closed-sign">
-
-                  <div class="closed-sign-date">
-
-                    ${escapeHTML(item.date)}
-
-                  </div>
-
-                  <div class="closed-sign-sorry">SORRY</div>
-
-                    <div class="closed-sign-title">
-
-                    WE\'RE CLOSED
-
-                  </div>
-
-                </div>
-
 
               </div>
 

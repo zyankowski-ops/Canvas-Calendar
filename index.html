@@ -2686,8 +2686,8 @@ function openModal(data) {
             }
 
             else if (
-              /BEFORE\s+YOU\s+LEAVE/i.test(
-                cleanedLine
+              heading.classList.contains(
+                "before-you-leave"
               )
             ) {
               headingClockLine =

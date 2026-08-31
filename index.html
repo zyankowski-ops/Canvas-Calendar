@@ -2676,6 +2676,9 @@ function openModal(data) {
             let headingClockLine =
               "";
 
+            let headingClockLabel =
+              "";
+
             if (
               /TODAY'?S\s+FOCUS/i.test(
                 cleanedLine
@@ -2683,6 +2686,9 @@ function openModal(data) {
             ) {
               headingClockLine =
                 clockInLine;
+
+              headingClockLabel =
+                "⏱️ CLOCK IN";
             }
 
             else if (
@@ -2692,6 +2698,9 @@ function openModal(data) {
             ) {
               headingClockLine =
                 clockOutLine;
+
+              headingClockLabel =
+                "⏱️ CLOCK OUT";
             }
 
 
@@ -2699,32 +2708,91 @@ function openModal(data) {
               headingClockLine
             ) {
 
-              heading.classList.add(
-                "with-clock-link"
-              );
+              /*
+                Robust clock-link handling:
+                - Prefer the URL contained in this clock line.
+                - If CLOCK OUT lost its Markdown URL during CSV export,
+                  reuse the CLOCK IN URL because both buttons open the
+                  same Time Clock web app.
+              */
+              const getClockUrlFromLine =
+                function(clockLine) {
 
-              const clockHolder =
-                document.createElement(
-                  "span"
+                  const source =
+                    String(
+                      clockLine || ""
+                    );
+
+                  const markdownMatch =
+                    source.match(
+                      /\]\((https?:\/\/[^)]+)\)/
+                    );
+
+                  if (
+                    markdownMatch &&
+                    markdownMatch[1]
+                  ) {
+                    return markdownMatch[1];
+                  }
+
+                  const rawUrlMatch =
+                    source.match(
+                      /(https?:\/\/[^\s)]+)/
+                    );
+
+                  return rawUrlMatch
+                    ? rawUrlMatch[1]
+                    : "";
+                };
+
+
+              let clockHref =
+                getClockUrlFromLine(
+                  headingClockLine
                 );
 
-              appendFormattedText(
-                clockHolder,
-                headingClockLine
-              );
-
-              const clockLink =
-                clockHolder.querySelector(
-                  "a"
-                );
 
               if (
-                clockLink
+                !clockHref &&
+                headingClockLabel ===
+                  "⏱️ CLOCK OUT"
               ) {
 
-                clockLink.classList.add(
-                  "heading-clock-link"
+                clockHref =
+                  getClockUrlFromLine(
+                    clockInLine
+                  );
+
+              }
+
+
+              if (
+                clockHref
+              ) {
+
+                heading.classList.add(
+                  "with-clock-link"
                 );
+
+                const clockLink =
+                  document.createElement(
+                    "a"
+                  );
+
+                clockLink.className =
+                  "heading-clock-link";
+
+                clockLink.textContent =
+                  headingClockLabel;
+
+                clockLink.href =
+                  clockHref;
+
+                clockLink.target =
+                  "_blank";
+
+                clockLink.rel =
+                  "noopener noreferrer";
 
                 heading.appendChild(
                   clockLink

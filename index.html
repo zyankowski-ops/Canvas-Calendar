@@ -2279,6 +2279,10 @@ function isAgendaHeading(line) {
 
     "TODAYS FOCUS",
 
+    "TODAY'S ASSIGNMENTS",
+
+    "TODAYS ASSIGNMENTS",
+
     "TODAY'S OBJECTIVE",
 
     "TODAY'S OBJECTIVES",
@@ -2680,7 +2684,7 @@ function openModal(data) {
               "";
 
             if (
-              /TODAY'?S\s+FOCUS/i.test(
+              /TODAY'?S\s+(FOCUS|ASSIGNMENTS)/i.test(
                 cleanedLine
               )
             ) {

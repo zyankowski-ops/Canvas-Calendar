@@ -84,6 +84,8 @@
 
       margin:
         0 0 8px 0;
+
+      position: relative;
     }
 
 
@@ -103,6 +105,37 @@
       box-shadow:
         0 5px 14px
         rgba(0,0,0,.22);
+    }
+
+
+    /* =========================================================
+       ALLDATA TOOLBOX LINK
+       Invisible hotspot over the toolbox in the header image.
+       Percent positioning keeps it aligned as the banner scales.
+    ========================================================== */
+
+    .alldata-toolbox-link {
+      position: absolute;
+      top: 9%;
+      right: 2.2%;
+      width: 23.5%;
+      height: 76%;
+      z-index: 10;
+      display: block;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    .alldata-toolbox-link:hover {
+      background: rgba(255, 199, 44, .08);
+      box-shadow: 0 0 0 3px rgba(255, 199, 44, .72),
+                  0 0 18px rgba(255, 199, 44, .45);
+    }
+
+    .alldata-toolbox-link:focus-visible {
+      outline: 4px solid #ffc72c;
+      outline-offset: -4px;
+      background: rgba(255, 199, 44, .10);
     }
 
 
@@ -1043,6 +1076,15 @@
       src="shopschedule.png?v=3"
       alt="RMCTC Auto Tech Shop Schedule"
     >
+
+    <a
+      class="alldata-toolbox-link"
+      href="https://my.alldata.com/#/home"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Open ALLDATA Service Information"
+      aria-label="Open ALLDATA Service Information"
+    ></a>
 
   </header>
 

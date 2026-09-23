@@ -2317,10 +2317,6 @@ function isAgendaHeading(line) {
 
   const knownHeadings = [
 
-    "TODAY'S FOCUS",
-
-    "TODAYS FOCUS",
-
     "TODAY'S ASSIGNMENTS",
 
     "TODAYS ASSIGNMENTS",
@@ -2591,11 +2587,47 @@ function openModal(data) {
         /CLOCK\s*OUT/i.test(line)
     ) || "";
 
-  const displayAgendaLines =
+  const displayAgendaLinesRaw =
     agendaLines.filter(
       line =>
         !/CLOCK\s*(IN|OUT)/i.test(line)
     );
+
+  /*
+    TODAY'S FOCUS has been retired.
+    Older Sheet entries may still contain that section, so hide the heading
+    and everything beneath it until TODAY'S ASSIGNMENTS.
+  */
+  let skippingTodaysFocus = false;
+
+  const displayAgendaLines =
+    displayAgendaLinesRaw.filter(line => {
+
+      const normalizedLine =
+        String(line || "")
+          .replace(/^[-•*]\s*/, "")
+          .replace(/[^A-Za-z0-9' ]/g, "")
+          .trim()
+          .toUpperCase();
+
+      if (
+        normalizedLine === "TODAY'S FOCUS" ||
+        normalizedLine === "TODAYS FOCUS"
+      ) {
+        skippingTodaysFocus = true;
+        return false;
+      }
+
+      if (
+        normalizedLine === "TODAY'S ASSIGNMENTS" ||
+        normalizedLine === "TODAYS ASSIGNMENTS"
+      ) {
+        skippingTodaysFocus = false;
+        return true;
+      }
+
+      return !skippingTodaysFocus;
+    });
 
 
 
@@ -2726,7 +2758,7 @@ function openModal(data) {
               "";
 
             if (
-              /TODAY'?S\s+(FOCUS|ASSIGNMENTS)/i.test(
+              /TODAY'?S\s+ASSIGNMENTS/i.test(
                 cleanedLine
               )
             ) {

@@ -2654,12 +2654,30 @@ function openModal(data) {
 
 
 
-          const cleanedLine =
+          let cleanedLine =
 
             line.replace(
               /^[-•*]\s*/,
               ""
             );
+
+
+          /*
+            DISPLAY-ONLY RENAME:
+            Keep all existing agenda data and parsing intact.
+            An old "TODAY'S FOCUS" heading is shown to students as
+            "TODAY'S ASSIGNMENTS".
+          */
+          if (
+            /^🔧?\s*TODAY'?S\s+FOCUS$/i.test(
+              cleanedLine.trim()
+            )
+          ) {
+
+            cleanedLine =
+              "📋 TODAY'S ASSIGNMENTS";
+
+          }
 
 
 
@@ -2726,7 +2744,7 @@ function openModal(data) {
               "";
 
             if (
-              /TODAY'?S\s+ASSIGNMENTS/i.test(
+              /TODAY'?S\s+(FOCUS|ASSIGNMENTS)/i.test(
                 cleanedLine
               )
             ) {
